@@ -1,7 +1,7 @@
-Confidently-wrong model (see [[Model]]) output. Two flavors with different causes and fixes:
+Confidently-wrong [model](./Model.md) output. Two flavors with different causes and fixes:
 
-- *Factuality hallucination* — invented or wrong facts about the world (a function that doesn't exist, a wrong API signature, a fake citation). Caused by **parametric knowledge** (see [[Parametric knowledge]]) gaps, often past the **knowledge cutoff** (see [[Knowledge cutoff]]). Fix: load the right **contextual knowledge** (see [[Contextual knowledge]]).
-- *Faithfulness hallucination* — output drifts from the **contextual knowledge** that's loaded, the user's instructions, or the model's own prior reasoning. Symptom of **attention degradation** (see [[Attention degradation]]); worsens in the **dumb zone** (see [[Smart zone]]). Fix: clear (see [[Clearing]]) or compact (see [[Compaction]]).
+- *Factuality hallucination* — invented or wrong facts about the world (a function that doesn't exist, a wrong API signature, a fake citation). Caused by [parametric knowledge](./Parametric%20knowledge.md) gaps, often past the [knowledge cutoff](./Knowledge%20cutoff.md). Fix: load the right [contextual knowledge](./Contextual%20knowledge.md).
+- *Faithfulness hallucination* — output drifts from the **contextual knowledge** that's loaded, the user's instructions, or the model's own prior reasoning. Symptom of [attention degradation](./Attention%20degradation.md); worsens in the [dumb zone](./Smart%20zone.md). Fix: [clear](./Clearing.md) or [compact](./Compaction.md).
 
 *Avoid:* "hallucination" as a bare synonym for "wrong" — without naming the flavor, the term has no diagnostic value.
 
