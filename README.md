@@ -163,7 +163,7 @@ Running a trained [model](#model) to generate output — what happens on every [
 
 "Why does the bill scale with usage instead of being a flat license?"
 
-"You're paying for inference — every model provider request runs the model on the provider's hardware. Training already happened, but inference costs accrue per request, and a single [turn](#turn) can fan out into many requests when [tools](#tool) are called."
+"You're paying for inference — every model provider request runs the model on the provider's hardware. Training already happened, but inference costs accrue per request, and a single [turn](#turn) can expand into many requests when [tools](#tool) are called."
 
 ### Token
 
@@ -251,7 +251,7 @@ Carries no information forward. The [model](#model) is stateless across [model p
 
 ### Context
 
-The relevant information the [agent](#agent) has access to right now. The abstract noun — not the buffer (that's the [context window](#context-window)), not the running history (that's the [session](#session)), but *what the agent knows that's pertinent to the task*. "Loading something into context" means making it part of this set; "context engineering" is the discipline of curating it.
+The relevant information the [agent](#agent) has access to right now. The abstract noun — not the raw input the model sees (that's the [context window](#context-window)), not the running history (that's the [session](#session)), but *what the agent knows that's pertinent to the task*. "Loading something into context" means making it part of this set; "context engineering" is the discipline of curating it.
 
 *Usage:*
 
@@ -261,7 +261,7 @@ The relevant information the [agent](#agent) has access to right now. The abstra
 
 ### Context window
 
-The buffer the [model](#model) reads on each [model provider request](#model-provider-request). Finite, model-specific, and the *only* surface through which the model perceives anything.
+Everything the [model](#model) sees on each [model provider request](#model-provider-request). Finite, model-specific, and the *only* surface through which the model perceives anything.
 
 *Avoid:* "memory" — the context window is working state and doesn't persist across [sessions](#session). [Memory](#memory-system) is a separate concept layered on top.
 
@@ -610,7 +610,7 @@ A system that attempts to make an [agent](#agent) [stateful](#stateful) across [
 
 "I keep having to re-tell it I'm on Postgres, not MySQL."
 
-"Wire up a memory system — write the stack to disk on the first [turn](#turn), reload it at session start. The [model](#model) itself is [stateless](#stateless); the memory layer fakes continuity."
+"Wire up a memory system — write what it learns to the [filesystem](#filesystem) on the first [turn](#turn), reload it at session start. The [model](#model) itself is [stateless](#stateless); the memory layer fakes continuity."
 
 ### AGENTS.md
 
