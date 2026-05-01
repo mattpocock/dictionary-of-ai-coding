@@ -12,7 +12,7 @@ Each has a clean answer, once someone tells you the words to use.
 
 That's what this dictionary is for. The vocabulary of AI coding, translated into plain English.
 
-**Want more than the vocabulary?** Join 54,000+ developers at **[aihero.dev/newsletter](https://aihero.dev/newsletter)** for my latest skills, thinking on AI engineering, and the resources that'll keep you ahead of the curve.
+**Want more than the vocabulary?** Join 62,000+ developers at **[aihero.dev/newsletter](https://www.aihero.dev/s/dictionary-newsletter)** for my latest skills, thinking on AI engineering, and the resources that'll keep you ahead of the curve.
 
 ---
 
