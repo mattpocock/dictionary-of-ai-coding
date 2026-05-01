@@ -9,4 +9,12 @@ A preset that shapes how the [agent](./Agent.md) operates at runtime — bundles
 
 *Vendor terms:* Claude Code calls these "permission modes," Codex calls them "approval modes" — both predate behavioral bundling.
 
-*Usage:* "It keeps editing files when I just want a plan." "Switch to plan mode — it'll block writes and stay in research." "What about for the AFK run later?" "Bypass mode, but only inside the sandbox."
+*Usage:*
+
+"It keeps editing files when I just want a plan."
+
+"Switch to plan mode — it'll block writes and stay in research."
+
+"What about for the AFK run later?"
+
+"Bypass mode, but only inside the sandbox."

@@ -7,4 +7,10 @@ A working pattern where the user kicks off a [session](./Session.md) and leaves 
 
 *Avoid:* "background agent" — centers the machine ("running in the background") rather than the human pattern ("user has walked away"). AFK is the load-bearing fact: the user isn't watching.
 
-*Usage:* "I'm running this AFK — three sandboxed agents on the refactor, reviewing the PRs in the morning." "Bypass permissions?" "Yeah, read-only filesystem, no network."
+*Usage:*
+
+"I'm running this AFK — three sandboxed agents on the refactor, reviewing the PRs in the morning."
+
+"Bypass permissions?"
+
+"Yeah, read-only filesystem, no network."

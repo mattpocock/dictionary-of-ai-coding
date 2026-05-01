@@ -5,4 +5,12 @@ Confidently-wrong [model](./Model.md) output. Two flavors with different causes 
 
 *Avoid:* "hallucination" as a bare synonym for "wrong" — without naming the flavor, the term has no diagnostic value.
 
-*Usage:* "It hallucinated a `parseAsync` method on the schema." "Factuality or faithfulness?" "The method exists in the docs I pasted — it just stopped reading them after turn forty." "Faithfulness then. Compact and reload, don't bother adding more docs."
+*Usage:*
+
+"It hallucinated a `parseAsync` method on the schema."
+
+"Factuality or faithfulness?"
+
+"The method exists in the docs I pasted — it just stopped reading them after turn forty."
+
+"Faithfulness then. Compact and reload, don't bother adding more docs."

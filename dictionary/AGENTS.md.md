@@ -2,4 +2,8 @@ A file in the [environment](./Environment.md) that the [harness](./Harness.md) l
 
 *Avoid:* using AGENTS.md for content that should be [progressively disclosed](./Progressive%20disclosure.md) — anything in it pays a [token](./Token.md) cost every [turn](./Turn.md).
 
-*Usage:* "Why is every session starting with 4k tokens already burned?" "Check AGENTS.md — someone pasted the entire style guide in there instead of putting it behind a skill."
+*Usage:*
+
+"Why is every session starting with 4k tokens already burned?"
+
+"Check AGENTS.md — someone pasted the entire style guide in there instead of putting it behind a skill."

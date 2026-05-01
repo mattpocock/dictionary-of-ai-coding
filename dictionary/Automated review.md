@@ -2,4 +2,8 @@ An [agent](./Agent.md) reviewing another agent's work, often with a different [m
 
 *Avoid:* "AI review" / "agent review" — too vague to distinguish from the working agent itself.
 
-*Usage:* "We're getting too many bad PRs from the AFK runs." "Add an automated review step before merge — different model, separate system prompt, scoped to security and contract changes."
+*Usage:*
+
+"We're getting too many bad PRs from the AFK runs."
+
+"Add an automated review step before merge — different model, separate system prompt, scoped to security and contract changes."

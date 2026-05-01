@@ -2,4 +2,12 @@ A deterministic verification that runs in the [environment](./Environment.md) �
 
 *Avoid:* "feedback loop" / "backpressure" — both lump checks together with [review](./Automated%20review.md). *Avoid:* "test" — tests are automated checks, but not all automated checks are tests.
 
-*Usage:* "The agent keeps shipping broken code in the AFK runs." "What automated checks are wired into the sandbox?" "Just the unit tests." "Add typecheck and lint — it'll self-correct from those before the PR ever lands."
+*Usage:*
+
+"The agent keeps shipping broken code in the AFK runs."
+
+"What automated checks are wired into the sandbox?"
+
+"Just the unit tests."
+
+"Add typecheck and lint — it'll self-correct from those before the PR ever lands."

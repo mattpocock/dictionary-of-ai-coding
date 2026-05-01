@@ -2,4 +2,8 @@ The atomic unit a [model](./Model.md) reads and writes. Roughly word-sized but n
 
 *Avoid:* "word" — token boundaries don't match word boundaries, and tokens-per-second / tokens-per-dollar are the units that actually matter.
 
-*Usage:* "How big is this prompt going to be?" "Run it through the tokenizer — the schema's compact but the JSON keys are weird, so they'll split into more tokens than you think."
+*Usage:*
+
+"How big is this prompt going to be?"
+
+"Run it through the tokenizer — the schema's compact but the JSON keys are weird, so they'll split into more tokens than you think."

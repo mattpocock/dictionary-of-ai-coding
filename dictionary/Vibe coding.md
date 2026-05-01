@@ -2,4 +2,10 @@ A working pattern where the user accepts the [agent](./Agent.md)'s code without 
 
 *Avoid:* "vibe coding" as a synonym for "low-quality AI coding" — the term names the review stance, not the resulting code.
 
-*Usage:* "Did you read what it changed in the auth flow?" "Vibe coded it — login still works, that's all I checked." "Read the diff before you push, vibing on auth is how secrets leak into logs."
+*Usage:*
+
+"Did you read what it changed in the auth flow?"
+
+"Vibe coded it — login still works, that's all I checked."
+
+"Read the diff before you push, vibing on auth is how secrets leak into logs."

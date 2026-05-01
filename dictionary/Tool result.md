@@ -1,3 +1,7 @@
 What the [harness](./Harness.md) sends back after executing a [tool call](./Tool%20call.md) — the file contents, the command output, the error. The [agent](./Agent.md)'s only window onto the [environment](./Environment.md). Travels back to the [model](./Model.md) in the *next* [model provider request](./Model%20provider%20request.md), where the model decides what to do with it. Tool call and tool result are two ends of the same exchange, both inside one [turn](./Turn.md).
 
-*Usage:* "It's reasoning about the file like it's empty." "The tool result came back as a permission denial, not the contents. The model only saw the error string — it has no other window onto the file."
+*Usage:*
+
+"It's reasoning about the file like it's empty."
+
+"The tool result came back as a permission denial, not the contents. The model only saw the error string — it has no other window onto the file."

@@ -4,4 +4,8 @@ Facts the [agent](./Agent.md) can read directly from the [context](./Context.md)
 
 *Avoid:* "working memory" — contextual knowledge is what's in the window *now*; a [memory system](./Memory%20system.md) is what gets cross-session content into it. Different scales, don't conflate.
 
-*Usage:* "Why does it nail the API when I paste the docs and fabricate it when I don't?" "With the docs in, it's contextual knowledge — reading off the page. Without, it's parametric and the rare endpoints blur."
+*Usage:*
+
+"Why does it nail the API when I paste the docs and fabricate it when I don't?"
+
+"With the docs in, it's contextual knowledge — reading off the page. Without, it's parametric and the rare endpoints blur."
