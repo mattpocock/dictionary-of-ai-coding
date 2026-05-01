@@ -22,6 +22,16 @@ That's what this dictionary is for. **The vocabulary of AI coding, translated in
 
 ---
 
+## Table of contents
+
+- [Section 1 — The Model](#section-1--the-model)
+- [Section 2 — Sessions, Context Windows & Turns](#section-2--sessions-context-windows--turns)
+- [Section 3 — Tools & Environment](#section-3--tools--environment)
+- [Section 4 — Hallucination & Why It Happens](#section-4--hallucination--why-it-happens)
+- [Section 5 — Handoffs](#section-5--handoffs)
+- [Section 6 — Work That Spans Multiple Context Windows](#section-6--work-that-spans-multiple-context-windows)
+- [Section 7 — Patterns of Work](#section-7--patterns-of-work)
+
 ## Section 1 — The Model
 
 ### Model

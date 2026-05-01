@@ -12,6 +12,7 @@ const TEMPLATE = join(HERE, "README.template.md");
 const DICT_DIR = join(ROOT, "dictionary");
 const OUTPUT = join(ROOT, "README.md");
 const MARKER = "<!-- CURRICULUM -->";
+const TOC_MARKER = "<!-- TOC -->";
 
 const SECTION_RE = /^## Section \d+ — .+$/;
 const BULLET_RE = /^- (.+)$/;
@@ -26,6 +27,15 @@ function fail(msg: string): never {
 
 function slugify(term: string): string {
   return term.toLowerCase().replace(/ /g, "-").replace(/[^a-z0-9-]/g, "");
+}
+
+// Mirrors GitHub's heading slugger: lowercase, strip punctuation (keeping hyphens),
+// then replace spaces with hyphens. "Section 1 — Foundations" → "section-1--foundations".
+function headingSlug(heading: string): string {
+  return heading
+    .toLowerCase()
+    .replace(/[^\p{L}\p{N} -]/gu, "")
+    .replace(/ /g, "-");
 }
 
 function parseCurriculum(text: string): Section[] {
@@ -72,6 +82,7 @@ function rewriteLinks(body: string): string {
 function main(): void {
   const template = readFileSync(TEMPLATE, "utf8");
   if (!template.includes(MARKER)) fail(`Template missing ${MARKER} marker`);
+  if (!template.includes(TOC_MARKER)) fail(`Template missing ${TOC_MARKER} marker`);
 
   const sections = parseCurriculum(readFileSync(CURRICULUM, "utf8"));
 
@@ -100,13 +111,19 @@ function main(): void {
   if (orphans.length) fail(`dictionary/ entries not referenced by Curriculum.md: ${orphans.join(", ")}`);
 
   const block = parts.join("\n").trimEnd() + "\n";
+  const toc = sections
+    .map((s) => `- [${s.heading}](#${headingSlug(s.heading)})`)
+    .join("\n");
   const banner =
     "<!--\n" +
     "  GENERATED FILE — DO NOT EDIT.\n" +
     "  Source: dictionary/*.md, internal/Curriculum.md, internal/README.template.md\n" +
     "  Regenerate: npm run generate\n" +
     "-->\n\n";
-  writeFileSync(OUTPUT, banner + template.replace(MARKER, block));
+  writeFileSync(
+    OUTPUT,
+    banner + template.replace(TOC_MARKER, toc).replace(MARKER, block),
+  );
 }
 
 main();

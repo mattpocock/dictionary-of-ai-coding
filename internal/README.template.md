@@ -16,4 +16,8 @@ That's what this dictionary is for. **The vocabulary of AI coding, translated in
 
 ---
 
+## Table of contents
+
+<!-- TOC -->
+
 <!-- CURRICULUM -->
