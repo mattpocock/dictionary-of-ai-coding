@@ -38,8 +38,9 @@
 - Agent mode
 - Sandbox
 
-## Section 4 — Hallucination & Why It Happens
+## Section 4 — Failure Modes
 
+- Sycophancy
 - Hallucination
 - Parametric knowledge
 - Knowledge cutoff
