@@ -57,7 +57,7 @@
 - Compaction
 - Autocompact
 
-## Section 6 — Work That Spans Multiple Context Windows
+## Section 6 — Memory and Steering
 
 - Memory system
 - AGENTS.md
