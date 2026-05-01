@@ -1,5 +1,7 @@
 README.md is a generated file, generated via internal/README.template.md.
 
+Links to other entries should only have a link on the first occurrence. I.e. if session appears twice in the entry, only the first should have an outward link.
+
 ## Agent skills
 
 ### Issue tracker
