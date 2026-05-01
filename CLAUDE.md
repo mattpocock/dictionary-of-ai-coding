@@ -1,4 +1,4 @@
-# CLAUDE.md
+README.md is a generated file, generated via internal/README.template.md.
 
 ## Agent skills
 
