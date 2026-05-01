@@ -210,9 +210,11 @@ One round-trip from the [harness](#harness) to the [model provider](#model-provi
 
 ### Prefix cache
 
-The [provider](#model-provider)-side store that lets consecutive [model provider requests](#model-provider-request) skip re-processing a shared prefix. When the start of a request matches the start of a recent one — same [system prompt](#system-prompt), same history up to some point — the provider reuses its prior work and bills those [tokens](#token) as [cache tokens](#cache-tokens) at a much lower rate. Anything that changes the prefix (reordering files, rewriting the system prompt mid-[session](#session), injecting a timestamp near the top) invalidates the cache from that point on, and the rest of the request bills at full [input token](#input-tokens) rate.
+The [provider](#model-provider)-side store that lets consecutive [model provider requests](#model-provider-request) skip re-processing a shared prefix. When the start of a request matches the start of a recent one — same [system prompt](#system-prompt), same history up to some point — the provider reuses its prior work and bills those [tokens](#token) as [cache tokens](#cache-tokens) at a much lower rate.
 
-*Usage:*
+Anything that changes the prefix (reordering files, rewriting the system prompt mid-[session](#session), injecting a timestamp near the top) invalidates the cache from that point on, and the rest of the request bills at full [input token](#input-tokens) rate.
+
+_Usage:_
 
 "Why did the bill spike halfway through the session?"
 
