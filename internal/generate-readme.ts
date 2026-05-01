@@ -73,6 +73,13 @@ function parseCurriculum(text: string): Section[] {
   return sections;
 }
 
+function stripFrontmatter(body: string): string {
+  if (!body.startsWith("---\n")) return body;
+  const end = body.indexOf("\n---\n", 4);
+  if (end === -1) return body;
+  return body.slice(end + 5).replace(/^\n+/, "");
+}
+
 function rewriteLinks(body: string): string {
   return body.replace(LINK_RE, (_, text: string, target: string) => {
     return `[${text}](#${slugify(decodeURIComponent(target))})`;
@@ -100,7 +107,7 @@ function main(): void {
       } catch {
         fail(`Curriculum.md references "${term}" but ${entryPath} does not exist`);
       }
-      parts.push(`### ${term}`, "", rewriteLinks(body.trimEnd()), "");
+      parts.push(`### ${term}`, "", rewriteLinks(stripFrontmatter(body).trimEnd()), "");
     }
   }
 

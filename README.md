@@ -210,13 +210,6 @@ The permission-gating slice of an [agent mode](#agent-mode) — which [tool call
 
 ### Agent mode
 
----
-aliases:
-  - plan mode
-  - accept-edits
-  - bypass permissions
-  - YOLO mode
----
 A preset that shapes how the [agent](#agent) operates at runtime — bundles a [permission mode](#permission-mode) with behavioral instructions injected into the [system prompt](#system-prompt). Examples: a default that prompts on risky calls, a **plan mode** that blocks edits and steers the agent toward research, an **accept-edits** mode that auto-approves edits, a **bypass permissions** mode (colloquially **YOLO mode**) that auto-approves everything. Can flip [mid-session](#session).
 
 *Vendor terms:* Claude Code calls these "permission modes," Codex calls them "approval modes" — both predate behavioral bundling.
@@ -225,11 +218,6 @@ A preset that shapes how the [agent](#agent) operates at runtime — bundles a [
 
 ### Sandbox
 
----
-aliases:
-  - Sandboxing
-  - Sandbox / Sandboxing
----
 An isolated [environment](#environment) the [agent](#agent) runs inside — a container, VM, ephemeral [filesystem](#filesystem), or restricted-permission shell. Limits the blast radius of agent actions: even if the agent runs destructive commands or fetches something malicious, the damage is contained. The safety substrate that makes [AFK](#afk) practical.
 
 *Usage:* "I want to let it run bypass-permissions overnight but I'm not ready for that." "Put it in a sandbox — fresh container, no credentials mounted, no network out. Worst case it nukes its own filesystem and you discard the container."
@@ -289,11 +277,6 @@ As a [session](#session) grows, each [token](#token)'s [attention budget](#atten
 
 ### Smart zone
 
----
-aliases:
-  - Dumb zone
-  - Smart zone / Dumb zone
----
 Early in a [session](#session) the [agent](#agent) is in a "smart zone" — sharp, focused, recall is good. As the session grows it drifts into a "dumb zone": sloppier, forgetful, more mistakes — and more **faithfulness [hallucinations](#hallucination). Same [model](#model), same [harness](#harness) — just more [context](#context). The felt effect of [attention degradation](#attention-degradation). [Clear](#clearing) or [compact](#compaction) when the session bloats; don't push through.
 
 *Usage:* "It nailed the first three components and just butchered the fourth." "You're out of the smart zone — same model, just deep into the dumb zone now. Compact and reload the plan, the next component will land."
@@ -382,22 +365,12 @@ An [agent](#agent) spawned by another agent via a [tool call](#tool-call). Runs 
 
 ### Human-in-the-loop
 
----
-aliases:
-  - HITL
-  - Human-in-the-loop (HITL)
----
 A working pattern where one or more humans pair with the [agent](#agent) during a [session](#session) — reviewing, redirecting, or collaborating in real time. The human is present and engaged, not just gating individual actions.
 
 *Usage:* "Run this AFK overnight?" "No, schema migration — keep it human-in-the-loop. I want to see each step and steer if it picks the wrong column to backfill from."
 
 ### AFK
 
----
-aliases:
-  - away from keyboard
-  - AFK (away from keyboard)
----
 A working pattern where the user kicks off a [session](#session) and leaves the [agent](#agent) to run unattended. The throughput multiplier of AI coding — many AFK sessions can run in parallel while you sleep, eat, or work on something else. Usually requires a permissive [permission mode](#permission-mode) plus [sandboxing](#sandbox) to be safe.
 
 *Avoid:* "background agent" — centers the machine ("running in the background") rather than the human pattern ("user has walked away"). AFK is the load-bearing fact: the user isn't watching.
