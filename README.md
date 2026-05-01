@@ -6,9 +6,9 @@
 
 # AI Coding Dictionary
 
-AI coding can feel like an expert field. Unexplained jargon. Mysterious failures. Bills that don't seem to match the work.
+**AI coding can feel like it's just for experts**. Unexplained jargon. Mysterious failures. Bills that don't seem to match the work.
 
-It isn't, really. A lot of the confusion is manufactured: there's a whole VC-funded economy that does better when this stuff stays hard to understand.
+It isn't, really. A lot of the confusion is manufactured: **there's a whole VC-funded economy that does better when this stuff stays hard to understand**.
 
 The basic terms of engagement are learnable in an afternoon. Once you have them, the whole thing stops feeling like guesswork.
 
@@ -16,7 +16,7 @@ Why does context degrade? Why is the bill so high? Why does the same prompt beha
 
 Each has a clean answer, once someone tells you the words to use.
 
-That's what this dictionary is for. The vocabulary of AI coding, translated into plain English.
+That's what this dictionary is for. **The vocabulary of AI coding, translated into plain English**.
 
 **Want more than the vocabulary?** Join 62,000+ developers at **[aihero.dev/newsletter](https://www.aihero.dev/s/dictionary-newsletter)** for my latest skills, thinking on AI engineering, and the resources that'll keep you ahead of the curve.
 
