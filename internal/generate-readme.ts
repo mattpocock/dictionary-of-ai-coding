@@ -25,10 +25,6 @@ function fail(msg: string): never {
   process.exit(1);
 }
 
-function slugify(term: string): string {
-  return term.toLowerCase().replace(/ /g, "-").replace(/[^a-z0-9-]/g, "");
-}
-
 // Mirrors GitHub's heading slugger: lowercase, strip punctuation (keeping hyphens),
 // then replace spaces with hyphens. "Section 1 — Foundations" → "section-1--foundations".
 function headingSlug(heading: string): string {
@@ -82,7 +78,7 @@ function stripFrontmatter(body: string): string {
 
 function rewriteLinks(body: string): string {
   return body.replace(LINK_RE, (_, text: string, target: string) => {
-    return `[${text}](#${slugify(decodeURIComponent(target))})`;
+    return `[${text}](#${headingSlug(decodeURIComponent(target))})`;
   });
 }
 
@@ -119,8 +115,20 @@ function main(): void {
 
   const block = parts.join("\n").trimEnd() + "\n";
   const toc = sections
-    .map((s) => `- [${s.heading}](#${headingSlug(s.heading)})`)
-    .join("\n");
+    .map((s) => {
+      const terms = s.terms
+        .map((t) => `- [${t}](#${headingSlug(t)})`)
+        .join("\n");
+      return [
+        "<details>",
+        `<summary><a href="#${headingSlug(s.heading)}">${s.heading}</a></summary>`,
+        "",
+        terms,
+        "",
+        "</details>",
+      ].join("\n");
+    })
+    .join("\n\n");
   const banner =
     "<!--\n" +
     "  GENERATED FILE — DO NOT EDIT.\n" +

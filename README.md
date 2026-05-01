@@ -24,13 +24,104 @@ That's what this dictionary is for. **The vocabulary of AI coding, translated in
 
 ## Table of contents
 
-- [Section 1 — The Model](#section-1--the-model)
-- [Section 2 — Sessions, Context Windows & Turns](#section-2--sessions-context-windows--turns)
-- [Section 3 — Tools & Environment](#section-3--tools--environment)
-- [Section 4 — Hallucination & Why It Happens](#section-4--hallucination--why-it-happens)
-- [Section 5 — Handoffs](#section-5--handoffs)
-- [Section 6 — Work That Spans Multiple Context Windows](#section-6--work-that-spans-multiple-context-windows)
-- [Section 7 — Patterns of Work](#section-7--patterns-of-work)
+<details>
+<summary><a href="#section-1--the-model">Section 1 — The Model</a></summary>
+
+- [Model](#model)
+- [Parameters](#parameters)
+- [Training](#training)
+- [Inference](#inference)
+- [Token](#token)
+- [Next-token prediction](#next-token-prediction)
+- [Model provider](#model-provider)
+- [Model provider request](#model-provider-request)
+- [Input tokens](#input-tokens)
+- [Output tokens](#output-tokens)
+- [Cache tokens](#cache-tokens)
+
+</details>
+
+<details>
+<summary><a href="#section-2--sessions-context-windows--turns">Section 2 — Sessions, Context Windows & Turns</a></summary>
+
+- [Stateless](#stateless)
+- [Context](#context)
+- [Context window](#context-window)
+- [Stateful](#stateful)
+- [Harness](#harness)
+- [Agent](#agent)
+- [System prompt](#system-prompt)
+- [Session](#session)
+- [Turn](#turn)
+
+</details>
+
+<details>
+<summary><a href="#section-3--tools--environment">Section 3 — Tools & Environment</a></summary>
+
+- [Environment](#environment)
+- [Filesystem](#filesystem)
+- [Tool](#tool)
+- [Tool call](#tool-call)
+- [Tool result](#tool-result)
+- [Permission request](#permission-request)
+- [Permission mode](#permission-mode)
+- [Agent mode](#agent-mode)
+- [Sandbox](#sandbox)
+
+</details>
+
+<details>
+<summary><a href="#section-4--hallucination--why-it-happens">Section 4 — Hallucination & Why It Happens</a></summary>
+
+- [Hallucination](#hallucination)
+- [Parametric knowledge](#parametric-knowledge)
+- [Knowledge cutoff](#knowledge-cutoff)
+- [Contextual knowledge](#contextual-knowledge)
+- [Attention relationship](#attention-relationship)
+- [Attention budget](#attention-budget)
+- [Attention degradation](#attention-degradation)
+- [Smart zone](#smart-zone)
+
+</details>
+
+<details>
+<summary><a href="#section-5--handoffs">Section 5 — Handoffs</a></summary>
+
+- [Clearing](#clearing)
+- [Handoff](#handoff)
+- [Handoff artifact](#handoff-artifact)
+- [Spec](#spec)
+- [Ticket](#ticket)
+- [Compaction](#compaction)
+- [Autocompact](#autocompact)
+
+</details>
+
+<details>
+<summary><a href="#section-6--work-that-spans-multiple-context-windows">Section 6 — Work That Spans Multiple Context Windows</a></summary>
+
+- [Memory system](#memory-system)
+- [AGENTS.md](#agentsmd)
+- [Progressive disclosure](#progressive-disclosure)
+- [Skill](#skill)
+- [Subagent](#subagent)
+
+</details>
+
+<details>
+<summary><a href="#section-7--patterns-of-work">Section 7 — Patterns of Work</a></summary>
+
+- [Human-in-the-loop](#human-in-the-loop)
+- [AFK](#afk)
+- [Automated check](#automated-check)
+- [Automated review](#automated-review)
+- [Human review](#human-review)
+- [Vibe coding](#vibe-coding)
+- [Design concept](#design-concept)
+- [Grilling](#grilling)
+
+</details>
 
 ## Section 1 — The Model
 
