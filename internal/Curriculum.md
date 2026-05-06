@@ -38,6 +38,7 @@
 - Permission mode
 - Agent mode
 - Sandbox
+- Hook
 
 ## Section 4 — Failure Modes
 

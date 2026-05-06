@@ -81,6 +81,7 @@ That's what this dictionary is for. **The vocabulary of AI coding, translated in
 - [Permission mode](#permission-mode)
 - [Agent mode](#agent-mode)
 - [Sandbox](#sandbox)
+- [Hook](#hook)
 
 </details>
 
@@ -485,6 +486,18 @@ An isolated [environment](#environment) the [agent](#agent) runs inside — a co
 "I want to let it run [bypass-permissions](#agent-mode) overnight but I'm not ready for that."
 
 "Put it in a sandbox — fresh container, no credentials mounted, no network out. Worst case it nukes its own filesystem and you discard the container."
+
+### Hook
+
+A deterministic shell command the [harness](#harness) runs in response to an [agent](#agent) event — before or after a [tool call](#tool-call), at the end of a [session](#session), on file edit. Distinct from a [tool](#tool) (which the agent calls) and a [skill](#skill) (which the agent reads): a hook fires whether the agent wants it to or not. How an operator wires deterministic behavior into the loop without trusting the model to remember.
+
+_Avoid:_ "tool" — agents call tools; the harness runs hooks. _Avoid:_ "[automated check](#automated-check)" — a check is what a hook usually _runs_; the hook is the trigger plumbing.
+
+_Usage:_
+
+"How do I make sure it always runs typecheck after edits?"
+
+"Wire a post-edit hook in the harness — don't rely on the agent to do it. Same for blocking writes outside the [sandbox](#sandbox): pre-tool hook, exit non-zero."
 
 ## Section 4 — Failure Modes
 
