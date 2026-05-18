@@ -1,5 +1,5 @@
 #!/usr/bin/env -S npx tsx
-// Generate README.md from internal/Curriculum.md + dictionary/*.md + internal/README.template.md.
+// Generate README files from curriculum + dictionary entries + templates.
 
 import { readFileSync, writeFileSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -7,10 +7,6 @@ import { dirname, join } from "node:path";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const ROOT = dirname(HERE);
-const CURRICULUM = join(HERE, "Curriculum.md");
-const TEMPLATE = join(HERE, "README.template.md");
-const DICT_DIR = join(ROOT, "dictionary");
-const OUTPUT = join(ROOT, "README.md");
 const MARKER = "<!-- CURRICULUM -->";
 const TOC_MARKER = "<!-- TOC -->";
 
@@ -19,6 +15,35 @@ const BULLET_RE = /^- (.+)$/;
 const LINK_RE = /\[([^\]]+)\]\(\.\/([^)]+)\.md\)/g;
 
 type Section = { heading: string; terms: string[] };
+type ReadmeConfig = {
+  name: string;
+  curriculum: string;
+  template: string;
+  dictionaryDir: string;
+  output: string;
+  sourceLine: string;
+};
+
+const README_CONFIGS: ReadmeConfig[] = [
+  {
+    name: "English README",
+    curriculum: join(HERE, "Curriculum.md"),
+    template: join(HERE, "README.template.md"),
+    dictionaryDir: join(ROOT, "dictionary"),
+    output: join(ROOT, "README.md"),
+    sourceLine:
+      "Source: dictionary/*.md, internal/Curriculum.md, internal/README.template.md",
+  },
+  {
+    name: "Simplified Chinese README",
+    curriculum: join(HERE, "Curriculum.zh-CN.md"),
+    template: join(HERE, "README.zh-CN.template.md"),
+    dictionaryDir: join(ROOT, "dictionary.zh-CN"),
+    output: join(ROOT, "README.zh-CN.md"),
+    sourceLine:
+      "Source: dictionary.zh-CN/*.md, internal/Curriculum.zh-CN.md, internal/README.zh-CN.template.md",
+  },
+];
 
 function fail(msg: string): never {
   console.error(msg);
@@ -34,7 +59,7 @@ function headingSlug(heading: string): string {
     .replace(/ /g, "-");
 }
 
-function parseCurriculum(text: string): Section[] {
+function parseCurriculum(text: string, label: string): Section[] {
   const sections: Section[] = [];
   let current: Section | null = null;
 
@@ -45,7 +70,9 @@ function parseCurriculum(text: string): Section[] {
 
     if (line.startsWith("## ")) {
       if (!SECTION_RE.test(line)) {
-        fail(`Curriculum.md:${lineNo}: section heading must match "## Section N — Title" (em-dash required): ${line}`);
+        fail(
+          `${label}:${lineNo}: section heading must match "## Section N — Title" (em-dash required): ${line}`
+        );
       }
       current = { heading: line.slice(3), terms: [] };
       sections.push(current);
@@ -53,27 +80,35 @@ function parseCurriculum(text: string): Section[] {
     }
 
     if (line.startsWith("- ")) {
-      if (!current) fail(`Curriculum.md:${lineNo}: bullet before any section heading`);
+      if (!current)
+        fail(`${label}:${lineNo}: bullet before any section heading`);
       const m = line.match(BULLET_RE);
-      if (!m || !m[1]) fail(`Curriculum.md:${lineNo}: malformed bullet: ${line}`);
+      if (!m || !m[1]) fail(`${label}:${lineNo}: malformed bullet: ${line}`);
       const term = m[1];
-      if (term.trim() !== term) fail(`Curriculum.md:${lineNo}: term has surrounding whitespace`);
-      if (/[*_`\[]/.test(term)) fail(`Curriculum.md:${lineNo}: term must be plain text, no markdown: ${term}`);
+      if (term.trim() !== term)
+        fail(`${label}:${lineNo}: term has surrounding whitespace`);
+      if (/[*_`\[]/.test(term)) {
+        fail(
+          `${label}:${lineNo}: term must be plain text, no markdown: ${term}`
+        );
+      }
       current.terms.push(term);
       return;
     }
 
-    fail(`Curriculum.md:${lineNo}: only "## Section N — Title" headings and "- Term" bullets are allowed: ${line}`);
+    fail(
+      `${label}:${lineNo}: only "## Section N — Title" headings and "- Term" bullets are allowed: ${line}`
+    );
   });
 
   return sections;
 }
 
 function stripFrontmatter(body: string): string {
-  if (!body.startsWith("---\n")) return body;
-  const end = body.indexOf("\n---\n", 4);
-  if (end === -1) return body;
-  return body.slice(end + 5).replace(/^\n+/, "");
+  if (!body.startsWith("---\n") && !body.startsWith("---\r\n")) return body;
+  const match = body.match(/^---\r?\n[\s\S]*?\r?\n---\r?\n/);
+  if (!match) return body;
+  return body.slice(match[0].length).replace(/^\r?\n+/, "");
 }
 
 function rewriteLinks(body: string): string {
@@ -82,36 +117,56 @@ function rewriteLinks(body: string): string {
   });
 }
 
-function main(): void {
-  const template = readFileSync(TEMPLATE, "utf8");
-  if (!template.includes(MARKER)) fail(`Template missing ${MARKER} marker`);
-  if (!template.includes(TOC_MARKER)) fail(`Template missing ${TOC_MARKER} marker`);
+function generateReadme(config: ReadmeConfig): void {
+  const template = readFileSync(config.template, "utf8");
+  if (!template.includes(MARKER))
+    fail(`${config.name}: template missing ${MARKER} marker`);
+  if (!template.includes(TOC_MARKER)) {
+    fail(`${config.name}: template missing ${TOC_MARKER} marker`);
+  }
 
-  const sections = parseCurriculum(readFileSync(CURRICULUM, "utf8"));
+  const curriculumLabel = config.curriculum.slice(ROOT.length + 1);
+  const sections = parseCurriculum(
+    readFileSync(config.curriculum, "utf8"),
+    curriculumLabel
+  );
 
   const seen = new Set<string>();
   const parts: string[] = [];
   for (const section of sections) {
     parts.push(`## ${section.heading}`, "");
     for (const term of section.terms) {
-      if (seen.has(term)) fail(`Curriculum.md: duplicate term "${term}"`);
+      if (seen.has(term)) fail(`${curriculumLabel}: duplicate term "${term}"`);
       seen.add(term);
-      const entryPath = join(DICT_DIR, `${term}.md`);
+      const entryPath = join(config.dictionaryDir, `${term}.md`);
       let body: string;
       try {
         body = readFileSync(entryPath, "utf8");
       } catch {
-        fail(`Curriculum.md references "${term}" but ${entryPath} does not exist`);
+        fail(
+          `${curriculumLabel} references "${term}" but ${entryPath} does not exist`
+        );
       }
-      parts.push(`### ${term}`, "", rewriteLinks(stripFrontmatter(body).trimEnd()), "");
+      parts.push(
+        `### ${term}`,
+        "",
+        rewriteLinks(stripFrontmatter(body).trimEnd()),
+        ""
+      );
     }
   }
 
   const onDisk = new Set(
-    readdirSync(DICT_DIR).filter((n) => n.endsWith(".md")).map((n) => n.slice(0, -3)),
+    readdirSync(config.dictionaryDir)
+      .filter((n) => n.endsWith(".md"))
+      .map((n) => n.slice(0, -3))
   );
   const orphans = [...onDisk].filter((t) => !seen.has(t)).sort();
-  if (orphans.length) fail(`dictionary/ entries not referenced by Curriculum.md: ${orphans.join(", ")}`);
+  if (orphans.length) {
+    fail(
+      `${config.dictionaryDir} entries not referenced by ${curriculumLabel}: ${orphans.join(", ")}`
+    );
+  }
 
   const block = parts.join("\n").trimEnd() + "\n";
   const toc = sections
@@ -132,13 +187,19 @@ function main(): void {
   const banner =
     "<!--\n" +
     "  GENERATED FILE — DO NOT EDIT.\n" +
-    "  Source: dictionary/*.md, internal/Curriculum.md, internal/README.template.md\n" +
+    `  ${config.sourceLine}\n` +
     "  Regenerate: npm run generate\n" +
     "-->\n\n";
   writeFileSync(
-    OUTPUT,
-    banner + template.replace(TOC_MARKER, toc).replace(MARKER, block),
+    config.output,
+    banner + template.replace(TOC_MARKER, toc).replace(MARKER, block)
   );
+}
+
+function main(): void {
+  for (const config of README_CONFIGS) {
+    generateReadme(config);
+  }
 }
 
 main();

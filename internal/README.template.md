@@ -8,6 +8,8 @@
   </a>
 </p>
 
+Language: English | [简体中文](./README.zh-CN.md)
+
 # AI Coding Dictionary
 
 **AI coding can feel like it's just for experts**. Unexplained jargon. Mysterious failures. Bills that don't seem to match the work.

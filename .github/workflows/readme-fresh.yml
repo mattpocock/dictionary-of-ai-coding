@@ -17,12 +17,12 @@ jobs:
         run: npm install --no-audit --no-fund
       - name: Typecheck generator
         run: npx tsc -p internal/tsconfig.json
-      - name: Regenerate README
+      - name: Regenerate READMEs
         run: npm run generate
-      - name: Fail if README.md is out of sync
+      - name: Fail if generated READMEs are out of sync
         run: |
-          if ! git diff --exit-code -- README.md; then
-            echo "README.md is out of sync with dictionary/, internal/Curriculum.md, or internal/README.template.md."
+          if ! git diff --exit-code -- README.md README.zh-CN.md; then
+            echo "Generated READMEs are out of sync with dictionary sources, curriculums, or templates."
             echo "Run: npm run generate && commit the result."
             exit 1
           fi
