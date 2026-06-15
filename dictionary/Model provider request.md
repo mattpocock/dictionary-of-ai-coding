@@ -1,28 +1,28 @@
 ---
-description: One round-trip from the harness to the model provider. The harness sends context; the provider returns one response.
+description: Satu putaran komunikasi dari harness ke penyedia model. Harness mengirim konteks; penyedia mengirim satu tanggapan balik.
 ---
 
-One round-trip from the [harness](./Harness.md) to the [model provider](./Model%20provider.md). The harness sends the current [context](./Context.md); the provider returns one response (a [tool call](./Tool%20call.md) or a final answer). A single user message can spawn many model provider requests if the [agent](./Agent.md) calls [tools](./Tool.md) — each [tool result](./Tool%20result.md) triggers another request.
+Satu siklus perjalanan bolak-balik pengiriman data dari [harness (sistem penjalan)](./Harness.md) ke [penyedia model (model provider)](./Model%20provider.md). Sistem penjalan mengirimkan seluruh [konteks](./Context.md) aktif; dan penyedia model mengirimkan satu tanggapan balik (berupa [panggilan alat (tool call)](./Tool%20call.md) atau jawaban akhir). Satu pesan dari Anda dapat memicu banyak permintaan ke penyedia model jika sang [agen](./Agent.md) memanggil [alat (tools)](./Tool.md) pemrograman — di mana setiap [hasil alat (tool result)](./Tool%20result.md) akan memicu permintaan baru berikutnya.
 
-Each request carries everything: the [system prompt](./System%20prompt.md), the full conversation so far, every tool result. The [model](./Model.md) is [stateless](./Stateless.md), so the provider keeps nothing between requests — request forty re-sends what request thirty-nine sent, plus one more tool result. The [prefix cache](./Prefix%20cache.md) exists to make this repetition affordable.
+Setiap permintaan membawa seluruh data: mulai dari [system prompt (instruksi sistem)](./System%20prompt.md), riwayat percakapan lengkap sejauh ini, hingga setiap hasil kerja alat. [Model](./Model.md) bersifat [stateless (tidak menyimpan riwayat)](./Stateless.md), sehingga penyedia model tidak menyimpan data apa pun di server mereka di antara setiap permintaan — permintaan ke-40 akan mengirimkan kembali apa yang dikirimkan oleh permintaan ke-39, ditambah satu hasil kerja alat terbaru. Layanan [cache awalan (prefix cache)](./Prefix%20cache.md) disediakan untuk membuat proses pengulangan kirim ini menjadi murah dan terjangkau.
 
-The request is also the unit of billing. [Input tokens](./Input%20tokens.md), [output tokens](./Output%20tokens.md), and cache discounts are all counted per request, which is why an innocuous-looking question can cost a surprising amount: the cost isn't proportional to your message, it's proportional to the number of requests times the size of the context each one carries.
+Permintaan ini juga merupakan unit dasar penghitungan biaya. Jumlah [Token input](./Input%20tokens.md), [token output](./Output%20tokens.md), dan diskon cache semuanya dihitung per permintaan. Itulah mengapa pertanyaan sederhana yang Anda ajukan bisa memakan biaya yang mengejutkan: biayanya tidak dihitung dari panjang pesan Anda, melainkan dari seberapa banyak jumlah permintaan yang terjadi dikalikan dengan ukuran jendela konteks yang dibawa oleh masing-masing permintaan tersebut.
 
-It's worth keeping the request distinct from the [turn](./Turn.md). A turn is one exchange with you, and a single turn — "fix the failing test" — plays out as a chain of requests:
+Sangat penting untuk membedakan antara "permintaan penyedia model" dengan [giliran](./Turn.md) percakapan (turn). Satu giliran percakapan adalah satu kali tanya-jawab antara Anda dengan agen, sementara satu giliran percakapan tersebut — misalnya perintah "perbaiki tes yang gagal" — bisa berkembang menjadi rantai beberapa permintaan di latar belakang:
 
-| Request | Model returns                     | Harness then                          |
-| ------- | --------------------------------- | ------------------------------------- |
-| 1       | Tool call: run the tests          | Runs them, appends the failure output |
-| 2       | Tool call: read the test file     | Appends the file contents             |
-| 3       | Tool call: read the source file   | Appends the file contents             |
-| 4       | Tool call: edit the source file   | Applies the edit, appends the result  |
-| 5       | Tool call: run the tests again    | Runs them, appends the pass output    |
-| 6       | Final answer: "fixed, tests pass" | Shows it to you                       |
+| Permintaan | Jawaban Model                         | Tindakan Sistem Penjalan (Harness)                     |
+| ---------- | ------------------------------------- | ------------------------------------------------------ |
+| 1          | Panggilan alat: jalankan tes          | Menjalankan tes, menambahkan laporan kegagalan         |
+| 2          | Panggilan alat: baca file tes         | Menambahkan isi file tes ke riwayat                    |
+| 3          | Panggilan alat: baca file kode sumber | Menambahkan isi file kode sumber ke riwayat            |
+| 4          | Panggilan alat: edit file kode sumber | Mengubah kode file, menambahkan hasil edit ke riwayat  |
+| 5          | Panggilan alat: jalankan tes lagi     | Menjalankan tes kembali, menambahkan laporan tes lulus |
+| 6          | Jawaban akhir: "selesai, tes lulus"   | Menampilkan jawaban akhir tersebut kepada Anda         |
 
-Six requests for one turn — each one re-sending the whole context. When you wonder where the [tokens](./Token.md) went, count the requests, not the turns.
+Terjadi enam kali permintaan penyedia model untuk menyelesaikan satu giliran pesan dari Anda — di mana setiap permintaan mengirimkan kembali seluruh konteks obrolan dari awal. Ketika Anda heran ke mana perginya kuota [token](./Token.md) Anda, hitunglah jumlah permintaan yang terjadi di latar belakang, bukan jumlah giliran pesannya.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"One question burned forty thousand tokens?"
+"Satu pertanyaan pendek ini menghabiskan empat puluh ribu token?"
 
-"Look at the tool calls — twelve grep, eight read, four edits. Each tool result spawns another model provider request, and the whole [session](./Session.md) prefix re-sends every time."
+"Lihat riwayat panggilan alatnya — ada dua belas kali pencarian grep, delapan pembacaan berkas, dan empat kali edit kode. Setiap hasil alat memicu satu permintaan penyedia model baru, dan seluruh awalan [sesi](./Session.md) dikirim ulang di setiap proses permintaan tersebut."

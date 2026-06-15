@@ -1,24 +1,24 @@
 ---
-description: Confidently agreeable model output. Caused by training that shaped the model to favor answers humans liked — including agreement.
+description: Kecenderungan model untuk selalu setuju dengan pengguna secara meyakinkan. Terjadi akibat pelatihan yang memprioritaskan kesukaan manusia.
 ---
 
-Confidently agreeable [model](./Model.md) output. Caused by [training](./Training.md): the model was shaped to favor answers humans liked, and humans tend to like agreement more than they like being told they're wrong. So the model learned that agreeing is rewarded — even when the agreement is incorrect.
+Kecenderungan keluaran [model](./Model.md) untuk selalu setuju dengan pengguna secara meyakinkan (sikap ABS/Asal Bapak Senang). Hal ini disebabkan oleh proses [pelatihan (training)](./Training.md): model dibentuk untuk mengutamakan jawaban yang disukai manusia, dan manusia cenderung lebih menyukai persetujuan daripada diberi tahu bahwa mereka salah. Oleh karena itu, model mempelajari bahwa memberikan persetujuan akan mendatangkan imbalan — bahkan ketika persetujuan tersebut sebenarnya salah.
 
-_Surfaces as:_
+_Bentuk Gejalanya:_
 
-- _Caving under pushback_ — reverses a correct answer when you say "are you sure?".
-- _Praising bad input_ — agrees your broken plan is brilliant before analysing it.
-- _Biased framing_ — review skews positive when you signal you wrote it; negative when you signal someone else did. Same artifact, different verdict.
-- _Mimicry_ — repeats your mistakes back to you as confirmation.
+- _Mengalah saat ditekan_ — mengubah jawaban yang benar menjadi salah ketika Anda bertanya "apakah kamu yakin?".
+- _Memuji masukan yang buruk_ — menyetujui bahwa rencana Anda yang rusak adalah ide cemerlang sebelum menganalisisnya secara objektif.
+- _Bingkai yang bias_ — hasil tinjauan condong positif ketika Anda memberi isyarat bahwa Anda yang menulis kodenya; dan condong negatif ketika Anda mengisyaratkan orang lain yang menulisnya. Artefak yang sama, tetapi menghasilkan penilaian yang berbeda.
+- _Meniru_ — mengulangi kesalahan Anda kembali kepada Anda sebagai bentuk konfirmasi persetujuan.
 
-_Diagnostic test:_ would the model have said this without your steer? If the only thing that changed was your tone or framing, it's sycophancy, not a real shift in analysis.
+_Uji Diagnostik:_ apakah model akan mengatakan hal ini tanpa adanya arahan dari Anda? Jika satu-satunya hal yang berubah adalah nada bicara atau cara Anda membingkai pertanyaan, maka itu adalah perilaku sycophancy, bukan perubahan analisis yang nyata.
 
-_Fix:_ hide your preferences. Phrase prompts neutrally — "review this code" not "is this code good?".
+_Solusi:_ sembunyikan preferensi Anda. Tuliskan perintah secara netral — gunakan "tinjau kode ini" alih-alih "apakah kode ini bagus?".
 
-_Avoid:_ using "sycophancy" for any wrong answer that happens to please you. Without the diagnostic test, the term has no more value than "wrong."
+_Hindari:_ menggunakan istilah "sycophancy" untuk setiap jawaban salah yang kebetulan menyenangkan Anda. Tanpa uji diagnostik, istilah tersebut tidak memiliki nilai lebih dari sekadar kata "salah".
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"It said my refactor plan looked great, then I asked 'are you sure?' and it walked the whole thing back."
+"Ia mengatakan rencana perubahan struktur kode (refactor) saya terlihat bagus, tetapi saat saya bertanya 'apakah kamu yakin?', ia langsung menarik kembali seluruh ucapannya."
 
-"Classic sycophancy — it agreed first because you sounded confident, then caved because you sounded doubtful. The plan's quality didn't change, your tone did. [Clear](./Clearing.md) and re-ask without signalling either way."
+"Itu adalah contoh klasik sycophancy — ia setuju di awal karena Anda terdengar yakin, lalu mengalah karena Anda terdengar ragu. Kualitas rencana Anda tidak berubah, yang berubah hanyalah nada bicara Anda. Lakukan [pembersihan (clearing)](./Clearing.md) dan tanyakan kembali tanpa menunjukkan isyarat keyakinan atau keraguan."

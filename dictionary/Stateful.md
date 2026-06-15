@@ -1,24 +1,26 @@
 ---
-description: Carries information forward. Sessions are stateful across turns; agents can be made stateful across sessions via a memory system.
+description: Membawa informasi ke depan. Sesi bersifat stateful antar-giliran; agen bisa dibuat stateful antar-sesi lewat sistem memori.
+aliases:
+  - stateful
 ---
 
-Carries information forward. A [session](./Session.md) is stateful across [turns](./Turn.md) — [context](./Context.md) accumulates as the session runs, which is why long sessions drift into the [dumb zone](./Smart%20zone.md). An [agent](./Agent.md) can be made stateful across **sessions** by adding a [memory system](./Memory%20system.md) that persists information into the [environment](./Environment.md) and reloads it at the start of future sessions. The [model](./Model.md) is never stateful; any apparent continuity is the [harness](./Harness.md) re-feeding context. Counterpart to [stateless](./Stateless.md).
+Kondisi membawa informasi ke langkah berikutnya. Sebuah [sesi](./Session.md) obrolan bersifat _stateful_ di berbagai [giliran](./Turn.md) pesan — di mana [konteks](./Context.md) akan terus bertambah menumpuk selama sesi berjalan, yang menjadi penyebab mengapa sesi panjang perlahan meluncur ke [zona bodoh (dumb zone)](./Smart%20zone.md). Sebuah [agen](./Agent.md) dapat dibuat bersifat _stateful_ lintas **sesi** dengan cara menambahkan [sistem memori (memory system)](./Memory%20system.md) yang menyimpan informasi ke dalam [lingkungan kerja](./Environment.md) dan memuatnya kembali di awal sesi berikutnya. [Model](./Model.md) sendiri tidak pernah bersifat stateful; kesinambungan ingatan yang tampak terjadi hanyalah hasil kerja [harness (sistem penjalan)](./Harness.md) yang mengirimkan kembali konteks obrolan lama. Istilah ini merupakan padanan dari [stateless (tidak menyimpan riwayat)](./Stateless.md).
 
-Where state lives at each layer:
+Tempat penyimpanan status (state) pada setiap lapisan sistem:
 
-| Layer       | Stateful?       | How                                                                                                                    |
-| ----------- | --------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| Model       | Never           | [Parameters](./Parameters.md) are frozen; it sees only what's in each request                                          |
-| Session     | Across turns    | The harness appends every message and [tool result](./Tool%20result.md) to the context                                 |
-| Harness     | Across sessions | Memory files, [AGENTS.md](./AGENTS.md.md), [handoff artifacts](./Handoff%20artifact.md) — written down, reloaded later |
-| Environment | Always          | Files persist whether or not any session is running                                                                    |
+| Lapisan          | Bersifat Stateful?   | Mekanisme Kerja                                                                                                                                                     |
+| ---------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Model            | Tidak pernah         | Kumpulan [parameter](./Parameters.md) bersifat beku; ia hanya membaca apa yang dikirim di setiap pesan                                                              |
+| Sesi             | Lintas giliran pesan | Sistem penjalan menambahkan setiap pesan dan [hasil alat (tool result)](./Tool%20result.md) ke konteks obrolan                                                      |
+| Sistem Penjalan  | Lintas sesi obrolan  | File catatan memori, file [AGENTS.md](./AGENTS.md.md), atau [artefak operan (handoff artifact)](./Handoff%20artifact.md) ditulis di komputer dan dimuat ulang nanti |
+| Lingkungan Kerja | Selalu               | Berkas data tetap bertahan di komputer tidak peduli apakah sesi obrolan sedang berjalan atau mati                                                                   |
 
-Each layer's statefulness is built by re-reading something stored a layer below: the session feels continuous because the harness re-sends the message history to the stateless model, and the agent remembers across sessions because the harness re-loads files from the environment. No state is ever stored in the model itself.
+Sifat stateful dari setiap lapisan dibangun dengan cara membaca kembali sesuatu yang disimpan di lapisan di bawahnya: sesi obrolan terasa berkesinambungan karena sistem penjalan mengirimkan kembali riwayat pesan ke model yang stateless, dan agen dapat mengingat informasi lintas sesi karena sistem penjalan memuat kembali catatan file dari lingkungan kerja penyimpanan komputer Anda. Tidak ada informasi status yang pernah disimpan di dalam model itu sendiri.
 
-State isn't always wanted. Everything carried forward influences what comes next, so a wrong assumption made early in a session is carried forward too. [Clearing](./Clearing.md) is the deliberate act of throwing session state away and starting from what's written down.
+Sifat menyimpan status ini tidak selalu diinginkan. Segala informasi yang dibawa ke depan akan memengaruhi apa yang terjadi berikutnya, sehingga asumsi salah yang dibuat di awal sesi juga akan terus dibawa sepanjang percakapan berjalan. Proses [pembersihan (clearing)](./Clearing.md) adalah tindakan sengaja untuk membuang status sesi obrolan dan memulai kembali tugas secara bersih berdasarkan apa yang tertulis di dokumen rencana kerja.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"It remembered my preferences from yesterday — does that mean the model learned them?"
+"Dia mengingat preferensi saya kemarin — apakah itu berarti modelnya sudah mempelajari kebiasaan saya?"
 
-"No, the agent's stateful because the harness wrote them to a memory file and reloaded them at session start. The model itself saw nothing of yesterday."
+"Tidak, agen tersebut bisa mengingatnya karena sistem penjalan (harness) menulis preferensi Anda ke file catatan memori di komputer Anda dan memuatnya kembali saat awal sesi dimulai. Model itu sendiri sama sekali tidak tahu apa yang terjadi kemarin."

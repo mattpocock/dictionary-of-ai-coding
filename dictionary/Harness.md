@@ -1,17 +1,17 @@
 ---
-description: "Everything around the model that turns it into an agent: tools, system prompt, context-window management, permissions, hooks."
+description: Segala hal di luar model yang menjadikannya agen: alat, system prompt, manajemen jendela konteks, izin, dan kait (hooks).
 ---
 
-Everything around the [model](./Model.md) that turns it into an [agent](./Agent.md): [tools](./Tool.md), [system prompt](./System%20prompt.md), [context-window management](./Context%20window.md), permissions, hooks. **Claude.ai** and **Claude Code** run on the same model but behave differently because their harnesses differ.
+Segala hal yang membungkus [model](./Model.md) untuk mengubahnya menjadi sebuah [agen](./Agent.md): [alat (tools)](./Tool.md), [system prompt (instruksi sistem)](./System%20prompt.md), [manajemen jendela konteks](./Context%20window.md), perizinan, dan kait (hooks). Fitur seperti **Claude.ai** dan **Claude Code** berjalan menggunakan model yang sama namun berperilaku sangat berbeda karena sistem penjalannya (harness) berbeda.
 
-The model itself only does one thing: take text in, produce text out. It can't read a file, run a command, or remember the last [turn](./Turn.md). The harness supplies all of that. It assembles the [context](./Context.md) for each [model provider request](./Model%20provider%20request.md), executes the [tool calls](./Tool%20call.md) the model asks for, feeds the [tool results](./Tool%20result.md) back in, stores the [session](./Session.md) history, asks you for permission before risky actions, and decides when to [compact](./Compaction.md). The agent loop — model proposes, harness executes, repeat — is run by the harness.
+Model itu sendiri sebenarnya hanya melakukan satu hal: menerima teks input dan menghasilkan teks output. Model tidak bisa membaca file, menjalankan perintah komputer, atau mengingat pesan di [giliran](./Turn.md) percakapan sebelumnya. Sistem penjalan (harness) menyediakan semua kemampuan tersebut. Sistem inilah yang merakit [konteks](./Context.md) untuk setiap [permintaan penyedia model (model provider request)](./Model%20provider%20request.md), mengeksekusi [panggilan alat (tool call)](./Tool%20call.md) yang diminta model, mengirimkan kembali [hasil alat (tool result)](./Tool%20result.md), menyimpan riwayat [sesi](./Session.md) obrolan, meminta konfirmasi izin Anda sebelum melakukan tindakan berisiko, dan memutuskan kapan harus [menyusutkan (compact)](./Compaction.md) obrolan. Siklus kerja agen — model mengajukan rencana, sistem penjalan mengeksekusi, lalu diulang — digerakkan oleh sistem penjalan.
 
-This matters for diagnosis. When behaviour differs between two products, or between yesterday and today, the model is often not the variable — the harness is. A different system prompt, a different set of tools, a changed permission default, or a new context-management strategy all change behaviour without any change to the model. It also means the harness is where most of your configuration lives: [AGENTS.md](./AGENTS.md.md) files, permission settings, and hooks are all instructions to the harness, not the model.
+Pembedaan ini sangat penting untuk mendiagnosis masalah. Ketika perilaku sistem berbeda antara dua aplikasi, atau berbeda antara kemarin dan hari ini, modelnya sering kali bukanlah variabel penyebabnya — melainkan sistem penjalannya. Instruksi sistem yang berbeda, kumpulan alat yang berbeda, aturan izin yang berubah, atau metode pengelolaan konteks baru semuanya dapat mengubah cara kerja sistem tanpa ada perubahan apa pun pada modelnya. Ini juga berarti bahwa sistem penjalan adalah tempat sebagian besar konfigurasi Anda berada: file [AGENTS.md](./AGENTS.md.md), aturan perizinan, dan kait pemrograman semuanya merupakan instruksi untuk sistem penjalan, bukan untuk model.
 
-Examples: Claude Code, Cursor, Codex CLI — and Claude.ai, which is a chat harness rather than a coding one.
+Contoh: Claude Code, Cursor, Codex CLI — dan Claude.ai, yang merupakan sistem obrolan umum alih-alih alat coding.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"Same model, why is Claude Code editing files and Claude.ai just answering questions?"
+"Menggunakan model yang sama, mengapa Claude Code bisa mengedit file sementara Claude.ai hanya menjawab pertanyaan saja?"
 
-"Different harnesses — Claude Code has [filesystem](./Filesystem.md) tools, a different system prompt, and a permission layer. The model isn't the variable here."
+"Sistem penjalannya (harness) berbeda — Claude Code dibekali alat akses [sistem file](./Filesystem.md), instruksi sistem yang berbeda, dan lapisan perizinan. Modelnya bukan variabel penentu di sini."

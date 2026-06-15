@@ -1,19 +1,19 @@
 ---
-description: A document used as the carry mechanism for a handoff — written by one session to be read by another.
+description: Dokumen yang digunakan sebagai wadah serah terima (handoff) — ditulis oleh satu sesi untuk dibaca oleh sesi berikutnya.
 ---
 
-A document used as the carry mechanism for a [handoff](./Handoff.md) — written to the [environment](./Environment.md) by one [session](./Session.md) to be read by another. [Specs](./Spec.md), [tickets](./Ticket.md), and plan docs are all handoff artifacts.
+Sebuah dokumen yang digunakan sebagai wadah pembawa informasi dalam proses [serah terima (handoff)](./Handoff.md) — ditulis ke dalam [lingkungan kerja](./Environment.md) oleh satu [sesi](./Session.md) obrolan untuk dibaca oleh sesi berikutnya. Dokumen [spesifikasi (spec)](./Spec.md), [tiket (ticket)](./Ticket.md), dan dokumen rencana kerja semuanya adalah bentuk dari artefak operan.
 
-The reason to write one: the [model](./Model.md) is [stateless](./Stateless.md), so nothing in a session survives [clearing](./Clearing.md) it. Decisions, constraints, half-finished plans — all gone with the [context](./Context.md) that held them. The environment persists. Writing the important state into a file moves it somewhere the next session can read it back from.
+Alasan penting untuk menulis dokumen ini: [model](./Model.md) bersifat [stateless (tidak menyimpan riwayat)](./Stateless.md), sehingga tidak ada informasi di dalam suatu sesi yang dapat bertahan setelah Anda melakukan [pembersihan (clearing)](./Clearing.md) sesi. Keputusan rapat, batasan aturan, dan rencana kerja setengah jadi — semuanya akan lenyap bersama [konteks](./Context.md) obrolan yang menampungnya. Namun, lingkungan kerja (filesystem komputer) tetap bertahan permanen. Menuliskan status-status penting ke dalam sebuah file akan menyimpannya di tempat yang aman agar dapat dibaca kembali oleh sesi obrolan berikutnya.
 
-The artifact is a [secondary source](./Secondary%20source.md) — an account of the session's work, not the work itself. That's what makes it small enough to brief a fresh session, and also why it can mislead one: it records what the writing session believed, and anything it left out or got wrong is invisible to the reader. Where a claim matters, the next session should verify it against the [primary source](./Primary%20source.md) — the code, the tests — rather than inherit it.
+Artefak ini merupakan [sumber sekunder (secondary source)](./Secondary%20source.md) — yaitu sebuah laporan tentang hasil kerja suatu sesi, bukan pekerjaan aslinya itu sendiri. Hal inilah yang membuatnya cukup ringkas untuk membekali sesi baru yang segar, tetapi juga bisa berisiko menyesatkan sesi tersebut: artefak hanya mencatat apa yang diyakini oleh sesi penulisnya, sehingga apa pun detail yang terlewat atau salah tulis tidak akan terlihat oleh sesi pembacanya. Ketika ada klaim atau asumsi yang krusial, sesi berikutnya harus memverifikasinya kembali secara langsung ke [sumber primer (primary source)](./Primary%20source.md) — seperti berkas kode pemrograman atau hasil pengujian — alih-alih langsung mempercayainya begitu saja.
 
-A good artifact is written to be read into a session that has zero context. Concrete file paths rather than "the file we discussed". What was decided and why, so the next session doesn't relitigate it. What's done and what's left. It helps to tell the writing session where the artifact is headed: "write a handoff doc for a fresh session that knows nothing about this work".
+Artefak operan yang baik ditulis agar mudah dipahami oleh sesi baru yang sama sekali tidak memiliki konteks sebelumnya. Tuliskan lokasi jalur file secara konkret daripada sekadar menulis "file yang kita diskusikan tadi". Tuliskan apa saja keputusan yang telah diambil beserta alasannya, agar sesi berikutnya tidak perlu merundingkannya kembali dari awal. Tuliskan apa saja yang sudah selesai dikerjakan dan apa saja sisa tugasnya. Mengarahkan sesi saat menulis dokumen ini akan sangat membantu: "tulis dokumen serah terima untuk sesi baru yang sama sekali belum tahu apa-apa tentang pekerjaan ini".
 
-The alternative carry mechanism is [compaction](./Compaction.md), which summarises in-memory. The artifact has two advantages: it lives on disk where you can read and correct it before anything depends on it, and it can be reused — the same spec can brief five parallel sessions.
+Alternatif wadah pembawa informasi lainnya adalah proses [penyusutan (compaction)](./Compaction.md) yang merangkum data langsung di dalam memori obrolan. Namun, penggunaan berkas artefak fisik memiliki dua keuntungan utama: ia tersimpan di dalam penyimpanan komputer Anda sehingga Anda dapat membaca dan memperbaikinya terlebih dahulu sebelum dijalankan, serta dapat digunakan kembali — satu dokumen spesifikasi yang sama dapat digunakan untuk membekali lima sesi kerja paralel sekaligus.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"How do I split this between the planning [agent](./Agent.md) and the implementing one?"
+"Bagaimana cara membagi tugas ini di antara [agen](./Agent.md) perencana dan agen pelaksana?"
 
-"Have the planner write a handoff artifact — file paths, decisions, constraints. The implementer's session opens with a pointer to the artifact and works from it as its brief."
+"Mintalah agen perencana menulis sebuah artefak operan (handoff artifact) — yang berisi jalur file, keputusan, dan batasan aturan. Sesi agen pelaksana kemudian dibuka dengan diarahkan ke berkas tersebut dan bekerja menggunakan petunjuk di dalamnya."

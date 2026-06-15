@@ -1,21 +1,21 @@
 ---
-description: Facts the agent can read directly from the context right now. Counterpart to parametric knowledge.
+description: Fakta yang bisa dibaca agen langsung dari konteks saat ini. Kebalikan dari pengetahuan parametrik.
 ---
 
-Facts the [agent](./Agent.md) can read directly from the [context](./Context.md) right now — the user's task, files the agent has read in, [tool results](./Tool%20result.md), [AGENTS.md](./AGENTS.md.md) content loaded at [session](./Session.md) start. Counterpart to [parametric knowledge](./Parametric%20knowledge.md): parametric is _recalled_ from the parameters; contextual is _read_ from the [window](./Context%20window.md). [Hallucinations](./Hallucination.md) are much less common when the agent works from contextual knowledge — the answer is right in front of it, not dredged up from a blurred memory.
+Fakta atau data yang dapat dibaca secara langsung oleh [agen](./Agent.md) dari [konteks](./Context.md) obrolan saat ini — seperti instruksi tugas dari pengguna, file yang telah dibaca agen, [hasil alat (tool result)](./Tool%20result.md), dan konten [AGENTS.md](./AGENTS.md.md) yang dimuat di awal [sesi](./Session.md). Ini adalah padanan dari [pengetahuan parametrik (parametric knowledge)](./Parametric%20knowledge.md): pengetahuan parametrik didapatkan dengan cara _mengingat_ dari dalam parameter model, sementara pengetahuan kontekstual didapatkan dengan cara _membaca_ langsung dari [jendela konteks](./Context%20window.md). [Halusinasi](./Hallucination.md) jauh lebih jarang terjadi ketika agen bekerja berdasarkan pengetahuan kontekstual — karena jawabannya ada langsung di hadapannya, bukan digali dari memori model yang samar.
 
-Of the two kinds of knowledge, only contextual knowledge is in your control. The parameters are frozen, so the only way to give the [model](./Model.md) knowledge it lacks — an internal SDK, a library released after the [knowledge cutoff](./Knowledge%20cutoff.md), a decision made yesterday — is to put it in the context. A lot of practical [AI](./AI.md) coding work reduces to this: getting the right facts in front of the model at the moment it needs them.
+Dari kedua jenis pengetahuan tersebut, hanya pengetahuan kontekstual yang dapat Anda kendalikan. Parameter model bersifat tetap dan tidak bisa diubah (frozen), sehingga satu-satunya cara untuk membekali [model](./Model.md) dengan pengetahuan baru yang tidak dimilikinya — seperti SDK internal perusahaan, pustaka kode yang dirilis setelah tanggal [batas pengetahuan (knowledge cutoff)](./Knowledge%20cutoff.md), atau keputusan rapat kemarin — adalah dengan meletakkannya ke dalam konteks obrolan. Banyak pekerjaan praktis dalam coding berbasis [AI](./AI.md) berpusat pada hal ini: meletakkan fakta yang tepat di hadapan model pada saat ia membutuhkannya.
 
-When contextual and parametric knowledge conflict, the contextual usually wins. Paste the current API docs and the model follows them rather than its stale memory of the old API — though the old version can still bleed through, especially deep into a long session. If the agent keeps reverting to an outdated pattern despite the docs being loaded, that's parametric knowledge leaking past the contextual; restating the correction or moving it closer to the work helps.
+Ketika pengetahuan kontekstual bertentangan dengan pengetahuan parametrik, pengetahuan kontekstual biasanya akan menang. Tempelkan dokumen panduan API versi terbaru, maka model akan mengikutinya daripada memori lamanya tentang API versi usang — meskipun memori lama tersebut terkadang masih bisa bocor keluar, terutama jika sesi obrolan sudah terlalu panjang. Jika agen terus kembali menggunakan pola penulisan kode yang usang padahal dokumen panduan baru sudah dimasukkan, itu tandanya pengetahuan parametrik bocor menembus pengetahuan kontekstual; mengulangi koreksi atau memindahkan posisi dokumen lebih dekat ke tugas yang dikerjakan akan sangat membantu.
 
-Unlike parametric knowledge, contextual knowledge costs something to use. Everything loaded into the window spends [tokens](./Token.md) and competes for the model's [attention budget](./Attention%20budget.md), so loading more is not automatically better — the aim is the relevant facts in the window, not all the facts.
+Berbeda dari pengetahuan parametrik yang gratis digunakan, pemakaian pengetahuan kontekstual membutuhkan biaya. Setiap informasi yang dimuat ke dalam jendela konteks akan memakan kuota [token](./Token.md) dan berebut porsi [anggaran perhatian](./Attention%20budget.md) model, sehingga memuat informasi sebanyak-banyaknya tidak selalu menjadi keputusan yang baik — tujuannya adalah meletakkan fakta yang benar-benar relevan saja di dalam jendela obrolan, bukan semua fakta dimasukkan.
 
-_Reach for this term_ only when contrasting with parametric knowledge; otherwise just say **context**.
+_Gunakan istilah ini_ hanya ketika Anda sedang membandingkannya dengan pengetahuan parametrik; jika tidak, cukup sebut sebagai **konteks**.
 
-_Avoid:_ "working memory" — contextual knowledge is what's in the window _now_; a [memory system](./Memory%20system.md) is what gets cross-session content into it. Different scales, don't conflate.
+_Hindari:_ istilah "memori kerja" (working memory) — karena pengetahuan kontekstual adalah apa yang ada di dalam jendela obrolan _saat ini_; sementara [sistem memori (memory system)](./Memory%20system.md) adalah sistem yang memasukkan konten dari sesi sebelumnya ke sesi saat ini. Keduanya berada pada skala yang berbeda, jadi jangan disamakan.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"Why does it nail the API when I paste the docs and fabricate it when I don't?"
+"Kenapa dia bisa menulis kode API dengan sangat tepat saat saya menempelkan dokumen panduan, tetapi malah mengarang-ngarang kode saat tidak saya tempelkan?"
 
-"With the docs in, it's contextual knowledge — reading off the page. Without, it's parametric and the rare endpoints blur."
+"Saat dokumen ditempelkan, agen menggunakan pengetahuan kontekstual — dia membacanya langsung dari halaman obrolan. Tanpa dokumen tersebut, dia terpaksa mengandalkan pengetahuan parametrik sehingga fungsi-fungsi API yang jarang dipakai menjadi samar dalam ingatannya."

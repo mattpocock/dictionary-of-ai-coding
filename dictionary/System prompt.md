@@ -1,17 +1,17 @@
 ---
-description: The instructions the harness prepends to every model provider request — the agent's standing brief. Usually stable across a session.
+description: Instruksi dasar yang disematkan oleh penjalan di awal setiap permintaan penyedia model — panduan perilaku tetap bagi agen.
 ---
 
-The instructions the [harness](./Harness.md) prepends to every [model provider request](./Model%20provider%20request.md) — the [agent](./Agent.md)'s standing brief: who it is, how to behave, which [tools](./Tool.md) it can call, what conventions to follow. Usually stable across a [session](./Session.md).
+Instruksi dasar yang disematkan oleh [harness (sistem penjalan)](./Harness.md) di awal setiap [permintaan penyedia model (model provider request)](./Model%20provider%20request.md) — merupakan panduan kerja tetap bagi [agen](./Agent.md): siapa dirinya, bagaimana harus berperilaku, [alat (tool)](./Tool.md) apa saja yang bisa dipanggil, serta aturan apa yang harus diikuti. Biasanya instruksi ini tetap sama sepanjang [sesi](./Session.md) berjalan.
 
-The system prompt is written by the harness vendor, not by you, and in coding harnesses it's big — often tens of thousands of [tokens](./Token.md) of behavioural rules, tool descriptions, and edge-case handling, all paid as [input tokens](./Input%20tokens.md) on every [turn](./Turn.md). Your own standing instructions ride along with it: files like [AGENTS.md](./AGENTS.md.md) are loaded next to the system prompt at the start of the session, so the [model](./Model.md) reads the vendor's brief and yours together before it ever sees your message.
+Perintah sistem (system prompt) ditulis oleh pembuat sistem penjalan, bukan oleh Anda. Pada sistem penjalan pemrograman, ukurannya sangat besar — sering kali mencapai puluhan ribu [token](./Token.md) aturan perilaku, penjelasan alat, dan penanganan kasus khusus, yang semuanya harus dibayar sebagai [token masukan (input tokens)](./Input%20tokens.md) pada setiap [giliran (turn)](./Turn.md) pesan. Instruksi kerja Anda sendiri juga ikut disertakan bersamanya: berkas-berkas seperti [AGENTS.md](./AGENTS.md.md) dimuat di samping perintah sistem pada awal sesi obrolan, sehingga [model](./Model.md) membaca panduan dari pembuat aplikasi sekaligus panduan dari Anda sebelum ia membaca pesan yang Anda kirimkan.
 
-Because it's identical on every request, it forms the start of the [prefix cache](./Prefix%20cache.md) — which is part of why harnesses keep it fixed for a whole session rather than editing it as they go.
+Karena perintah sistem ini sama di setiap permintaan, ia menjadi bagian awal dari [penyimpanan cache awalan (prefix cache)](./Prefix%20cache.md) — hal inilah salah satu alasan mengapa sistem penjalan menjaganya tetap konstan sepanjang sesi obrolan daripada mengubahnya di tengah jalan.
 
-Models are trained to prioritise the system prompt over user messages. So when an agent insists on a convention you never asked for, or formats output in a way you can't shake, it's usually obeying its system prompt — and your message is losing the argument. Some harnesses are customisable: they give you full access to the system prompt, so you can read what the agent is actually being told and change it.
+Model dilatih untuk memprioritaskan perintah sistem dibanding pesan dari pengguna. Jadi, ketika agen bersikeras menerapkan suatu aturan penulisan yang tidak pernah Anda minta, atau memformat keluaran dengan cara yang sulit diubah, biasanya ia sedang mematuhi perintah sistem miliknya — dan pesan Anda kalah bersaing. Beberapa sistem penjalan dapat disesuaikan: mereka memberi Anda akses penuh ke perintah sistem, sehingga Anda dapat membaca apa yang sebenarnya diinstruksikan kepada agen dan mengubahnya.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"Two harnesses, same model, totally different behavior on the same prompt."
+"Dua sistem penjalan yang berbeda menggunakan model yang sama, tetapi perilakunya sangat berbeda saat diberikan perintah yang sama."
 
-"Different system prompts. One's tuned for terse code edits, the other for explaining — that's where the divergence lives, before your message even arrives."
+"Itu karena perintah sistem (system prompt) mereka berbeda. Yang satu diatur untuk melakukan perubahan kode secara ringkas, sementara yang lain diatur untuk memberikan penjelasan panjang — di situlah letak perbedaannya, bahkan sebelum pesan Anda dikirim."

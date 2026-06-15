@@ -1,15 +1,15 @@
 ---
-description: "A technique for developing a design concept: the agent interviews the user Socratically, one decision at a time."
+description: Metode pematangan konsep desain: agen mewawancarai pengguna secara mendalam untuk menyepakati satu per satu keputusan.
 ---
 
-A technique for developing a [design concept](./Design%20concept.md) with an [agent](./Agent.md): the agent interviews the user Socratically, one decision at a time, proposing a recommended answer for each. Slows the rush to a finished plan — no [handoff artifact](./Handoff%20artifact.md) is written until the concept stabilises.
+Sebuah teknik untuk mematangkan [konsep desain (design concept)](./Design%20concept.md) bersama dengan [agen](./Agent.md): agen akan mewawancarai pengguna secara mendalam (metode Sokratik) satu per satu keputusan, sambil mengajukan rekomendasi jawaban untuk masing-masing poin. Teknik ini memperlambat proses pembuatan rencana kerja yang terburu-buru — tidak ada [artefak operan (handoff artifact)](./Handoff%20artifact.md) yang ditulis sampai konsep desain tersebut benar-benar stabil.
 
-The technique exists because agents fill gaps silently. Asked to write a [spec](./Spec.md) from a two-line prompt, the agent doesn't stop at the decisions you haven't made — it picks defaults and writes them in. The result looks complete, and the guesses are indistinguishable from the choices, so you discover them late: at review, or when the built feature handles an edge case in a way you never chose. Grilling inverts this — instead of guessing, the agent has to ask.
+Teknik ini lahir karena agen sering kali mengisi celah keputusan yang kosong secara diam-diam. Ketika diminta menulis [spesifikasi (spec)](./Spec.md) dari instruksi singkat sepanjang dua baris kalimat saja, agen tidak akan berhenti ketika menemui bagian keputusan yang belum Anda tentukan — ia akan memilih jawaban bawaan (default) tebakannya sendiri dan menuliskannya di sana. Hasilnya memang tampak lengkap, dan tebakan tersebut tidak dapat dibedakan dari pilihan sadar Anda, sehingga Anda baru menyadarinya di akhir: saat proses tinjauan kode, atau saat fitur yang dibangun menangani kasus ekstrem dengan cara yang tidak pernah Anda setujui. Wawancara intensif (grilling) membalikkan kondisi ini — alih-alih menebak, agen diwajibkan bertanya kepada Anda.
 
-It's a [human-in-the-loop](./Human-in-the-loop.md) technique: your answers are the input. When a question can't be answered in conversation — you'd have to see the thing — switch to [prototyping](./Prototyping.md).
+Ini adalah teknik [human-in-the-loop (keterlibatan manusia)](./Human-in-the-loop.md): jawaban Anda adalah bahan inputnya. Ketika sebuah pertanyaan tidak dapat dijawab langsung melalui percakapan — misalnya karena Anda harus melihat wujud fiturnya terlebih dahulu — gantilah ke metode [pembuatan prototipe (prototyping)](./Prototyping.md).
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"It went straight to writing the spec and got the cancellation logic wrong."
+"Dia langsung menulis spesifikasi dan membuat logika pembatalan pesanan yang salah."
 
-"Grill it first — make it ask you about partial cancels, refunds, and timing before it commits anything to the doc. Cheaper to resolve in conversation than in code."
+"Lakukan grilling (tanya-jawab intensif) terlebih dahulu — paksa dia bertanya kepada Anda tentang pembatalan sebagian, pengembalian dana, dan batas waktu sebelum dia menulis apa pun ke dokumen. Lebih murah menyelesaikan masalah lewat obrolan daripada merombak kode pemrograman."

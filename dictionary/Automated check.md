@@ -1,21 +1,21 @@
 ---
-description: A deterministic verification that runs in the environment — tests, type checks, lints, build, pre-commit hooks. Pass/fail, no judgement.
+description: Verifikasi pasti yang berjalan di lingkungan kerja (tes, tipe data, linter, build). Hasilnya lulus/gagal tanpa penilaian subjektif.
 ---
 
-A deterministic verification that runs in the [environment](./Environment.md) — tests, type checks, lints, build, pre-commit hooks. Pass/fail, no judgement. The signal an [agent](./Agent.md) can self-correct from without involving anyone else. A flaky test is a broken check, not a non-check; automated checks are deterministic _by design_.
+Sebuah verifikasi pasti (deterministik) yang berjalan di dalam [lingkungan kerja](./Environment.md) — seperti pengujian (test), pengecekan tipe data, pembersih kode (lint), pembuatan program (build), dan pre-commit hooks. Hasilnya hanya lulus/gagal (pass/fail), tanpa adanya penilaian subjektif. Ini adalah sinyal utama yang digunakan oleh [agen](./Agent.md) untuk memperbaiki kesalahannya sendiri tanpa perlu melibatkan orang lain. Pengujian yang tidak stabil (flaky test) adalah bentuk pemeriksaan yang rusak, bukan berarti tidak ada pemeriksaan; pemeriksaan otomatis dirancang untuk selalu memberikan hasil yang pasti dan konsisten.
 
-Self-correction works as a loop. The agent makes a change, runs the check as a [tool call](./Tool%20call.md), and the failure output lands in its [context window](./Context%20window.md) — a type error with a file and line, a failing assertion with expected and actual values. That's enough for the agent to fix the problem and run the check again, around and around until it passes, with no human in the loop. Determinism is what makes the loop trustworthy: the same code always produces the same verdict, so a pass means something. A flaky check poisons this — the agent "fixes" code that was fine, or retries past a real failure.
+Proses perbaikan mandiri bekerja dalam sebuah siklus. Agen melakukan perubahan kode, menjalankan pemeriksaan melalui [panggilan alat (tool call)](./Tool%20call.md), dan hasil kegagalan tersebut akan masuk kembali ke dalam [jendela konteks](./Context%20window.md)-nya — misalnya berupa pesan error tipe data lengkap dengan nama file dan baris kodenya, atau kegagalan pengujian yang memuat nilai ekspektasi vs nilai riil. Laporan tersebut sudah cukup bagi agen untuk memperbaiki masalah dan menjalankan pemeriksaan kembali, terus berputar hingga semuanya lulus tanpa perlu campur tangan manusia. Konsistensi inilah yang membuat siklus perbaikan dapat dipercaya: kode yang sama harus selalu menghasilkan putusan yang sama, sehingga status "lulus" benar-benar memiliki arti. Pemeriksaan yang tidak konsisten (flaky) akan merusak siklus ini — agen mungkin akan mencoba "memperbaiki" kode yang sebenarnya sudah benar, atau terus mencoba melewati kegagalan yang nyata.
 
-This is why good checks are a large part of a codebase's [AX](./AX.md). An agent in a repo with strict types, a fast test suite, and a linter catches most of its own mistakes before you see them; an agent in a repo with none of those ships whatever it produces. The difference matters most in [AFK](./AFK.md) runs, where checks are the only verification happening during the run. But a check only catches what it asserts — green checks mean the asserted properties hold, not that the code is right. The judgement-shaped gaps are what [automated review](./Automated%20review.md) and [human review](./Human%20review.md) are for.
+Inilah mengapa pemeriksaan otomatis yang baik merupakan bagian besar dari kualitas [AX (pengalaman agen)](./AX.md) dalam sebuah proyek. Agen yang bekerja di dalam proyek dengan aturan tipe data yang ketat, rangkaian tes yang cepat, dan linter akan mampu menangkap sebagian besar kesalahannya sendiri sebelum Anda mengetahuinya; sedangkan agen di proyek yang tidak memiliki semua itu akan langsung mengirimkan apa pun kode yang dihasilkannya. Perbedaan ini sangat terasa pada pengerjaan otomatis [AFK (away from keyboard)](./AFK.md), di mana pemeriksaan otomatis adalah satu-satunya verifikasi yang terjadi selama agen berjalan. Namun, pemeriksaan otomatis hanya mendeteksi apa yang diujinya saja — status hijau (lulus) berarti kriteria yang diuji telah terpenuhi, bukan berarti logika keseluruhan kode sudah benar. Celah yang memerlukan penilaian subjektif dan logika kontekstual inilah yang menjadi tugas dari [tinjauan otomatis](./Automated%20review.md) dan [tinjauan manusia](./Human%20review.md).
 
-_Avoid:_ "feedback loop" / "backpressure" — both lump checks together with review. _Avoid:_ "test" — tests are automated checks, but not all automated checks are tests.
+_Hindari:_ istilah "feedback loop" (siklus umpan balik) atau "backpressure" — karena kedua istilah ini mencampuradukkan antara pemeriksaan otomatis yang kaku dengan tinjauan subjektif. _Hindari:_ menggunakan istilah "test" secara umum — karena pengujian (test) adalah bagian dari pemeriksaan otomatis, tetapi tidak semua pemeriksaan otomatis adalah pengujian (misalnya pengecekan tipe data).
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"The agent keeps shipping broken code in the AFK runs."
+"Agen terus mengirimkan kode yang rusak pada sesi kerja otomatis (AFK)."
 
-"What automated checks are wired into the [sandbox](./Sandbox.md)?"
+"Pemeriksaan otomatis apa saja yang dipasang di dalam [sandbox (lingkungan terisolasi)](./Sandbox.md)?"
 
-"Just the unit tests."
+"Baru pengujian unit (unit test) saja."
 
-"Add typecheck and lint — it'll self-correct from those before the PR ever lands."
+"Tambahkan pengecekan tipe data (typecheck) dan linter — agen akan memperbaikinya sendiri dari laporan pemeriksaan itu sebelum PR diajukan."

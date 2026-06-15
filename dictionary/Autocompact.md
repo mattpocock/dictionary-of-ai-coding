@@ -1,17 +1,17 @@
 ---
-description: Compaction triggered automatically by the harness when the context window approaches full.
+description: Penyusutan (compaction) yang dijalankan otomatis oleh sistem penjalan ketika jendela konteks hampir penuh.
 ---
 
-[Compaction](./Compaction.md) triggered automatically by the [harness](./Harness.md) when the [context window](./Context%20window.md) approaches full.
+[Penyusutan (compaction)](./Compaction.md) yang dipicu secara otomatis oleh [harness (sistem penjalan)](./Harness.md) ketika kapasitas [jendela konteks](./Context%20window.md) hampir penuh.
 
-The harness watches how full the context window is. When it crosses a threshold — often around 80% — it pauses, asks the [model](./Model.md) to summarise the [session](./Session.md) so far, and seeds a fresh session with the summary. Work then continues as if nothing happened.
+Sistem penjalan (harness) akan mengamati seberapa penuh kapasitas jendela konteks. Ketika penggunaan kapasitas tersebut melewati ambang batas tertentu — biasanya sekitar 80% — sistem akan berhenti sejenak, meminta [model](./Model.md) membuat ringkasan dari seluruh [sesi](./Session.md) yang berjalan sejauh ini, lalu memulai sesi baru yang bersih dengan dibekali ringkasan tersebut. Setelah itu, pekerjaan dilanjutkan kembali seolah tidak terjadi apa-apa.
 
-Except something did happen. Compaction is lossy, and autocompact is lossy at a moment you didn't choose. A manual compact happens at a phase boundary, when you can tell the model what to preserve. Autocompact fires mid-task, whenever the threshold is hit — possibly halfway through a refactor, with the summary deciding for itself which of your decisions were worth keeping. The classic symptom: the [agent](./Agent.md) carries on confidently but has quietly forgotten a constraint you established an hour ago, and you only notice when its work starts contradicting it.
+Namun, sebenarnya ada hal penting yang terjadi. Proses penyusutan ini bersifat mereduksi informasi (lossy), dan penyusutan otomatis (autocompact) terjadi pada momen yang tidak bisa Anda pilih. Penyusutan manual biasanya dilakukan di akhir fase tugas, di mana Anda bisa menentukan detail apa saja yang harus tetap diingat oleh model. Sebaliknya, penyusutan otomatis dapat terjadi di tengah-tengah pengerjaan tugas kapan saja batas kapasitas tercapai — mungkin saat baru setengah jalan merombak kode (refactoring) — di mana model akan menentukan sendiri keputusan mana saja yang dianggap layak untuk disimpan dalam ringkasan. Gejala khasnya: sang [agen](./Agent.md) tetap bekerja dengan percaya diri tetapi sebenarnya dia telah melupakan aturan penting yang Anda berikan sejam lalu, dan Anda baru menyadarinya ketika hasil kerjanya mulai bertentangan dengan aturan tersebut.
 
-The defence is to not let it fire. Watch the context indicator and compact manually at a natural boundary, or write decisions into a plan doc or [handoff artifact](./Handoff%20artifact.md) on disk, where no summary can lose them. Most harnesses also let you customise the buffer — moving the threshold earlier or later, or turning autocompact off entirely — so you can tune how much headroom you keep before it fires.
+Cara pencegahannya adalah dengan tidak membiarkan fitur otomatis ini berjalan sendiri. Perhatikan indikator kapasitas konteks Anda dan lakukan penyusutan secara manual di akhir fase kerja yang logis, atau tulis keputusan-keputusan penting ke dalam file rencana kerja atau [artefak operan (handoff artifact)](./Handoff%20artifact.md) di komputer Anda, di mana informasi tersebut aman dan tidak akan hilang akibat peringkasan otomatis. Sebagian besar sistem penjalan juga memungkinkan Anda menyesuaikan ambang batas ini — mempercepat atau menundanya, atau mematikan fitur penyusutan otomatis sepenuhnya — sehingga Anda bisa mengatur sisa kapasitas aman sebelum proses dipicu.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"It doesn't seem to remember what we decided about the schema earlier."
+"Agen ini sepertinya tidak ingat lagi apa yang kita putuskan tentang struktur tabel tadi."
 
-"Autocompact fired between [turns](./Turn.md) — the early decisions got summarised and we must have lost something. Reload the plan doc, or compact manually next time so you control what gets kept."
+"Fitur penyusutan otomatis (autocompact) berjalan di antara [giliran](./Turn.md) percakapan — keputusan awal kita diringkas oleh model dan kemungkinan ada detail yang terbuang. Muat ulang file rencana, atau lakukan penyusutan manual di lain waktu agar Anda bisa mengontrol detail apa saja yang harus disimpan."

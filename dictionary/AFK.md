@@ -1,22 +1,22 @@
 ---
-description: A working pattern where the user kicks off a session and leaves the agent to run unattended (away from keyboard).
+description: Pola kerja di mana pengguna memulai sesi lalu meninggalkan agen berjalan sendiri tanpa pengawasan (jauh dari keyboard).
 aliases:
   - away from keyboard
   - AFK (away from keyboard)
 ---
 
-Away from keyboard. A working pattern where the user kicks off a [session](./Session.md) and leaves the [agent](./Agent.md) to run unattended. The throughput multiplier of [AI](./AI.md) coding — many AFK sessions can run in parallel while you sleep, eat, or work on something else. Usually requires a permissive [permission mode](./Permission%20mode.md) plus [sandboxing](./Sandbox.md) to be safe.
+Away from keyboard (jauh dari keyboard). Sebuah pola kerja di mana pengguna memulai [sesi](./Session.md) lalu meninggalkan [agen](./Agent.md) bekerja sendiri tanpa pengawasan. Ini adalah cara melipatgandakan produktivitas dalam coding berbasis [AI](./AI.md) — banyak sesi AFK dapat berjalan bersamaan saat Anda tidur, makan, atau mengerjakan hal lain. Agar aman, pola ini biasanya membutuhkan [mode izin](./Permission%20mode.md) yang longgar dan sistem [sandboxing (lingkungan terisolasi)](./Sandbox.md).
 
-When you're not there, the agent handles ambiguity differently. While you're watching, an ambiguous decision surfaces as a question and you answer it; once you've walked away, the agent picks a default and keeps going, and every later decision builds on that guess. The characteristic failure is coming back to hours of finished, confident work built on a wrong call made in the first ten minutes. The work isn't sloppy — it's coherent, just coherent about the wrong thing.
+Saat Anda tidak ada di tempat, agen akan menangani ketidakpastian dengan cara yang berbeda. Ketika Anda mengawasi, keputusan yang membingungkan akan diajukan sebagai pertanyaan dan Anda bisa langsung menjawabnya. Namun, begitu Anda pergi, agen akan memilih jawaban bawaan sendiri (default) dan terus berjalan, di mana setiap keputusan berikutnya akan didasarkan pada tebakan pertama tersebut. Kegagalan khas dari pola ini adalah ketika Anda kembali dan melihat hasil kerja berjam-jam yang selesai dengan penuh percaya diri, tetapi ternyata dibangun di atas keputusan yang salah pada sepuluh menit pertama. Hasil kerjanya tidak berantakan — hasilnya rapi dan masuk akal, hanya saja masuk akal untuk hal yang salah.
 
-Since you can't give input during the run, give it before and after instead. Before: resolve the ambiguity up front — a [grilling](./Grilling.md) session, a written [spec](./Spec.md) — so there are fewer gaps for the agent to fill alone. During: [automated checks](./Automated%20check.md) and [automated review](./Automated%20review.md) stand in for the attention you're not giving, failing fast on what can be caught mechanically. After: the run ends in something reviewable — a PR, not changes already merged. AFK doesn't remove [human review](./Human%20review.md); it defers all of it to the end, which is why what arrives at the end has to be worth reviewing. This is also why [AX](./AX.md) matters most in AFK runs — with no one watching, the environment is the only support the agent gets.
+Karena Anda tidak bisa memberikan masukan selama agen berjalan, berikan masukan sebelum dan sesudahnya. Sebelum memulai: selesaikan ketidakpastian sejak awal — misalnya lewat sesi [grilling (tanya-jawab intensif)](./Grilling.md) atau menulis [spesifikasi (spec)](./Spec.md) — sehingga agen tidak perlu banyak menebak sendiri. Selama berjalan: [pemeriksaan otomatis](./Automated%20check.md) dan [tinjauan otomatis](./Automated%20review.md) menggantikan perhatian yang tidak bisa Anda berikan, sehingga sistem langsung gagal (fail fast) jika ada kesalahan yang bisa dideteksi secara teknis. Setelah selesai: proses kerja harus berakhir pada sesuatu yang bisa ditinjau kembali — seperti Pull Request (PR), bukan perubahan yang langsung digabungkan (merge) ke kode utama. AFK tidak menghilangkan [tinjauan manusia](./Human%20review.md); pola ini hanya menunda semua tinjauan ke bagian akhir. Itulah mengapa hasil akhir yang diberikan harus benar-benar layak untuk ditinjau. Ini juga alasan mengapa [AX (pengalaman agen)](./AX.md) sangat penting dalam sesi AFK — saat tidak ada yang mengawasi, lingkungan kerja adalah satu-satunya panduan yang dimiliki oleh agen.
 
-_Avoid:_ "background agent" — centers the machine ("running in the background") rather than the human pattern ("user has walked away"). AFK names the fact that matters: the user isn't watching.
+_Hindari:_ istilah "agen latar belakang" (background agent) — karena istilah ini terlalu fokus pada mesin ("berjalan di latar belakang") alih-alih pola kerja manusianya ("pengguna sedang pergi"). AFK menekankan fakta yang sebenarnya penting: pengguna tidak sedang mengawasi jalannya proses.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"I'm running this AFK — three sandboxed agents on the refactor, reviewing the PRs in the morning."
+"Saya menjalankan tugas ini secara AFK — tiga agen terisolasi melakukan perbaikan kode (refactor), dan saya tinggal memeriksa PR-nya besok pagi."
 
-"[Bypass permissions](./Agent%20mode.md)?"
+"Apakah kita akan [melewati perizinan](./Agent%20mode.md)?"
 
-"Yeah, read-only [filesystem](./Filesystem.md), no network."
+"Ya, tapi dengan akses [sistem file](./Filesystem.md) hanya-baca (read-only) dan tanpa jaringan internet."

@@ -1,25 +1,25 @@
 ---
-description: What the harness shows the user before executing a tool call that isn't pre-approved. The mechanism for putting a human in the loop.
+description: Apa yang ditampilkan harness ke pengguna sebelum menjalankan alat yang belum disetujui. Cara melibatkan manusia dalam proses kerja.
 ---
 
-What the [harness](./Harness.md) shows the user before executing a [tool call](./Tool%20call.md) that isn't pre-approved. The [model](./Model.md) produces a tool call; instead of running it immediately, the harness pauses and asks. Approve and it runs; deny and the harness reports the denial back to the model as a [tool result](./Tool%20result.md). The mechanism by which a harness puts a human in the [loop](./Human-in-the-loop.md) for risky or sensitive actions.
+Informasi yang ditampilkan oleh [harness (sistem penjalan)](./Harness.md) kepada pengguna sebelum mengeksekusi perintah [panggilan alat (tool call)](./Tool%20call.md) yang belum disetujui sebelumnya. [Model](./Model.md) menghasilkan perintah panggilan alat; alih-alih langsung menjalankannya, sistem penjalan akan berhenti sejenak dan meminta konfirmasi Anda. Jika Anda menyetujuinya (approve), perintah akan dijalankan; jika Anda menolaknya (deny), sistem penjalan akan melaporkan penolakan tersebut kembali ke model sebagai [hasil alat (tool result)](./Tool%20result.md). Ini adalah mekanisme utama yang digunakan sistem penjalan untuk menyertakan manusia dalam [lingkaran pendampingan (human-in-the-loop)](./Human-in-the-loop.md) untuk tindakan yang sensitif atau berisiko.
 
-The lifecycle of a permission request:
+Siklus hidup dari suatu permintaan izin:
 
-| Step | Who     | What happens                                                                            |
-| ---- | ------- | --------------------------------------------------------------------------------------- |
-| 1    | Model   | Produces a tool call                                                                    |
-| 2    | Harness | Checks it against the [permission mode](./Permission%20mode.md) and any saved approvals |
-| 3    | Harness | Pre-approved: executes immediately. Otherwise: pauses and shows the request             |
-| 4    | User    | Approves once, approves for the rest of the [session](./Session.md), or denies          |
-| 5    | Harness | Executes the call, or sends the denial back as a tool result                            |
+| Langkah | Aktor           | Proses yang Terjadi                                                                                                                 |
+| ------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| 1       | Model           | Menghasilkan panggilan alat (tool call)                                                                                             |
+| 2       | Sistem Penjalan | Memeriksa panggilan alat terhadap [mode izin (permission mode)](./Permission%20mode.md) aktif dan daftar persetujuan yang tersimpan |
+| 3       | Sistem Penjalan | Disetujui sebelumnya: langsung dijalankan. Jika tidak: berhenti sejenak dan menampilkan permintaan izin di layar                    |
+| 4       | Pengguna        | Menyetujui sekali, menyetujui untuk sisa [sesi](./Session.md) obrolan, atau menolak tindakan                                        |
+| 5       | Sistem Penjalan | Mengeksekusi panggilan alat tersebut, atau mengirimkan status penolakan kembali sebagai hasil alat                                  |
 
-Denying a request steers the agent. The model reads the denial like any other tool result and reacts to it — it tries a different approach, or asks what you'd prefer. Most harnesses let you attach a message to the denial, which turns the request into a steering point: "not like that, use the migration script instead" lands exactly when the model is deciding what to do next.
+Tindakan menolak permintaan izin dapat mengarahkan tindakan agen. Model membaca status penolakan tersebut seperti hasil kerja alat lainnya dan bereaksi terhadapnya — ia akan mencoba pendekatan lain atau bertanya apa yang lebih Anda sukai. Sebagian besar sistem penjalan memungkinkan Anda melampirkan pesan catatan saat melakukan penolakan, yang mengubah momen penolakan tersebut menjadi poin pengarahan: pesan seperti "jangan gunakan perintah itu, gunakan skrip migrasi database saja" akan tiba tepat saat model sedang menentukan langkah apa yang harus diambil selanjutnya.
 
-The cost is that every request is a synchronous wait on you. The [agent](./Agent.md) sits blocked until you answer, which is fine while you're watching and a problem when you're not — an agent that triggers requests constantly can't be left to work [AFK](./AFK.md). The permission mode is the dial: which calls run freely, which ask first, ideally with a [sandbox](./Sandbox.md) making it safe to widen the free set.
+Konsekuensinya adalah setiap permintaan izin akan membuat proses kerja terhenti untuk menunggu respon sinkron dari Anda. Sang [agen](./Agent.md) akan berada dalam kondisi terblokir (blocked) sampai Anda memberikan jawaban, hal ini tidak masalah jika Anda sedang berada di depan layar, namun menjadi masalah jika Anda sedang pergi — agen yang terus-menerus memicu permintaan izin tidak akan bisa ditinggal bekerja secara mandiri ([AFK](./AFK.md)). Mode perizinan adalah tombol pengaturnya: menentukan perintah mana yang boleh berjalan bebas dan mana yang harus bertanya terlebih dahulu, idealnya dengan dibantu sistem [sandbox (lingkungan terisolasi)](./Sandbox.md) agar aman memperluas daftar alat yang berjalan bebas.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"It's been blocked on a permission request for ten minutes — I was in a meeting."
+"Agen ini terhenti menunggu permintaan izin selama sepuluh menit — tadi saya sedang rapat."
 
-"That's the cost of human-in-the-loop. Pre-approve the safe [tools](./Tool.md) so the request only fires on the actually-risky calls."
+"Itulah konsekuensi dari metode keterlibatan manusia (human-in-the-loop). Berikan persetujuan di awal untuk [alat (tools)](./Tool.md) yang aman, sehingga permintaan izin di layar hanya muncul untuk tindakan yang benar-benar berisiko."

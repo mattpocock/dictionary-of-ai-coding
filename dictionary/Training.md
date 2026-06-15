@@ -1,15 +1,15 @@
 ---
-description: The process that sets a model's parameters by exposing it to vast amounts of text and adjusting to improve next-token prediction.
+description: Proses mengatur parameter model dengan melatihnya pada teks dalam jumlah besar untuk meningkatkan prediksi token berikutnya.
 ---
 
-The process that sets a [model](./Model.md)'s [parameters](./Parameters.md), by exposing it to vast amounts of text and adjusting parameters to improve [next-token prediction](./Next-token%20prediction.md). A one-time, expensive process done by the [model provider](./Model%20provider.md). Encompasses both pre-training (the bulk run) and post-training (later refinements like instruction-following and safety); the distinction doesn't matter at this glossary's level.
+Proses yang mengatur [parameter](./Parameters.md) suatu [model](./Model.md), dengan cara menghadapkannya pada teks dalam jumlah yang sangat besar dan menyesuaikan parameternya untuk meningkatkan akurasi [prediksi token berikutnya (next-token prediction)](./Next-token%20prediction.md). Ini adalah proses sekali jalan yang sangat mahal yang dilakukan oleh [penyedia model (model provider)](./Model%20provider.md). Proses ini mencakup prapelatihan (pre-training / pengerjaan massal) dan pascapelatihan (post-training / penyempurnaan lanjutan seperti kepatuhan instruksi dan keselamatan); perbedaan keduanya tidak terlalu penting pada tingkatan glosarium ini.
 
-The mechanism is repetition at scale: show the model a stretch of text, have it predict the next [token](./Token.md), nudge the parameters toward whatever the actual next token was, and repeat across trillions of tokens. Nothing is stored as facts or rules — everything the model "knows" is a side effect of getting better at prediction, compressed into the parameters as [parametric knowledge](./Parametric%20knowledge.md).
+Mekanisme kerjanya adalah pengulangan dalam skala besar: tunjukkan potongan teks kepada model, biarkan ia memprediksi [token](./Token.md) berikutnya, lalu ubah sedikit parameternya agar condong ke token yang sebenarnya muncul berikutnya, kemudian ulangi proses ini pada triliunan token. Tidak ada data yang disimpan sebagai fakta atau aturan baku — semua hal yang "diketahui" oleh model adalah efek samping dari upayanya untuk menjadi lebih baik dalam melakukan prediksi, yang dikompresi ke dalam parameter sebagai [pengetahuan parametrik (parametric knowledge)](./Parametric%20knowledge.md).
 
-Two consequences matter day to day. Training ends at a point in time, so the model has a [knowledge cutoff](./Knowledge%20cutoff.md) — it hasn't seen the library version you upgraded to last month. And training is not something you can do: when the model doesn't know your codebase, your conventions, or your internal APIs, the fix is never "teach the model" — it's putting that material into [context](./Context.md), the one input you control.
+Dua konsekuensi penting yang memengaruhi pekerjaan sehari-hari: Pelatihan berakhir pada satu titik waktu tertentu, sehingga model memiliki [batas waktu pengetahuan (knowledge cutoff)](./Knowledge%20cutoff.md) — ia belum pernah melihat versi pustaka (library) baru yang Anda tingkatkan (upgrade) bulan lalu. Selain itu, pelatihan bukanlah hal yang dapat Anda lakukan secara mandiri: ketika model tidak mengetahui basis kode Anda, aturan penulisan Anda, atau API internal Anda, solusinya bukanlah "mengajari model melalui pelatihan" — melainkan memasukkan materi tersebut ke dalam [konteks](./Context.md) obrolan, yaitu satu-satunya input yang dapat Anda kendalikan secara langsung.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"Can we get it to know our internal API?"
+"Apakah kita bisa melatih model agar ia mengetahui API internal kita?"
 
-"Not via training — that's a months-long process by the model provider. Load the API docs into context instead, that's the lever you actually have."
+"Tidak melalui proses pelatihan (training) — itu adalah proses berbulan-bulan yang dilakukan oleh penyedia model. Muat saja dokumen API tersebut ke dalam konteks obrolan, karena itulah alat kendali yang sebenarnya Anda miliki."

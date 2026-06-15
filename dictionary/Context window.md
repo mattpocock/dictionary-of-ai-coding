@@ -1,17 +1,17 @@
 ---
-description: Everything the model sees on each model provider request. Finite, model-specific, the only surface through which the model perceives.
+description: Semua hal yang dilihat model pada setiap permintaan ke provider. Jumlahnya terbatas dan menjadi satu-satunya cara model memahami.
 ---
 
-Everything the [model](./Model.md) sees on each [model provider request](./Model%20provider%20request.md). Finite, model-specific, and the _only_ surface through which the model perceives anything.
+Segala sesuatu yang dapat dibaca dan dianalisis oleh [model](./Model.md) pada setiap [permintaan penyedia model (model provider request)](./Model%20provider%20request.md). Kapasitasnya terbatas, bersifat spesifik untuk setiap model, dan merupakan _satu-satunya_ jalur bagi model untuk mengetahui segala hal.
 
-It's a single sequence of [tokens](./Token.md): the [system prompt](./System%20prompt.md), the conversation so far, every [tool result](./Tool%20result.md) the [harness](./Harness.md) has fed back in. If something is in that sequence, the model can use it; if it isn't, the model doesn't know it exists — not your codebase, not the file you edited yesterday, not the instruction you gave three sessions ago. Anything outside the window has to be brought in, usually via a [tool call](./Tool%20call.md), before it can affect anything.
+Jendela konteks berupa satu barisan urutan [token](./Token.md): mulai dari [system prompt (instruksi sistem)](./System%20prompt.md), riwayat percakapan sejauh ini, hingga setiap [hasil alat (tool result)](./Tool%20result.md) yang dikirimkan kembali oleh [harness (sistem penjalan)](./Harness.md). Jika suatu informasi berada di dalam urutan tersebut, model dapat menggunakannya; jika tidak ada, model tidak akan tahu bahwa informasi tersebut eksis — baik itu kode pemrograman Anda, berkas yang Anda edit kemarin, maupun instruksi yang Anda berikan tiga sesi yang lalu. Segala sesuatu yang berada di luar jendela konteks harus dimuat terlebih dahulu, biasanya melalui [panggilan alat (tool call)](./Tool%20call.md), sebelum dapat memengaruhi pekerjaan agen.
 
-Finite means it fills up. Every turn appends more — your messages, the model's responses, tool results — and a long [session](./Session.md) will eventually hit the limit, forcing [compaction](./Compaction.md) or [clearing](./Clearing.md). It also means everything in the window competes: each token you load is one less available for the rest, and content you didn't need still occupies the model's [attention](./Attention%20budget.md). The practical stance is to treat the window as a budget — load what the task needs, leave the rest out.
+Kapasitas terbatas (finite) berarti ruang ini bisa penuh. Setiap giliran percakapan akan menambahkan data baru — pesan Anda, jawaban model, dan hasil kerja alat — dan [sesi](./Session.md) obrolan yang panjang pada akhirnya akan mencapai batas kapasitas maksimal, yang memaksa dilakukannya proses [penyusutan (compaction)](./Compaction.md) atau [pembersihan (clearing)](./Clearing.md). Batas ini juga berarti semua informasi di dalamnya akan saling berebut perhatian: setiap token tidak penting yang Anda muat akan mengurangi ruang bagi informasi penting lainnya, dan konten yang tidak dibutuhkan tersebut akan tetap memakan [anggaran perhatian](./Attention%20budget.md) model. Langkah praktisnya adalah memperlakukan jendela konteks ini sebagai anggaran belanja — muat hanya apa yang dibutuhkan oleh tugas saat itu, dan biarkan sisanya tetap berada di luar.
 
-_Avoid:_ "memory" — the context window is working state and doesn't persist across sessions. [Memory](./Memory%20system.md) is a separate concept layered on top.
+_Hindari:_ istilah "memori" (memory) — karena jendela konteks adalah memori kerja aktif sementara yang akan hilang setelah sesi berakhir. [Sistem memori](./Memory%20system.md) yang sesungguhnya adalah konsep terpisah yang dibangun di atas jendela konteks untuk menyimpan data antar-sesi.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"Can I just paste the whole monorepo into the prompt?"
+"Bolehkah saya menyalin seluruh isi folder proyek besar ini langsung ke dalam kolom chat?"
 
-"The context window's 200k tokens — that's maybe a fifth of the repo. Pick the files the task touches, leave the rest behind a tool call."
+"Jendela konteks model ini hanya berkapasitas 200 ribu token — itu mungkin hanya seperlima dari isi proyek Anda. Pilih saja file-file yang berkaitan langsung dengan tugas Anda, dan biarkan file lainnya dimuat otomatis lewat panggilan alat jika dibutuhkan."

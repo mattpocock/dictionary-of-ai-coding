@@ -1,17 +1,17 @@
 ---
-description: A handoff artifact scoping one session of work. Stands alone or hangs off a spec. Can block or be blocked by sibling tickets.
+description: Artefak operan tugas yang mencakup pekerjaan untuk satu sesi. Dapat berdiri sendiri atau menjadi bagian dari spesifikasi.
 ---
 
-A [handoff artifact](./Handoff%20artifact.md) scoping one [session](./Session.md) of work. Stands alone, or hangs off a [spec](./Spec.md) as one of its children. Tickets can block or be blocked by sibling tickets, so the order of work falls out of their dependency graph rather than a linear plan.
+Sebuah [artefak operan (handoff artifact)](./Handoff%20artifact.md) yang membatasi ruang lingkup pekerjaan untuk satu [sesi](./Session.md). Tiket dapat berdiri sendiri, atau digantungkan pada dokumen [spesifikasi (spec)](./Spec.md) sebagai salah satu bagian darinya. Suatu tiket dapat menghalangi (memblokir) atau dihalangi oleh tiket lain yang setara, sehingga urutan pekerjaan ditentukan oleh grafik ketergantungan (dependency graph) mereka, bukan dari rencana linear yang kaku.
 
-The defining constraint is the size: one session. A ticket should be completable before the session drifts out of the [smart zone](./Smart%20zone.md) — and that constraint is testable. If sessions on your tickets routinely degrade before the work is done, the tickets are too big; split them. If each session spends most of its [context](./Context.md) on setup before doing five minutes of work, they're too small; merge them.
+Batasan utama yang menentukan keberhasilan sebuah tiket adalah ukurannya: satu sesi kerja. Sebuah tiket harus dapat diselesaikan sebelum sesi tersebut keluar dari [zona pintar (smart zone)](./Smart%20zone.md) — dan batasan ini dapat diuji secara langsung. Jika sesi kerja Anda untuk tiket-tiket tersebut secara rutin mengalami penurunan kualitas sebelum pekerjaannya selesai, berarti tiket-tiket tersebut terlalu besar; bagilah menjadi beberapa tiket yang lebih kecil. Sebaliknya, jika setiap sesi menghabiskan sebagian besar [konteks](./Context.md) hanya untuk tahap persiapan sebelum melakukan pekerjaan selama lima menit, berarti tiket tersebut terlalu kecil; gabungkanlah.
 
-A good ticket is written for a reader with no other context. The goal, the acceptance criteria, and [context pointers](./Context%20pointer.md) to the relevant files and decisions — enough that the session can start working without re-deriving what the last one knew.
+Tiket yang baik ditulis untuk pembaca yang tidak memiliki konteks informasi lainnya. Tiket tersebut memuat tujuan akhir, kriteria penerimaan, serta [penunjuk konteks (context pointer)](./Context%20pointer.md) ke file dan keputusan yang relevan — cukup rinci agar sesi baru dapat langsung bekerja tanpa harus menebak-nebak kembali apa yang diketahui oleh sesi sebelumnya.
 
-The dependency graph is also what unlocks parallelism. Independent tickets — the leaves of the graph — can each run in their own session at the same time. This is an effective way of running multiple agents at once.
+Grafik ketergantungan ini juga merupakan kunci untuk membuka potensi pengerjaan secara paralel. Tiket-tiket yang bersifat independen — yaitu daun-daun terluar dari grafik ketergantungan — masing-masing dapat dijalankan di sesinya sendiri pada waktu yang bersamaan. Ini adalah cara yang efektif untuk menjalankan beberapa agen secara sekaligus.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"Where do I start on the migration spec?"
+"Dari mana sebaiknya saya mulai mengerjakan spesifikasi migrasi ini?"
 
-"Look at the ticket graph — the schema change blocks the backfill, the backfill blocks the API switch. Pick a leaf and run a session on it."
+"Lihatlah grafik ketergantungan tiketnya — perubahan skema menghalangi pengisian data (backfill), lalu pengisian data menghalangi pengalihan API. Pilih tiket yang tidak terhalang oleh apa pun (daun terluar) dan jalankan satu sesi kerja untuk tiket tersebut."

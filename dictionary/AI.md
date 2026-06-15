@@ -1,27 +1,27 @@
 ---
-description: A moving label, not a technology. Points at whatever computers can newly, impressively do — right now, large language models.
+description: Label yang terus bergeser, bukan nama teknologi. Merujuk pada hal baru dan luar biasa yang bisa dilakukan komputer — saat ini, LLM.
 ---
 
-A moving label, not a technology. "AI" doesn't name a fixed thing the way [model](./Model.md) or [token](./Token.md) does — it points at whatever computers can newly, impressively do. Right now it points at large language models. It has pointed at very different things before:
+Sebuah label yang terus bergeser seiring waktu, bukan nama teknologi yang spesifik. Kata "AI" tidak merujuk pada benda fisik yang tetap seperti halnya [model](./Model.md) atau [token](./Token.md) — melainkan menunjuk pada apa pun hal baru dan luar biasa yang bisa dilakukan oleh komputer. Saat ini, AI merujuk pada model bahasa besar (LLM). Di masa lalu, AI merujuk pada hal-hal yang sangat berbeda:
 
-| Era       | What "AI" meant                                                                                       |
-| --------- | ----------------------------------------------------------------------------------------------------- |
-| 1950s     | Symbolic reasoning — theorem provers, checkers programs.                                              |
-| 1960s–70s | Rule-based symbolic programs — ELIZA, SHRDLU.                                                         |
-| 1980s     | Expert systems — thousands of hand-written if-then rules encoding human expertise.                    |
-| 1990s     | Game-tree search — Deep Blue beating Kasparov (1997). Researchers avoided the word "AI" entirely      |
-| 2000s     | Statistical machine learning — spam filters, recommenders. Still sold as "machine learning", not "AI" |
-| 2010s     | Deep learning — image recognition (AlexNet, 2012), AlphaGo (2016).                                    |
-| 2020s     | Large language models — ChatGPT (2022) made "AI" mean chatbots                                        |
+| Era       | Arti "AI" saat itu                                                                                       |
+| --------- | -------------------------------------------------------------------------------------------------------- |
+| 1950-an   | Penalaran simbolis — pembuktian teorema matematika, program permainan catur.                             |
+| 1960-70an | Program simbolis berbasis aturan — ELIZA, SHRDLU.                                                        |
+| 1980-an   | Sistem pakar (expert systems) — ribuan aturan logika "jika-maka" yang ditulis manual oleh manusia.       |
+| 1990-an   | Pencarian pohon permainan — Deep Blue mengalahkan Kasparov (1997). Peneliti saat itu menghindari "AI"    |
+| 2000-an   | Pembelajaran mesin statistik — filter spam, sistem rekomendasi. Lebih sering disebut "machine learning". |
+| 2010-an   | Pembelajaran mendalam (deep learning) — pengenalan gambar (AlexNet, 2012), AlphaGo (2016).               |
+| 2020-an   | Model bahasa besar (LLM) — ChatGPT (2022) membuat kata "AI" identik dengan chatbot (asisten obrolan)     |
 
-The pointer moves by a known mechanism, sometimes called the AI effect: once a technique works reliably, it gets renamed — it's "just" search, "just" statistics — and "AI" slides forward to the next unsolved thing. The observation is old. Bertram Raphael put it this way in 1971: "AI is a collective name for problems which we do not yet know how to solve properly by computer." Larry Tesler's version, from around 1979: "Intelligence is whatever machines haven't done yet."
+Pergeseran ini terjadi karena sebuah mekanisme yang dikenal sebagai "efek AI": begitu suatu teknologi bekerja dengan andal, teknologi tersebut tidak lagi disebut AI melainkan diganti namanya — misalnya menjadi "hanya algoritma pencarian" atau "hanya analisis statistik" — dan sebutan "AI" pun bergeser ke hal berikutnya yang belum terpecahkan. Pengamatan ini sudah lama ada. Bertram Raphael menyatakannya seperti ini pada tahun 1971: "AI adalah nama kolektif untuk masalah-masalah yang belum kita ketahui cara penyelesaiannya yang benar menggunakan komputer." Versi Larry Tesler pada tahun 1979 berbunyi: "Kecerdasan (intelligence) adalah apa pun yang belum bisa dilakukan oleh mesin."
 
-This is why conversations about AI so often talk past each other. A claim like "AI can't reason" or "AI is overhyped" carries a hidden timestamp — it may be about expert systems, about 2010s image classifiers, or about last month's LLM, and each reference supports a different conclusion. When a discussion about AI stalls, the fix is usually to swap the word for whichever precise term is actually meant: the model, the [harness](./Harness.md), the [agent](./Agent.md), the [context](./Context.md) it was given.
+Inilah mengapa percakapan tentang AI sering kali tidak sejalan. Pernyataan seperti "AI tidak bisa bernalar" atau "AI itu terlalu dilebih-lebihkan (overhyped)" membawa penanda waktu tersembunyi — bisa jadi itu membicarakan sistem pakar tahun 80-an, pengenal gambar tahun 2010-an, atau LLM bulan lalu, dan setiap acuan tersebut mendukung kesimpulan yang berbeda. Ketika diskusi tentang AI menemui jalan buntu, solusinya biasanya adalah mengganti kata "AI" dengan istilah yang lebih presisi: apakah yang dimaksud itu modelnya, [harness (sistem penjalan)](./Harness.md)-nya, [agen](./Agent.md)-nya, atau [konteks](./Context.md) yang diberikan kepadanya.
 
-_Avoid:_ "AI" in any technical claim — name the part you mean instead. "AI coding" as a label for the practice is fine; "the AI is hallucinating" is not.
+_Hindari:_ menggunakan kata "AI" dalam pernyataan teknis — sebutkan bagian spesifik yang Anda maksud. Istilah "coding berbasis AI" sebagai label kegiatan masih diperbolehkan; namun kalimat seperti "AI-nya sedang berhalusinasi" sebaiknya dihindari.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"The CTO wants to know whether AI could handle the triage queue."
+"CTO ingin tahu apakah AI bisa menangani antrean tiket bantuan."
 
-"Translate that before scoping it — she means an LLM in a harness with access to the ticket system. 'AI' on its own isn't a spec."
+"Artikan dulu maksudnya sebelum merancang sistem — maksud beliau adalah menggunakan LLM di dalam sistem penjalan yang terhubung ke sistem tiket. Kata 'AI' saja tidak bisa dijadikan spesifikasi kerja."

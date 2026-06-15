@@ -1,15 +1,15 @@
 ---
-description: A system that attempts to make an agent stateful across sessions by persisting to the environment and reloading at session start.
+description: Sistem agar agen mengingat data antar-sesi dengan menyimpannya ke lingkungan kerja & memuatnya kembali di awal sesi.
 ---
 
-A system that attempts to make an [agent](./Agent.md) [stateful](./Stateful.md) across [sessions](./Session.md). Persists information into the [environment](./Environment.md) during a session and reloads it into the [context window](./Context%20window.md) at the start of future ones, so the agent carries continuity beyond the user [clearing](./Clearing.md) the session.
+Sebuah sistem yang berupaya membuat [agen](./Agent.md) bersifat [stateful (menyimpan keadaan/riwayat)](./Stateful.md) di berbagai [sesi](./Session.md) obrolan. Sistem ini menyimpan informasi ke dalam [lingkungan kerja](./Environment.md) selama sesi berlangsung dan memuatnya kembali ke dalam [jendela konteks](./Context%20window.md) di awal sesi berikutnya, sehingga agen tetap memiliki kesinambungan ingatan bahkan setelah pengguna melakukan [pembersihan (clearing)](./Clearing.md) sesi.
 
-A memory system has two halves. The write path: during a session, the agent records what it learned — a preference you stated, a fact about the project — as files in the environment. The read path: at session start, the [harness](./Harness.md) loads those files, or an index of them, back into the context window. Many harnesses ship their own memory system — Claude Code's `/memory` is one — but you can also build one yourself: a directory of notes plus an instruction in [AGENTS.md](./AGENTS.md.md) to consult it.
+Sistem memori memiliki dua jalur kerja. Jalur tulis (write path): selama sesi berlangsung, agen mencatat apa saja yang dipelajarinya — misalnya preferensi yang Anda sebutkan atau fakta tentang proyek Anda — ke dalam file di lingkungan kerja komputer Anda. Jalur baca (read path): di awal sesi baru, [harness (sistem penjalan)](./Harness.md) memuat file-file catatan tersebut, atau indeks dari berkas tersebut, kembali ke dalam jendela konteks. Banyak sistem penjalan dilengkapi dengan sistem memorinya sendiri — salah satunya adalah perintah `/memory` di Claude Code — tetapi Anda juga bisa membuatnya sendiri: misalnya dengan membuat folder berisi kumpulan catatan dan menambahkan instruksi di file [AGENTS.md](./AGENTS.md.md) agar agen membacanya.
 
-The same trade-offs as any always-loaded content apply. Memories accumulate, so most systems load a one-line index and leave the bodies behind [context pointers](./Context%20pointer.md) rather than inlining everything. And memories are [secondary sources](./Secondary%20source.md), so they drift: a fact recorded in March is loaded with equal confidence in June, after the project has moved on. A memory system needs pruning, the same way AGENTS.md does.
+Konsekuensi yang harus dihadapi sama seperti memuat konten otomatis lainnya. Catatan ingatan akan menumpuk, sehingga sebagian besar sistem memori hanya memuat indeks berupa satu baris kalimat saja dan menyembunyikan isi lengkapnya di balik [penunjuk konteks (context pointer)](./Context%20pointer.md) alih-alih menuliskan semuanya secara langsung. Selain itu, ingatan tersebut adalah [sumber sekunder (secondary source)](./Secondary%20source.md), sehingga informasinya bisa kedaluwarsa: fakta proyek yang dicatat pada bulan Maret akan dibaca dengan tingkat kepercayaan yang sama tingginya pada bulan Juni, padahal proyek kodenya mungkin sudah berubah. Sistem memori memerlukan pemangkasan catatan secara berkala, sama seperti halnya file AGENTS.md.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"I keep having to re-tell it I'm on Postgres, not MySQL."
+"Saya harus terus memberi tahu agen ini bahwa kita menggunakan Postgres, bukan MySQL."
 
-"Wire up a memory system — write what it learns to the [filesystem](./Filesystem.md) on the first [turn](./Turn.md), reload it at session start. The [model](./Model.md) itself is [stateless](./Stateless.md); the memory layer fakes continuity."
+"Pasang sistem memori (memory system) — biarkan dia menulis apa yang dipelajarinya ke dalam [sistem file](./Filesystem.md) pada [giliran](./Turn.md) obrolan pertama, lalu muat kembali berkas itu di awal sesi berikutnya. [Model](./Model.md) itu sendiri sebenarnya bersifat [stateless (tidak menyimpan riwayat)](./Stateless.md); sistem memori ini hanya memalsukan kesinambungan ingatan."

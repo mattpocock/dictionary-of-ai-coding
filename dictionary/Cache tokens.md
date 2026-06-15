@@ -1,24 +1,24 @@
 ---
-description: Input tokens the provider has cached from a previous request via its prefix cache, billed at a much lower rate.
+description: Token input yang disimpan penyedia model dari permintaan sebelumnya melalui cache awalan, dengan tarif yang jauh lebih murah.
 ---
 
-[Input tokens](./Input%20tokens.md) the [provider](./Model%20provider.md) has cached from a previous [model provider request](./Model%20provider%20request.md) so it doesn't have to re-process them. When consecutive requests share a prefix, the provider reuses the work via its [prefix cache](./Prefix%20cache.md) and bills the cached portion at a much lower rate. The lever that makes long [sessions](./Session.md) affordable — without it, every [turn](./Turn.md) re-pays for the whole history.
+[Token input](./Input%20tokens.md) yang disimpan oleh [penyedia model (provider)](./Model%20provider.md) dari [permintaan penyedia model (model provider request)](./Model%20provider%20request.md) sebelumnya agar tidak perlu diproses ulang dari awal. Ketika permintaan-permintaan yang berurutan memiliki awalan yang sama persis, penyedia model akan menggunakan kembali hasil pemrosesan sebelumnya melalui [cache awalan (prefix cache)](./Prefix%20cache.md) dan mengenakan tarif yang jauh lebih murah untuk bagian yang tersimpan tersebut. Fitur inilah yang membuat [sesi](./Session.md) percakapan panjang tetap ramah di kantong — tanpa fitur ini, setiap [giliran](./Turn.md) percakapan baru akan membuat Anda membayar penuh untuk seluruh riwayat obrolan dari awal.
 
-The reason this matters is how sessions are billed. The [model](./Model.md) is [stateless](./Stateless.md), so every request resends the entire conversation — [system prompt](./System%20prompt.md), every message, every [tool result](./Tool%20result.md) — as input tokens. By turn fifty, each request carries fifty turns of history, and you'd pay full rate on all of it, every time. The cache changes the maths: tokens the provider has already processed in an identical prefix are billed as cache tokens, often at a tenth of the input rate or less. On a long session, most of what you send is cache tokens, and the bill stays sane.
+Alasan mengapa hal ini sangat penting adalah cara penghitungan biaya sesi. [Model](./Model.md) bersifat [stateless (tidak mengingat riwayat)](./Stateless.md), sehingga setiap kali Anda mengirimkan pesan baru, sistem sebenarnya mengirimkan kembali seluruh isi obrolan dari awal — termasuk [system prompt (instruksi sistem)](./System%20prompt.md), semua pesan sebelumnya, dan setiap [hasil alat (tool result)](./Tool%20result.md) — sebagai token input. Di giliran ke-50, setiap pesan baru akan membawa riwayat obrolan sepanjang 50 giliran sebelumnya, dan Anda harus membayar tarif penuh untuk semua itu, berkali-kali. Cache mengubah hitungan ini: token dari awalan obrolan yang identik yang sudah diproses oleh penyedia model akan dihitung sebagai token cache (cache tokens), dengan tarif yang biasanya hanya sepersepuluh dari tarif input biasa atau bahkan kurang. Pada sesi yang panjang, sebagian besar token yang Anda kirimkan berupa token cache, sehingga biaya tagihan Anda tetap wajar.
 
-An example shows when tokens are cached and when they're not. Each letter stands for a block of conversation content; each request sends the conversation so far:
+Contoh berikut menunjukkan kapan token dapat disimpan dalam cache dan kapan tidak. Setiap huruf mewakili satu blok percakapan; setiap permintaan mengirimkan percakapan dari awal hingga titik tersebut:
 
-| Request sends | Cached  | Billed at full rate | Why                                               |
-| ------------- | ------- | ------------------- | ------------------------------------------------- |
-| `AB`          | nothing | `AB`                | First request — nothing to match against          |
-| `ABC`         | `AB`    | `C`                 | `AB` is an exact prefix of the previous request   |
-| `ABCD`        | `ABC`   | `D`                 | Prefix still intact                               |
-| `AXCD`        | `A`     | `XCD`               | An edit changed `B` to `X`; the match fails there |
+| Permintaan Mengirimkan | Masuk Cache | Dibayar Tarif Penuh | Alasan                                                                               |
+| ---------------------- | ----------- | ------------------- | ------------------------------------------------------------------------------------ |
+| `AB`                   | tidak ada   | `AB`                | Permintaan pertama — belum ada kecocokan riwayat                                     |
+| `ABC`                  | `AB`        | `C`                 | `AB` adalah awalan yang persis sama dengan permintaan sebelumnya                     |
+| `ABCD`                 | `ABC`       | `D`                 | Awalan obrolan masih utuh dan tidak berubah                                          |
+| `AXCD`                 | `A`         | `XCD`               | Perubahan kode atau teks mengubah `B` menjadi `X`; pencocokan cache terhenti di sana |
 
-The cache is fragile in a specific way: it matches exact prefixes. If anything changes earlier in the conversation — the [harness](./Harness.md) reorders content, a timestamp updates, a file's representation shifts — the cache misses from that point onward and everything after it is billed at full input rate. Caches also expire after a few minutes of inactivity, so a session resumed after a long pause re-pays its history once. When a session's cost jumps without an obvious cause, compare cache tokens to input tokens in the usage report — a broken cache shows up there first.
+Cache ini sangat sensitif terhadap perubahan: ia mencocokkan awalan yang persis sama. Jika ada hal kecil saja yang berubah di bagian awal percakapan — misalnya [harness (sistem penjalan)](./Harness.md) mengubah urutan file, penanda waktu (timestamp) diperbarui, atau representasi file bergeser sedikit — cache akan meleset (cache miss) mulai dari titik perubahan tersebut dan semua bagian setelahnya akan ditagih dengan tarif input penuh. Cache juga akan kedaluwarsa setelah beberapa menit tidak ada aktivitas obrolan, sehingga sesi yang dilanjutkan kembali setelah jeda lama akan membayar pemrosesan riwayat obrolan penuh sekali lagi. Jika biaya sesi Anda mendadak melonjak tanpa sebab yang jelas, bandingkan jumlah token cache dengan token input di laporan penggunaan Anda — kegagalan cache akan langsung terlihat di sana.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"Cost on long sessions is brutal — eight bucks for a refactor."
+"Biaya untuk sesi panjang terasa sangat mahal — delapan dolar hanya untuk merapikan kode (refactor)."
 
-"Check the cache tokens. If the harness is reordering the system prompt or files between turns, the prefix breaks and you re-pay full input rate every request."
+"Coba periksa penggunaan token cache Anda. Jika sistem penjalan (harness) terus mengubah urutan system prompt atau posisi file di setiap giliran obrolan, awalan cache akan rusak dan Anda harus membayar penuh tarif input di setiap permintaan."
