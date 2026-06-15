@@ -1,15 +1,15 @@
 ---
-description: A tree of files and directories the agent reads from, writes to, and executes within — the default environment for a coding agent.
+description: Struktur folder dan file tempat agen membaca, menulis, dan menjalankan perintah — lingkungan kerja bawaan agen coding.
 ---
 
-A tree of files and directories the [agent](./Agent.md) reads from, writes to, and executes within — the default kind of [environment](./Environment.md) for a coding agent. [AGENTS.md](./AGENTS.md.md), [skills](./Skill.md), source code, build scripts, and [tool](./Tool.md) configs all live in a filesystem. When a [harness](./Harness.md) "starts in your project," it's pointing the agent at a filesystem.
+Struktur pohon direktori dan file tempat [agen](./Agent.md) membaca data, menulis perubahan, dan menjalankan perintah pemrograman — yang merupakan jenis [lingkungan kerja](./Environment.md) bawaan (default) bagi agen coding. File seperti [AGENTS.md](./AGENTS.md.md), modul [keahlian (skills)](./Skill.md), kode program aplikasi, skrip kompilasi (build), dan konfigurasi [alat (tool)](./Tool.md) semuanya disimpan di dalam sistem file komputer. Ketika sebuah [harness (sistem penjalan)](./Harness.md) "berjalan di proyek Anda", sistem tersebut sebenarnya sedang mengarahkan agen ke sistem file tersebut.
 
-The agent touches it only through [tool calls](./Tool%20call.md) — reading a file, writing one, running a shell command. Nothing on disk is in the [context window](./Context%20window.md) until a tool call loads it, which is what lets the agent work in a repository far larger than the window: the filesystem holds everything, the context holds only what the current task has read. Some harnesses do load the current directory's filenames into the context window by default — not the contents, just the tree — which act as [context pointers](./Context%20pointer.md): the agent sees what exists and reads the files it needs.
+Agen hanya berinteraksi dengan sistem file melalui [panggilan alat (tool call)](./Tool%20call.md) — seperti membaca berkas, menulis berkas, atau menjalankan perintah baris shell. Tidak ada data di dalam penyimpanan komputer (disk) yang langsung masuk ke dalam [jendela konteks](./Context%20window.md) sebelum dimuat oleh panggilan alat. Fitur ini memungkinkan agen bekerja di dalam proyek besar yang ukurannya jauh melampaui kapasitas jendela konteks: sistem file menampung semua file proyek, sementara jendela konteks hanya menyimpan berkas yang dibaca untuk tugas aktif saat itu. Beberapa sistem penjalan memang memuat nama-nama file di direktori kerja ke dalam jendela konteks sejak awal — bukan isi filenya, hanya daftar nama pohon direktorinya saja — yang berfungsi sebagai [penunjuk konteks (context pointer)](./Context%20pointer.md): agen dapat melihat file apa saja yang tersedia lalu membaca berkas yang dibutuhkannya.
 
-And it's shared with you. The files the agent edits are the same ones you open in your editor and diff in git — the filesystem is the common workspace where you review what the agent did.
+Dan area kerja ini dibagi bersama Anda. Berkas yang diedit oleh agen adalah berkas yang sama yang Anda buka di aplikasi editor kode dan Anda periksa perubahannya menggunakan git — sistem file komputer adalah ruang kerja bersama tempat Anda meninjau hasil kerja agen.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"Why isn't it picking up my AGENTS.md?"
+"Kenapa dia tidak membaca file `AGENTS.md` milik saya?"
 
-"It's running against a different filesystem — the [sandbox](./Sandbox.md) mounted the parent dir, not the project root. Repoint the harness."
+"Dia berjalan di sistem file yang berbeda — sistem [sandbox (lingkungan terisolasi)](./Sandbox.md) memuat folder induknya, bukan folder utama proyek Anda. Coba arahkan kembali sistem penjalannya (harness)."

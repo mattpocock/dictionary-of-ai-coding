@@ -1,23 +1,23 @@
 ---
-description: The relevant information the agent has access to right now — what the agent knows that's pertinent to the task.
+description: Informasi relevan yang bisa diakses agen saat ini — apa yang diketahui agen yang berkaitan dengan tugasnya.
 ---
 
-The relevant information the [agent](./Agent.md) has access to right now. The abstract noun — not the raw input the model sees (that's the [context window](./Context%20window.md)), not the running history (that's the [session](./Session.md)), but _what the agent knows that's pertinent to the task_. "Loading something into context" means making it part of this set; "context engineering" is the discipline of curating it.
+Informasi relevan yang dapat diakses oleh [agen](./Agent.md) saat ini. Ini adalah kata benda abstrak — bukan input mentah yang dibaca oleh model (itu disebut [jendela konteks](./Context%20window.md)), bukan pula catatan riwayat obrolan yang sedang berjalan (itu disebut [sesi](./Session.md)), melainkan _apa saja yang diketahui agen yang berkaitan dengan tugasnya_. Istilah "memasukkan sesuatu ke dalam konteks" berarti menambahkan informasi tersebut ke dalam kumpulan pengetahuan aktif agen; sementara "rekayasa konteks" (context engineering) adalah keahlian mengelola dan menyaring informasi tersebut.
 
-The three terms separate cleanly:
+Ketiga istilah ini memiliki batasan yang jelas:
 
-| Term           | What it names                                                       |
-| -------------- | ------------------------------------------------------------------- |
-| Context        | The task-relevant information the agent currently has               |
-| Context window | The literal [token](./Token.md) sequence the model sees per request |
-| Session        | The running conversation the [harness](./Harness.md) stores         |
+| Istilah         | Penjelasan                                                                              |
+| --------------- | --------------------------------------------------------------------------------------- |
+| Konteks         | Informasi relevan dengan tugas yang saat ini dimiliki oleh agen                         |
+| Jendela konteks | Urutan [token](./Token.md) fisik yang dibaca oleh model di setiap permintaan            |
+| Sesi            | Catatan riwayat percakapan yang disimpan oleh [harness (sistem penjalan)](./Harness.md) |
 
-The separation matters because context is a measure of quality, not quantity. A context window can be nearly full and the context still poor — thousands of tokens of stale tool output, none of it about the task at hand. It can also be nearly empty and the context excellent: the one type definition the task turns on.
+Pembedaan ini sangat penting karena kualitas konteks diukur dari mutunya, bukan dari jumlah katanya. Kapasitas jendela konteks bisa saja hampir penuh tetapi kualitas konteksnya sangat buruk — misalnya berisi ribuan token dari hasil keluaran alat pemrograman yang sudah lama dan sama sekali tidak berhubungan dengan tugas saat ini. Sebaliknya, jendela konteks bisa saja hampir kosong tetapi kualitas konteksnya sangat luar biasa: misalnya hanya berisi satu file definisi tipe data penting yang menentukan keberhasilan tugas tersebut.
 
-Most day-to-day failures trace back to context. When the agent invents an API, contradicts a decision, or guesses at a schema, the first question is what was in context when it did — usually the relevant fact was never loaded, or was buried under [attention degradation](./Attention%20degradation.md). The fix is curation: load what the task needs, keep out what it doesn't.
+Sebagian besar kegagalan kerja harian agen disebabkan oleh masalah konteks. Ketika agen mengarang kode API baru, bertentangan dengan keputusan sebelumnya, atau menebak-nebak struktur data, pertanyaan pertama yang harus diajukan adalah apa saja informasi yang ada di dalam konteks saat itu — biasanya fakta penting yang relevan memang belum pernah dimuat, atau terpendam akibat [penurunan perhatian (attention degradation)](./Attention%20degradation.md). Solusinya adalah kurasi: muat informasi yang dibutuhkan oleh tugas, dan singkirkan informasi yang tidak diperlukan.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"It keeps inventing fields that aren't in the type."
+"Agen ini terus mengarang kolom data (field) baru yang tidak ada di dalam file definisi tipe datanya."
 
-"The type file isn't in context — it's reading the call sites and guessing. Read the definition in first."
+"File definisi tipe data tersebut belum masuk ke dalam konteks — agen hanya membaca lokasi pemanggilan kodenya lalu menebak-nebak. Coba minta dia membaca definisinya terlebih dahulu."

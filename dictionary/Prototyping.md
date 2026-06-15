@@ -1,19 +1,19 @@
 ---
-description: Having the agent build a quick, rough version when conversation is too low-fidelity and you need a real artifact to talk about.
+description: Meminta agen membuat versi awal yang kasar ketika obrolan terlalu abstrak dan Anda butuh wujud nyata untuk dievaluasi.
 ---
 
-Having the [agent](./Agent.md) build a quick, rough version of something, for when conversation is too low-fidelity and you need a real artifact to talk about.
+Meminta [agen](./Agent.md) membuat versi awal yang cepat dan kasar dari sesuatu, berguna ketika proses obrolan terlalu abstrak (kurang representatif) dan Anda membutuhkan wujud fisik nyata untuk didiskusikan bersama.
 
-[Grilling](./Grilling.md) resolves design decisions in conversation. Conversation is cheap, but it's low-fidelity: some questions can't be answered in words — how an interaction feels, whether an API shape is ergonomic in real calling code, whether the layout works at real data sizes. The interview hits a question and your honest answer is "I don't know, I'd have to see it." Past that point the discussion circles. Instead, have the agent build the thing, look at it, and come back to the conversation with an answer.
+Metode [grilling (tanya-jawab intensif)](./Grilling.md) menyelesaikan keputusan desain melalui percakapan. Percakapan memang murah, namun representasinya rendah: beberapa pertanyaan tidak dapat dijawab hanya dengan kata-kata — seperti bagaimana sensasi interaksi tombol saat diklik, apakah struktur API terasa nyaman saat dipanggil di kode pemrograman nyata, atau apakah tata letak tampilan tetap rapi saat dimuat data yang sesungguhnya. Proses tanya-jawab sering kali menemui pertanyaan di mana jawaban jujur Anda adalah "saya tidak tahu, saya harus melihat wujudnya dulu." Setelah titik itu, diskusi hanya akan berputar-putar tanpa ujung. Sebagai gantinya, mintalah agen membangun wujud kasarnya terlebih dahulu, lihat hasilnya, dan kembalilah ke obrolan dengan membawa jawaban pasti.
 
-Agents lower the cost of building, which is what makes this practical. A rough version that used to take a day to mock up now takes minutes, so it's worth doing routinely. It's a [human-in-the-loop](./Human-in-the-loop.md) technique: the prototype is there for you to react to.
+Keberadaan agen dapat memangkas biaya pembuatan program, yang membuat metode ini sangat praktis dilakukan. Versi kasar yang dulunya membutuhkan waktu seharian untuk dirancang, sekarang dapat selesai dalam hitungan menit, sehingga sangat layak untuk rutin dilakukan. Ini adalah teknik [human-in-the-loop (keterlibatan manusia)](./Human-in-the-loop.md): prototipe dibuat agar Anda dapat mengevaluasi dan merespon hasilnya secara langsung.
 
-You usually don't stop at one look. Iterate with the prototype — react, ask for a change, react again — so each round resolves another decision against the real artifact, at a higher fidelity than conversation allows.
+Proses evaluasi ini biasanya tidak berhenti pada pandangan pertama. Lakukan proses iterasi pada prototipe tersebut — lihat hasilnya, minta perubahan kode, dan lihat kembali hasilnya — sehingga setiap putaran akan menyelesaikan keputusan demi keputusan langsung di atas wujud nyata, dengan tingkat representasi yang jauh lebih tinggi daripada sekadar obrolan.
 
-A prototype doesn't have to be all-scrappy. You can build the pieces you're actually evaluating to production quality, so when the decision lands, the component or API you reacted to can transfer into the real codebase. This makes prototyping essential material for the [spec](./Spec.md) to reference.
+Prototipe tidak harus selalu berakhir menjadi sampah. Anda dapat membangun bagian-bagian yang sedang Anda evaluasi dengan standar kualitas siap rilis (production-ready), sehingga ketika keputusan desain sudah disepakati, komponen atau API yang Anda uji dapat langsung dipindahkan ke dalam proyek utama. Hal ini menjadikan pembuatan prototipe sebagai bahan rujukan utama untuk dimasukkan ke dalam dokumen [spesifikasi (spec)](./Spec.md).
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"We've spent half an hour arguing about whether the wizard should be one page or three steps."
+"Kita sudah menghabiskan waktu setengah jam berdebat tentang apakah wizard pengisian data ini sebaiknya dibuat satu halaman penuh atau dibagi menjadi tiga langkah."
 
-"Words won't settle it — have the agent prototype both. We'll click through them and know in five minutes."
+"Kata-kata tidak akan menyelesaikan perdebatan ini — minta agen membuat prototipe untuk kedua opsi tersebut. Kita tinggal mencobanya dan akan tahu jawabannya dalam lima menit."

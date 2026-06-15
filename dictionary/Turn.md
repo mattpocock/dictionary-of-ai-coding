@@ -1,15 +1,15 @@
 ---
-description: One user message plus everything the agent does in response, up until it yields back to the user. Contains one or more provider requests.
+description: Satu pesan pengguna ditambah semua respon agen hingga giliran kembali ke pengguna. Terdiri dari satu atau lebih permintaan penyedia.
 ---
 
-One user message plus everything the [agent](./Agent.md) does in response, up until it yields back to the user. Contains one or more [model provider requests](./Model%20provider%20request.md) — many, if the agent calls [tools](./Tool.md). A clarifying question closes the turn; your reply opens the next one. The hierarchy is [session](./Session.md) **> Turn > Model provider request**.
+Satu pesan dari pengguna ditambah semua respon yang dilakukan oleh [agen](./Agent.md) sebagai jawaban, hingga kendali diserahkan kembali kepada pengguna. Giliran pesan (turn) ini berisi satu atau lebih [permintaan penyedia model (model provider requests)](./Model%20provider%20request.md) — dan bisa sangat banyak jika agen memanggil berbagai [alat (tools)](./Tool.md). Pertanyaan klarifikasi dari agen akan menutup giliran tersebut; jawaban Anda akan membuka giliran berikutnya. Hierarki tingkatannya adalah [sesi](./Session.md) **> Giliran Pesan (Turn) > Permintaan Penyedia Model**.
 
-What makes the turn worth naming is that its length is the agent's decision, not yours. You hand over one message; the agent decides how many tool calls to chain before yielding. A turn can be a one-sentence answer or twenty minutes of reading, editing, and running tests. That's the same property from two angles: long turns are what make [AFK](./AFK.md) work possible, and long turns are also where things go wrong unsupervised — by the time the agent yields, it may have drifted a long way from what you meant.
+Hal yang membuat giliran pesan ini penting untuk didefinisikan adalah karena panjangnya ditentukan oleh keputusan agen, bukan oleh Anda. Anda mengirimkan satu pesan; lalu agen memutuskan berapa banyak panggilan alat yang akan dirangkai sebelum ia mengembalikan kendali kepada Anda. Satu giliran pesan bisa berupa jawaban satu kalimat saja, atau proses membaca, mengedit, dan menjalankan pengujian selama dua puluh menit. Karakteristik ini memiliki dua sisi: giliran pesan yang panjang adalah hal yang memungkinkan pengerjaan secara [AFK (jauh dari keyboard)](./AFK.md), tetapi giliran pesan yang panjang juga merupakan tempat di mana masalah dapat terjadi tanpa pengawasan — pada saat agen akhirnya mengembalikan kendali, ia mungkin telah melenceng jauh dari apa yang Anda maksudkan.
 
-The turn is also the natural unit for steering. Everything inside a turn happens without you; the gaps between turns are where you redirect. Most [harnesses](./Harness.md) soften this: you can interrupt mid-turn to stop the agent and redirect it, or type a message while it works, which gets read once the turn completes. If you find yourself repeatedly unhappy with where turns end up, the fix is usually to ask for smaller ones — a plan first, one step at a time — trading autonomy for more frequent gaps to steer in.
+Giliran pesan juga merupakan unit alami untuk mengarahkan agen. Semua tindakan di dalam suatu giliran terjadi tanpa campur tangan Anda; jeda di antara giliran pesan adalah momen di mana Anda dapat mengarahkan ulang tindakan agen. Sebagian besar [harness (sistem penjalan)](./Harness.md) mempermudah hal ini: Anda dapat menginterupsi di tengah giliran untuk menghentikan agen dan mengarahkannya kembali, atau mengetik pesan saat ia bekerja, yang akan dibaca setelah gilirannya selesai. Jika Anda berulang kali merasa tidak puas dengan hasil akhir giliran pesan, solusinya biasanya adalah meminta langkah-langkah yang lebih kecil — seperti membuat rencana terlebih dahulu, satu langkah demi satu langkah — menukar sebagian otonomi agen dengan jeda yang lebih sering untuk mengarahkannya.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"One turn took two minutes?"
+"Satu giliran pesan saja memakan waktu sampai dua menit?"
 
-"It made fourteen [tool calls](./Tool%20call.md) inside that turn — each one is a separate model provider request. Latency stacks up before the agent finally yields back to you."
+"Agen melakukan empat belas kali [panggilan alat (tool calls)](./Tool%20call.md) di dalam giliran pesan tersebut — masing-masing panggilan adalah permintaan penyedia model yang terpisah. Latensi waktu menumpuk sebelum agen akhirnya mengembalikan kendali kepada Anda."

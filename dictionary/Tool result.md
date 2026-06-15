@@ -1,25 +1,25 @@
 ---
-description: What the harness sends back after executing a tool call — file contents, output, or error. The agent's only view of the environment.
+description: Apa yang dikirim balik oleh penjalan setelah menjalankan panggilan alat — isi berkas, keluaran perintah, atau pesan kesalahan.
 ---
 
-What the [harness](./Harness.md) sends back after executing a [tool call](./Tool%20call.md) — the file contents, the command output, the error. The [agent](./Agent.md)'s only view of the [environment](./Environment.md). Travels back to the [model](./Model.md) in the _next_ [model provider request](./Model%20provider%20request.md), where the model decides what to do with it. Tool call and tool result are two ends of the same exchange, both inside one [turn](./Turn.md).
+Apa yang dikirim balik oleh [harness (sistem penjalan)](./Harness.md) setelah menjalankan [panggilan alat (tool call)](./Tool%20call.md) — dapat berupa isi file, keluaran perintah, atau pesan kesalahan. Ini adalah satu-satunya jendela bagi [agen](./Agent.md) untuk melihat [lingkungan kerja (environment)](./Environment.md). Data hasil ini dikirim kembali ke [model](./Model.md) pada [permintaan penyedia model (model provider request)](./Model%20provider%20request.md) _berikutnya_, di mana model akan memutuskan apa yang harus dilakukan setelahnya. Panggilan alat dan hasil alat adalah dua bagian dari pertukaran informasi yang sama di dalam satu [giliran (turn)](./Turn.md).
 
-The lifecycle of a tool result:
+Siklus hidup hasil alat:
 
-| Step | Who     | What happens                                                               |
-| ---- | ------- | -------------------------------------------------------------------------- |
-| 1    | Harness | Executes the tool call — runs the command, reads the file                  |
-| 2    | Harness | Captures the outcome: output, contents, or error                           |
-| 3    | Harness | Appends it to the [context](./Context.md) as a message                     |
-| 4    | Harness | Sends the whole context to the provider in the next model provider request |
-| 5    | Model   | Reads the result and decides: another tool call, or a final answer         |
+| Langkah | Siapa   | Apa yang terjadi                                                                                    |
+| ------- | ------- | --------------------------------------------------------------------------------------------------- |
+| 1       | Harness | Menjalankan panggilan alat — mengeksekusi perintah, membaca file                                    |
+| 2       | Harness | Menangkap hasil akhir: keluaran teks, isi berkas, atau pesan kesalahan                              |
+| 3       | Harness | Menambahkan hasil tersebut ke [konteks](./Context.md) sebagai sebuah pesan                          |
+| 4       | Harness | Mengirimkan seluruh konteks ke penyedia model dalam permintaan penyedia model berikutnya            |
+| 5       | Model   | Membaca hasil tersebut dan memutuskan: melakukan panggilan alat lain, atau memberikan jawaban akhir |
 
-The result stays in the context for the rest of the [session](./Session.md). Tool results are usually the bulk of a coding session's context: every file read, every test run, every search lands in full and keeps occupying [tokens](./Token.md) long after it stopped being useful. A few large results — a verbose test log, a generated file read whole — can push a session toward the edge of the [context window](./Context%20window.md) faster than the conversation itself does.
+Hasil alat ini akan tetap berada di dalam konteks sepanjang sisa waktu [sesi](./Session.md) obrolan berjalan. Hasil alat biasanya merupakan bagian terbesar dari konteks sesi pemrograman: setiap pembacaan file, setiap jalannya pengujian, dan setiap pencarian akan masuk secara utuh ke dalam konteks dan terus memakan kapasitas [token](./Token.md) lama setelah informasi tersebut tidak lagi berguna. Beberapa hasil alat yang berukuran besar — seperti log pengujian yang sangat panjang atau pembacaan file besar yang diunggah secara utuh — dapat mendorong sesi obrolan mendekati batas kapasitas [jendela konteks (context window)](./Context%20window.md) jauh lebih cepat daripada obrolan itu sendiri.
 
-Because the result is all the model sees, the model has no way to check the environment behind it. If the output was truncated, the command silently failed, or the harness returned an error instead of the contents, the model reasons from what it was given. When the agent's picture of your system seems wrong, the tool results are where to look: somewhere in the transcript is a result that says something different from what you know to be true.
+Karena hasil alat adalah satu-satunya hal yang dilihat oleh model, model tidak memiliki cara untuk memeriksa lingkungan kerja nyata di baliknya. Jika keluaran terpotong, perintah gagal secara diam-diam, atau sistem penjalan mengembalikan pesan kesalahan alih-alih isi berkas, model akan mengambil kesimpulan hanya berdasarkan apa yang diberikan kepadanya. Ketika gambaran agen tentang sistem Anda tampak keliru, hasil alat adalah tempat pertama yang harus Anda periksa: di dalam transkrip obrolan pasti terdapat suatu hasil alat yang memberikan informasi yang berbeda dari kenyataan sebenarnya.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"It's reasoning about the file like it's empty."
+"Ia menganalisis file tersebut seolah-olah filenya kosong."
 
-"The tool result came back as a permission denial, not the contents. The model only saw the error string — it has no other way to see the file."
+"Itu karena hasil alat (tool result) yang dikembalikan adalah pesan penolakan izin akses, bukan isi berkasnya. Model hanya melihat teks kesalahan tersebut — ia tidak punya cara lain untuk melihat berkasnya."

@@ -1,23 +1,23 @@
 ---
-description: A teachable capability bundled as a unit — kept out of the context window until a context pointer pulls it in for the task at hand.
+description: Kemampuan yang dikemas jadi satu modul — disimpan di luar jendela konteks sampai penunjuk memuatnya saat dibutuhkan.
 ---
 
-A teachable capability bundled as a unit — instructions and resources for doing one task well, kept in the [environment](./Environment.md) until a [context pointer](./Context%20pointer.md) pulls it into the [context window](./Context%20window.md) for the task at hand. The unit of [progressive disclosure](./Progressive%20disclosure.md) in a [harness](./Harness.md).
+Sebuah modul kemampuan terkemas yang diajarkan kepada agen — berisi kumpulan instruksi dan sumber daya untuk menyelesaikan suatu tugas spesifik dengan baik, disimpan di dalam [lingkungan kerja](./Environment.md) sampai [penunjuk konteks (context pointer)](./Context%20pointer.md) memuatnya ke dalam [jendela konteks](./Context%20window.md) ketika tugas tersebut dikerjakan. Ini adalah modul unit dari metode [pengungkapan bertahap (progressive disclosure)](./Progressive%20disclosure.md) di dalam [harness (sistem penjalan)](./Harness.md).
 
-Skills are an open standard, defined at [agentskills.io](https://agentskills.io) — originally developed by Anthropic and since adopted by most major harnesses, so a skill written once works across them. The format is a folder containing:
+Fitur keahlian (skills) adalah standar terbuka yang didefinisikan di situs [agentskills.io](https://agentskills.io) — awalnya dikembangkan oleh Anthropic dan kini telah diadopsi oleh sebagian besar sistem penjalan terkemuka, sehingga modul keahlian yang ditulis sekali dapat bekerja di berbagai sistem. Format modul keahlian berupa sebuah folder yang berisi:
 
-- A `SKILL.md` file — metadata (a name and description, at minimum) plus the instructions themselves
-- Optionally, scripts the [agent](./Agent.md) can run
-- Optionally, templates and reference material the instructions point to
+- File `SKILL.md` — berisi metadata (minimal nama dan deskripsi keahlian) serta instruksi langkah kerja itu sendiri
+- Pilihan lainnya: skrip program yang dapat dijalankan oleh [agen](./Agent.md)
+- Pilihan lainnya: templat berkas dan materi rujukan yang ditunjuk oleh instruksi kerja
 
-Only the name and description sit in [context](./Context.md) by default. When the agent's task matches, it loads the rest. Until then, the skill takes up almost no room — a sentence or two of [tokens](./Token.md), however large its full instructions are.
+Secara bawaan, hanya nama dan deskripsi keahlian saja yang masuk ke dalam [konteks](./Context.md) obrolan. Ketika tugas yang diberikan cocok, agen baru memuat isi lengkap dokumen instruksinya. Sebelum hal itu terjadi, modul keahlian ini hampir tidak memakan ruang memori sama sekali — hanya memakan satu atau dua kalimat [token](./Token.md), peduli seberapa panjang dan tebal dokumen instruksi lengkapnya di dalam komputer.
 
-This distinguishes skills from [AGENTS.md](./AGENTS.md.md), which is loaded into every [session](./Session.md) regardless of the task. A skill is read when a particular kind of work comes up — releasing, scaffolding a new service, writing a migration — and ignored the rest of the time.
+Hal inilah yang membedakan modul keahlian dengan file [AGENTS.md](./AGENTS.md.md), yang selalu dimuat di setiap [sesi](./Session.md) percakapan apa pun jenis tugasnya. Modul keahlian hanya dibaca ketika jenis pekerjaan spesifik yang relevan muncul — seperti merilis aplikasi, merancang struktur layanan baru, atau menulis migrasi database — dan diabaikan pada sisa waktu pengerjaan lainnya.
 
-_Avoid:_ "[tool](./Tool.md)" — a tool is what the agent _calls_; a skill is instructions it _reads_.
+_Hindari:_ istilah "[alat (tool)](./Tool.md)" — karena alat adalah apa yang _dijalankan_ oleh agen; sedangkan keahlian (skill) adalah dokumen instruksi yang _dibaca_ oleh agen.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"Where should I put the deploy runbook?"
+"Di mana sebaiknya saya meletakkan file panduan deploy aplikasi?"
 
-"As a skill — the agent loads it only when the task involves deploys. In AGENTS.md it'd burn tokens on every [turn](./Turn.md) for something we use weekly."
+"Sebagai sebuah modul keahlian (skill) — agen akan memuatnya hanya ketika tugasnya berkaitan dengan deploy. Jika diletakkan di file `AGENTS.md`, itu akan menghabiskan kuota token di setiap [giliran](./Turn.md) obrolan untuk sesuatu yang hanya kita pakai seminggu sekali."

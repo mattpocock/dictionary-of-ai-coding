@@ -1,21 +1,21 @@
 ---
-description: A mention in one document that points to another, so the agent can pull it into context only when the task calls for it.
+description: Penyebutan dalam suatu dokumen yang mengarah ke dokumen lain, agar agen bisa memuatnya ke jendela konteks hanya saat dibutuhkan.
 ---
 
-A mention in one document that points to another, so the [agent](./Agent.md) can pull it into the [context window](./Context%20window.md) only when the task calls for it. The unit [progressive disclosure](./Progressive%20disclosure.md) is built from.
+Sebuah rujukan atau penyebutan di dalam suatu dokumen yang mengarah ke dokumen lainnya, sehingga [agen](./Agent.md) dapat memuat dokumen tersebut ke dalam [jendela konteks](./Context%20window.md) hanya ketika tugas yang dikerjakannya membutuhkan informasi tersebut. Ini adalah fondasi utama dari metode [pengungkapan bertahap (progressive disclosure)](./Progressive%20disclosure.md).
 
-The reason to use a pointer (instead of inlining the content) is cost. A pointer is one line in the context window. The document behind it might be thousands of [tokens](./Token.md), but those tokens cost nothing until the agent actually follows the pointer. Inline a 2,000-token runbook in [AGENTS.md](./AGENTS.md.md) and every [session](./Session.md) pays for it; replace it with "deploy process: see `internal/deploy.md`" and only the sessions that deploy ever load it. The agent follows the pointer with a [tool call](./Tool%20call.md) when the task matches.
+Alasan utama menggunakan penunjuk (pointer) — daripada menuliskan langsung seluruh isinya di tempat — adalah masalah efisiensi biaya. Sebuah penunjuk hanya memakan ruang satu baris kalimat saja di dalam jendela konteks. Dokumen yang dirujuk mungkin berisi ribuan [token](./Token.md), namun token tersebut tidak akan memakan biaya apa pun sebelum agen benar-benar mengikuti penunjuk tersebut. Menuliskan langsung 2.000 token panduan rilis di dalam [AGENTS.md](./AGENTS.md.md) akan membuat Anda membayar biaya token tersebut di setiap awal [sesi](./Session.md) baru; tetapi jika Anda menggantinya dengan kalimat "proses deploy: silakan baca `internal/deploy.md`", maka hanya sesi yang benar-benar melakukan deployment saja yang akan memuat dokumen tersebut. Agen akan mengikuti penunjuk ini melalui [panggilan alat (tool call)](./Tool%20call.md) ketika tugas yang diberikan sesuai.
 
-A pointer needs two parts to work: a stable path, and enough description for the agent to know when following it is worth it. A bare path is a pointer the agent has no reason to follow; "see `internal/deploy.md`" with no hint of what's inside gets skipped by a session that needed it. Write the line so it matches how tasks present: "release, deploy, or rollback — read `internal/deploy.md` first".
+Agar penunjuk dapat bekerja dengan baik, dibutuhkan dua hal: jalur lokasi file yang tetap (stable path) dan deskripsi yang cukup agar agen tahu kapan rujukan tersebut perlu dibaca. Jalur file saja tanpa keterangan tidak akan menarik perhatian agen; kalimat "baca `internal/deploy.md`" tanpa penjelasan isi akan diabaikan oleh sesi yang sebenarnya membutuhkannya. Tuliskan rujukan tersebut sesuai dengan kategori tugasnya: "untuk rilis aplikasi, deploy, atau pembatalan rilis (rollback) — baca `internal/deploy.md` terlebih dahulu".
 
-Pointers are everywhere once you look: lines in AGENTS.md, [skill](./Skill.md) descriptions (the harness loads the description; the skill body waits behind it), filenames in a directory listing, links between docs.
+Penunjuk konteks dapat ditemukan di mana saja: baris instruksi di file AGENTS.md, deskripsi [keahlian (skill)](./Skill.md) (sistem penjalan memuat deskripsinya, sementara isi keahliannya menunggu di balik deskripsi tersebut), nama-nama file di dalam daftar folder, serta tautan antar-dokumen.
 
-A pointer can also tie a [secondary source](./Secondary%20source.md) back to the [primary source](./Primary%20source.md) it was derived from — the compaction summary that names the original transcript, the doc that names the source file it describes. This makes the secondary source's lossiness recoverable: when the summary turns out not to be enough, the agent follows the pointer and reads the original, instead of working from whatever the summary kept.
+Penunjuk juga dapat menghubungkan [sumber sekunder (secondary source)](./Secondary%20source.md) kembali ke [sumber primer (primary source)](./Primary%20source.md) asalnya — seperti ringkasan penyusutan yang menyebutkan nama berkas transkrip asli, atau dokumen panduan yang mencantumkan nama berkas kode pemrograman yang dijelaskannya. Hal ini membuat hilangnya informasi dari ringkasan dapat dipulihkan: ketika ringkasan dirasa tidak cukup lengkap, agen dapat mengikuti penunjuk tersebut untuk membaca dokumen aslinya, alih-alih menebak-nebak dari ringkasan yang ada.
 
-_Avoid:_ "reference" — too dry; doesn't convey that following it pulls more context in. "Portal" — too florid.
+_Hindari:_ istilah "referensi" (reference) — karena terlalu formal dan kurang menggambarkan bahwa proses mengikuti tautan tersebut akan memuat konteks baru. _Hindari:_ istilah "portal" — karena terlalu berlebihan.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"AGENTS.md is getting huge."
+"File `AGENTS.md` kita ukurannya sudah sangat besar."
 
-"Most of it should be context pointers, not content. Keep the always-on rules inline; turn the deploy runbook and the style guide into skills and leave a context pointer behind."
+"Sebagian besar isinya harus diubah menjadi penunjuk konteks (context pointer), bukan ditulis langsung semua isinya di sana. Biarkan aturan wajib tetap tertulis langsung; ubah panduan deploy dan panduan gaya kode menjadi modul keahlian (skill) dan sisakan penunjuk konteksnya saja di file tersebut."

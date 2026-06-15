@@ -1,15 +1,15 @@
 ---
-description: The shared understanding of what's being built, held in common between user and agent but separate from any asset.
+description: Pemahaman bersama tentang aplikasi yang sedang dibangun, dimiliki oleh pengguna dan agen tetapi terpisah dari berkas fisik.
 ---
 
-The shared understanding of what's being built, held in common between user and [agent](./Agent.md) but separate from any asset. Brooks' term (_The Design of Design_): the conversation, [handoff artifacts](./Handoff%20artifact.md), and the code are all assets that try to capture or reach the design concept, but none of them _are_ it. Quality of the design concept is felt through the quality of the conversation that built it.
+Pemahaman bersama mengenai apa yang sedang dibangun, yang dimiliki secara selaras antara pengguna dan [agen](./Agent.md), namun terpisah dari dokumen fisik apa pun. Istilah ini dipopulerkan oleh Brooks dalam bukunya _The Design of Design_: percakapan, [artefak operan (handoff artifact)](./Handoff%20artifact.md), dan kode program adalah dokumen fisik (aset) yang berupaya menangkap atau mewujudkan konsep desain tersebut, namun tidak ada satu pun dari aset itu yang _merupakan_ konsep desain itu sendiri. Kualitas konsep desain ini dirasakan langsung melalui kualitas percakapan yang membangunnya.
 
-The term names the gap behind a familiar frustration: the agent writes exactly what you asked for and it's still wrong. The usual cause is that you hadn't fully figured out what you wanted. The design concept wasn't finished in your own head — your prompt captured the parts you'd worked out, and was silent on the parts you hadn't. The agent filled those silences with its own assumptions, because there was nothing to align with. Nothing malfunctioned. There was no shared design concept, because there wasn't yet a whole one to share.
+Istilah ini menjelaskan penyebab di balik rasa frustrasi yang sering kita rasakan: agen menuliskan kode yang persis seperti yang Anda minta, namun hasilnya tetap saja salah. Penyebab utamanya biasanya adalah karena Anda sendiri belum sepenuhnya tahu apa yang Anda inginkan. Konsep desain tersebut belum matang di dalam kepala Anda — instruksi (prompt) Anda baru menangkap bagian-bagian yang sudah Anda pikirkan, dan diam untuk bagian-bagian yang belum terpikirkan. Agen kemudian mengisi keheningan tersebut dengan asumsinya sendiri, karena tidak ada panduan keselarasan yang bisa diikutinya. Tidak ada sistem yang rusak. Konsep desain bersama belum terbentuk, karena memang belum ada konsep utuh yang bisa dibagikan.
 
-You can tell a design concept is shared the same way you can with a colleague: the other party starts answering questions you haven't asked yet the way you would. Until then, the work is conversation — [grilling](./Grilling.md) is the deliberate version — and writing a [spec](./Spec.md) too early just captures the misalignment in a more durable asset. The design concept also moves as you learn; assets lag it, which is why a spec faithful to last week's understanding can still mislead this week's session.
+Anda dapat mengetahui bahwa konsep desain telah dipahami bersama dengan cara yang sama seperti yang Anda lakukan terhadap rekan kerja manusia: pihak lain mulai menjawab pertanyaan yang belum Anda tanyakan dengan cara yang persis seperti yang Anda harapkan. Sebelum momen itu tercapai, proses kerja masih berupa percakapan — metode [grilling (tanya-jawab intensif)](./Grilling.md) adalah bentuk sengaja dari hal ini — dan menulis [spesifikasi (spec)](./Spec.md) terlalu cepat hanya akan mengunci ketidakselarasan tersebut ke dalam dokumen fisik yang permanen. Konsep desain juga akan terus berkembang seiring Anda belajar; dokumen fisik akan selalu tertinggal di belakangnya, itulah mengapa spesifikasi yang setia pada pemahaman minggu lalu masih bisa menyesatkan sesi kerja minggu ini.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"It's writing exactly what I asked for and it's still wrong."
+"Agen ini menulis kode yang persis seperti yang saya minta, tapi hasilnya tetap saja salah."
 
-"You don't share a design concept yet — it's filling gaps with assumptions. Keep talking until cancellation, refunds, and partial fulfilment all line up between you before you let it write a spec."
+"Kalian belum memiliki konsep desain bersama (design concept) — dia mengisi bagian yang kosong dengan asumsinya sendiri. Teruskan mengobrol hingga aturan pembatalan, pengembalian dana, dan pemenuhan pesanan sebagian sudah selaras di antara kalian berdua sebelum Anda memintanya menulis file spesifikasi."

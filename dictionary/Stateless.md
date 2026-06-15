@@ -1,15 +1,15 @@
 ---
-description: Carries no information forward. The model is stateless across requests; an agent is stateless across sessions by default.
+description: Tidak membawa informasi ke depan. Model bersifat stateless lintas permintaan; agen stateless lintas sesi secara default.
 ---
 
-Carries no information forward. The [model](./Model.md) is stateless across [model provider requests](./Model%20provider%20request.md) — each request resends the full [context window](./Context%20window.md), because the model has no way to see anything else. An [agent](./Agent.md) is stateless across [sessions](./Session.md) by default: a new session starts empty, with no trace of prior ones. Counterpart to [stateful](./Stateful.md).
+Tidak membawa informasi ke depan. [Model](./Model.md) bersifat _stateless_ (tidak menyimpan riwayat) di berbagai [permintaan penyedia model (model provider request)](./Model%20provider%20request.md) — setiap permintaan mengirimkan kembali seluruh isi [jendela konteks (context window)](./Context%20window.md), karena model tidak memiliki cara untuk melihat hal lain. Sebuah [agen](./Agent.md) secara default bersifat _stateless_ di berbagai [sesi](./Session.md) obrolan: sesi baru dimulai dalam keadaan kosong, tanpa jejak dari sesi sebelumnya. Istilah ini merupakan padanan dari [stateful (menyimpan status)](./Stateful.md).
 
-The model itself is permanently stateless: its [parameters](./Parameters.md) are frozen after [training](./Training.md), and nothing you do at [inference](./Inference.md) changes them. The model doesn't learn from your corrections, doesn't remember being told the same thing yesterday, and isn't getting to know you — however much the conversation feels otherwise. The feeling of continuity within a session is manufactured by the [harness](./Harness.md), which keeps the transcript and re-sends it with every request. The model isn't remembering the conversation; it's re-reading it.
+Model itu sendiri bersifat stateless secara permanen: [parameter](./Parameters.md) miliknya dibekukan setelah proses [pelatihan (training)](./Training.md), dan tidak ada hal yang Anda lakukan saat [inferensi (inference)](./Inference.md) yang dapat mengubahnya. Model tidak belajar dari koreksi Anda, tidak ingat pernah diberitahu hal yang sama kemarin, dan tidak akan mengenali Anda lebih dekat — meskipun percakapan terasa sebaliknya. Perasaan adanya kesinambungan dalam suatu sesi dibuat oleh [harness (sistem penjalan)](./Harness.md), yang menyimpan transkrip percakapan dan mengirimkannya kembali bersama setiap permintaan baru. Model tidak mengingat percakapan; ia membaca ulang percakapan tersebut.
 
-The practical consequence: if you want something remembered across sessions, you have to write it down somewhere the agent will read it back. That's what [AGENTS.md](./AGENTS.md.md) files, [memory systems](./Memory%20system.md), and [handoff artifacts](./Handoff%20artifact.md) are — files that get loaded into the [context](./Context.md) of future sessions, standing in for the memory the model doesn't have. When the agent keeps making a mistake you've corrected before, the question isn't why it didn't learn — it can't — but where that correction should be written down so every future session reads it.
+Konsekuensi praktisnya: jika Anda ingin sesuatu diingat di berbagai sesi obrolan, Anda harus menulisnya di suatu tempat yang akan dibaca kembali oleh agen. Tempat tersebut adalah file [AGENTS.md](./AGENTS.md.md), [sistem memori (memory system)](./Memory%20system.md), dan [artefak operan (handoff artifact)](./Handoff%20artifact.md) — berkas-berkas yang dimuat ke dalam [konteks](./Context.md) pada sesi berikutnya, menggantikan memori yang tidak dimiliki oleh model. Ketika agen terus melakukan kesalahan yang sama padahal sudah Anda koreksi sebelumnya, pertanyaannya bukan mengapa agen tidak belajar — karena ia memang tidak bisa — melainkan di mana koreksi tersebut harus ditulis agar setiap sesi baru di masa mendatang dapat membacanya.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"Why does it forget the convention every time I [clear](./Clearing.md)?"
+"Mengapa dia selalu lupa aturan penulisan kode setiap kali saya melakukan [pembersihan (clearing)](./Clearing.md)?"
 
-"The model's stateless — the new session starts empty. If you want it carried, write it to AGENTS.md or a memory file the harness loads at session start."
+"Modelnya bersifat stateless — sesi baru dimulai dalam keadaan kosong. Jika Anda ingin aturan itu tetap diingat, tuliskan di AGENTS.md atau file memori yang dimuat oleh sistem penjalan di awal sesi."

@@ -1,22 +1,22 @@
 ---
-description: Running a trained model to generate output — what happens on every model provider request. Parameters stay fixed.
+description: Menjalankan model yang sudah dilatih untuk menghasilkan keluaran. Parameter tetap dan tidak berubah selama proses berjalan.
 ---
 
-Running a trained [model](./Model.md) to generate output — what happens on every [model provider request](./Model%20provider%20request.md). [Parameters](./Parameters.md) stay fixed; the model just does [next-token prediction](./Next-token%20prediction.md) over the [context](./Context.md) it's given. Cheap relative to [training](./Training.md), but billed per [token](./Token.md) and the dominant cost of using a model.
+Proses menjalankan [model](./Model.md) yang telah selesai dilatih untuk menghasilkan teks jawaban — inilah yang terjadi pada setiap [permintaan penyedia model (model provider request)](./Model%20provider%20request.md). [Parameter](./Parameters.md) model bernilai tetap (tidak berubah); model hanya melakukan [prediksi token berikutnya (next-token prediction)](./Next-token%20prediction.md) berdasarkan [konteks](./Context.md) obrolan yang diberikan kepadanya. Biaya proses ini tergolong murah dibanding proses [pelatihan (training)](./Training.md), namun ditagih per [token](./Token.md) dan menjadi biaya utama dari penggunaan model sehari-hari.
 
-A model's life splits into two phases:
+Siklus hidup sebuah model dibagi menjadi dua fase:
 
-| Phase     | When it happens                  | What it does                                                    | Parameters    |
-| --------- | -------------------------------- | --------------------------------------------------------------- | ------------- |
-| Training  | Once, before release             | Produces the parameters from a training corpus                  | Being written |
-| Inference | Every time anyone uses the model | Runs the frozen parameters over your context to generate tokens | Read-only     |
+| Fase                  | Kapan Terjadi                               | Apa yang Dilakukan                                                                | Status Parameter       |
+| --------------------- | ------------------------------------------- | --------------------------------------------------------------------------------- | ---------------------- |
+| Pelatihan (Training)  | Sekali, sebelum model dirilis               | Menghasilkan parameter model dari kumpulan data pelatihan raksasa                 | Sedang ditulis         |
+| Inferensi (Inference) | Setiap kali ada pengguna yang memakai model | Menjalankan parameter tetap di atas konteks obrolan Anda untuk menghasilkan token | Hanya-baca (read-only) |
 
-Nothing you do at inference time writes back to the parameters — that's the reason a correction you make today doesn't stick tomorrow. The model that makes the same mistake next [session](./Session.md), after you carefully explained the fix, hasn't ignored you; it's incapable of learning from the exchange. The model is [stateless](./Stateless.md) — continuity has to come from outside it — from the [context window](./Context%20window.md) or a [memory system](./Memory%20system.md).
+Tidak ada tindakan apa pun yang Anda lakukan pada fase inferensi yang dapat mengubah atau menulis ulang nilai parameter model — itulah alasan mengapa koreksi yang Anda berikan hari ini tidak akan terekam otomatis untuk hari esok. Ketika model mengulangi kesalahan yang sama di [sesi](./Session.md) berikutnya, padahal Anda sudah menjelaskan perbaikannya secara mendalam, model tersebut bukannya mengabaikan Anda; ia memang secara teknis tidak mampu belajar langsung dari interaksi tersebut. Model bersifat [stateless (tidak menyimpan riwayat)](./Stateless.md) — sehingga kesinambungan memori harus dijaga dari luar model — baik dari [jendela konteks](./Context%20window.md) maupun lewat bantuan [sistem memori (memory system)](./Memory%20system.md).
 
-This mechanism also explains how you're billed. Every request runs the model over the full context, so cost scales with [input tokens](./Input%20tokens.md) and [output tokens](./Output%20tokens.md), and an agent making dozens of [tool](./Tool.md) calls pays for inference on each round trip. This is why context size is a cost question as well as a quality one.
+Mekanisme ini juga menjelaskan bagaimana biaya tagihan Anda dihitung. Setiap permintaan akan menjalankan model untuk membaca seluruh konteks obrolan dari awal, sehingga biaya akan bertambah sebanding dengan jumlah [token input](./Input%20tokens.md) dan [token output](./Output%20tokens.md) yang digunakan. Agen yang melakukan belasan panggilan [alat (tool)](./Tool.md) akan membayar biaya inferensi untuk setiap putaran bolak-balik pengiriman data. Inilah mengapa ukuran jendela konteks menjadi masalah efisiensi biaya sekaligus penentu kualitas jawaban.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"Why does the bill scale with usage instead of being a flat license?"
+"Mengapa tagihannya dihitung berdasarkan pemakaian, bukan berupa biaya langganan tetap bulanan?"
 
-"You're paying for inference — every model provider request runs the model on the provider's hardware. Training already happened, but inference costs accrue per request, and a single [turn](./Turn.md) can expand into many requests when tools are called."
+"Karena Anda membayar untuk setiap proses inferensi — setiap kali mengirimkan pesan baru, penyedia model menjalankan model tersebut menggunakan komputer (hardware) milik mereka. Proses pelatihan memang sudah selesai di awal, tetapi biaya penggunaan server untuk inferensi dihitung per permintaan pesan, dan satu [giliran](./Turn.md) percakapan Anda bisa berkembang menjadi banyak permintaan pesan ketika agen berulang kali memanggil alat pemrograman."

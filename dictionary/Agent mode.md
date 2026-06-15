@@ -1,5 +1,5 @@
 ---
-description: A preset bundling a permission mode with behavioral instructions injected into the system prompt. Can flip mid-session.
+description: Pengaturan awal yang menggabungkan mode izin dengan instruksi perilaku di system prompt. Dapat berganti di tengah sesi.
 aliases:
   - plan mode
   - accept-edits
@@ -7,20 +7,20 @@ aliases:
   - YOLO mode
 ---
 
-A preset that shapes how the [agent](./Agent.md) operates at runtime — bundles a [permission mode](./Permission%20mode.md) with behavioral instructions injected into the [system prompt](./System%20prompt.md). Examples: a default that prompts on risky calls, a **plan mode** that blocks edits and steers the agent toward research, an **accept-edits** mode that auto-approves edits, a **bypass permissions** mode (colloquially **YOLO mode**) that auto-approves everything. Can flip [mid-session](./Session.md).
+Sebuah pengaturan awal (preset) yang menentukan cara kerja [agen](./Agent.md) saat berjalan — menggabungkan [mode izin](./Permission%20mode.md) dengan instruksi perilaku yang dimasukkan ke dalam [system prompt (instruksi sistem)](./System%20prompt.md). Contohnya: pengaturan bawaan (default) yang meminta konfirmasi Anda untuk tindakan berisiko, **mode rencana (plan mode)** yang memblokir perubahan kode dan mengarahkan agen untuk riset, mode **terima edit (accept-edits)** yang menyetujui perubahan secara otomatis, atau mode **lewati izin (bypass permissions)** (sering disebut **mode YOLO**) yang otomatis menyetujui semua tindakan. Mode ini dapat diganti di [tengah sesi](./Session.md) yang sedang berjalan.
 
-The bundling is what distinguishes a mode from a bare permission setting. A permission mode is only a gate: it decides which [tool calls](./Tool%20call.md) go through. A gate alone produces an agent that wants to edit but can't — it proposes the write, gets blocked, and tries another way. The injected instructions remove the want: plan mode doesn't just block edits, it tells the agent it's in a planning phase, so it reads, asks, and proposes instead of straining against the gate. Gate and steer point the same direction.
+Penggabungan inilah yang membedakan sebuah "mode" dengan pengaturan izin biasa. Pengaturan izin biasa hanya berfungsi seperti gerbang pintu: ia menentukan [panggilan alat (tool call)](./Tool%20call.md) mana saja yang boleh lewat. Gerbang saja hanya akan menghasilkan agen yang ingin mengubah kode tetapi terhalang — ia mencoba menulis file, diblokir, lalu mencoba cara lain. Namun, instruksi perilaku yang ditambahkan akan menghilangkan keinginan tersebut: mode rencana tidak hanya memblokir penulisan file, tetapi juga memberi tahu agen bahwa ia sedang dalam fase perencanaan, sehingga ia akan membaca kode, bertanya, dan mengajukan rencana daripada bersikeras menembus gerbang izin. Gerbang dan arahan bekerja secara selaras.
 
-In practice, you change mode as your trust changes over the course of a task. The same task can pass through several modes: plan mode while the approach is still being shaped, the prompting default for the first delicate edits, accept-edits once the agent has shown it understands the change, bypass for an [AFK](./AFK.md) run inside a [sandbox](./Sandbox.md). Changing mode costs you nothing: the conversation continues exactly where it was, with new permissions and new instructions. If you find yourself approving every prompt without reading it, the mode is set tighter than your actual trust; if you keep rejecting edits, it's set looser.
+Dalam praktiknya, Anda akan mengubah mode ini seiring dengan berubahnya tingkat kepercayaan Anda selama pengerjaan suatu tugas. Tugas yang sama dapat melewati beberapa mode: mode rencana saat pendekatan solusi masih dirumuskan, mode bawaan yang meminta konfirmasi untuk perubahan sensitif pertama, mode terima-edit setelah agen menunjukkan pemahaman terhadap tugasnya, dan mode lewati izin untuk menjalankan agen secara [AFK (away from keyboard)](./AFK.md) di dalam [sandbox (lingkungan terisolasi)](./Sandbox.md). Mengubah mode tidak mengganggu sesi Anda: percakapan berlanjut di tempat terakhir dengan aturan perizinan dan instruksi perilaku yang baru. Jika Anda mendapati diri Anda menyetujui setiap permintaan izin tanpa membacanya terlebih dahulu, itu tandanya mode perizinan disetel terlalu ketat dibanding kepercayaan Anda; jika Anda terus-menerus menolak editan, berarti modenya terlalu longgar.
 
-_Vendor terms:_ Claude Code calls these "permission modes," Codex calls them "approval modes" — both predate behavioral bundling.
+_Istilah vendor:_ Claude Code menyebutnya "mode perizinan" (permission modes), sedangkan Codex menyebutnya "mode persetujuan" (approval modes) — kedua istilah ini lahir sebelum adanya fitur penggabungan perilaku.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"It keeps editing files when I just want a plan."
+"Agen ini terus mengedit file padahal saya hanya ingin dia membuat rencana saja."
 
-"Switch to plan mode — it'll block writes and stay in research."
+"Ubah ke mode rencana (plan mode) — modenya akan memblokir proses menulis berkas dan agen akan tetap fokus melakukan riset."
 
-"What about for the AFK run later?"
+"Bagaimana untuk pengerjaan otomatis (AFK) nanti?"
 
-"Bypass mode, but only inside the sandbox."
+"Gunakan mode lewati izin (bypass mode), tapi pastikan hanya dilakukan di dalam lingkungan terisolasi (sandbox)."

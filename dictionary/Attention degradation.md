@@ -1,17 +1,17 @@
 ---
-description: As a session grows, each token's attention budget spreads across more competitors; signal on meaningful relationships shrinks.
+description: Saat sesi memanjang, anggaran perhatian terbagi ke lebih banyak token; fokus pada hubungan yang penting pun berkurang.
 ---
 
-As a [session](./Session.md) grows, each [token](./Token.md)'s [attention budget](./Attention%20budget.md) is spread across more competitors. The signal on any one [meaningful relationship](./Attention%20relationship.md) shrinks; noise from irrelevant [context](./Context.md) crowds in. Same [model](./Model.md), same [parameters](./Parameters.md) — just more mouths to feed from the same plate. Cause of the smart zone / dumb [zone effect](./Smart%20zone.md).
+Seiring bertambah panjangnya suatu [sesi](./Session.md), [anggaran perhatian](./Attention%20budget.md) dari setiap [token](./Token.md) akan terbagi ke lebih banyak pesaing baru. Sinyal fokus pada [hubungan yang penting](./Attention%20relationship.md) akan melemah, sementara kebisingan dari [konteks](./Context.md) yang tidak relevan akan berkerumun masuk. Padahal [model](./Model.md)-nya sama, [parameter](./Parameters.md)-nya juga sama — hanya saja ada lebih banyak mulut yang harus diberi makan dari piring yang sama. Fenomena ini adalah penyebab efek [zona pintar/bodoh](./Smart%20zone.md).
 
-It presents as the model getting worse mid-session: constraints it followed for an hour start slipping, it re-asks things it was told, it writes code that ignores a file it read earlier. Nothing about the model changed — the only variable is how much context it's now attending over.
+Gejalanya terlihat seperti penurunan kualitas model di tengah sesi: aturan yang dipatuhinya selama satu jam pertama mulai terabaikan, agen kembali menanyakan hal-hal yang sudah diberi tahu, atau menulis kode yang mengabaikan file yang dibacanya tadi. Tidak ada yang berubah pada model itu sendiri — satu-satunya variabel yang berubah adalah seberapa banyak konteks obrolan yang sedang dibacanya saat ini.
 
-It's gradual, which is what makes it hard to catch from inside the session. There's no error and no threshold; each [turn](./Turn.md) is only slightly worse than the last, and by the time the slips are obvious you've been in the dumb zone for a while.
+Penurunan ini terjadi secara bertahap, sehingga sulit disadari jika Anda hanya melihat dari dalam sesi yang sedang berlangsung. Tidak ada pesan error dan tidak ada batas yang jelas; setiap [giliran](./Turn.md) obrolan hanya terasa sedikit lebih buruk daripada sebelumnya. Saat kesalahan mulai terlihat jelas, sebenarnya Anda sudah berada di dalam zona bodoh (dumb zone) selama beberapa waktu.
 
-You recover by removing context, not adding more. Re-pasting the ignored instruction adds another competitor to the same crowded window and helps only briefly. What works: [clear](./Clearing.md) and reload only what the task needs, or [compact](./Compaction.md), or [hand off](./Handoff.md) to a fresh session. Treat declining instruction-following as a signal about context length, not about the model.
+Cara memulihkannya adalah dengan membuang konteks obrolan lama, bukan menambahkannya. Menempelkan ulang instruksi yang diabaikan hanya akan menambah pesaing baru di dalam jendela percakapan yang sudah penuh, dan hal itu hanya membantu sebentar saja. Langkah yang berhasil: [bersihkan (clear)](./Clearing.md) percakapan dan muat ulang hanya file yang dibutuhkan oleh tugas tersebut, atau lakukan proses [ringkas (compact)](./Compaction.md), atau [oper (hand off)](./Handoff.md) pekerjaan ke sesi yang baru. Anggaplah penurunan kepatuhan agen terhadap instruksi Anda sebagai sinyal bahwa obrolan sudah terlalu panjang, bukan karena modelnya yang bermasalah.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"It's deep in the dumb zone — inventing generics that aren't in the type file."
+"Agen ini sudah masuk jauh ke zona bodoh — dia mulai mengarang fungsi-fungsi umum yang tidak ada di dalam file tipe data."
 
-"Attention degradation. The type definitions are still in context, but the signal on them is buried under everything we've added since. Clear and reload."
+"Ini adalah penurunan perhatian (attention degradation). Definisi tipe datanya masih ada di dalam konteks, tetapi sinyal pemahamannya terkubur di bawah semua percakapan yang kita tambahkan sejak tadi. Bersihkan sesi dan muat ulang."

@@ -1,17 +1,17 @@
 ---
-description: The parameters. Stateless — does next-token prediction and nothing else. Cannot do anything agentic on its own.
+description: Parameter model. Stateless (tidak menyimpan riwayat) — hanya menebak token berikutnya dan tidak bisa bekerja mandiri tanpa harness.
 ---
 
-The [parameters](./Parameters.md). [Stateless](./Stateless.md) — does [next-token prediction](./Next-token%20prediction.md) and nothing else. "Claude Opus 4.x" and "GPT-5.x" are models. On its own a model can't do anything agentic; it has to be [harnessed](./Harness.md).
+Kumpulan [parameter](./Parameters.md). Bersifat [stateless (tidak menyimpan riwayat)](./Stateless.md) — hanya melakukan [prediksi token berikutnya (next-token prediction)](./Next-token%20prediction.md) dan tidak melakukan hal lainnya. Nama seperti "Claude Opus 4.x" dan "GPT-5.x" adalah model. Model itu sendiri tidak dapat melakukan tindakan mandiri; ia harus [dipadukan dengan sistem penjalan (harness)](./Harness.md) agar bisa berfungsi sebagai agen.
 
-Models can't read files, run commands, browse the web, or remember yesterday — it takes [tokens](./Token.md) in and predicts tokens out, once per [model provider request](./Model%20provider%20request.md). Everything that feels like an [agent](./Agent.md) working — choosing [tools](./Tool.md), reading results, looping until the task is done — is the harness orchestrating many of those predictions in a row.
+Model tidak memiliki kemampuan untuk membaca file komputer, menjalankan perintah pemrograman, berselancar di internet, atau mengingat obrolan kemarin — ia hanya menerima sekumpulan [token](./Token.md) input dan menebak token output, sekali di setiap [permintaan penyedia model (model provider request)](./Model%20provider%20request.md). Segala hal yang terasa seperti cara kerja [agen](./Agent.md) yang cerdas — seperti memilih [alat (tools)](./Tool.md), membaca hasil kerja kode, atau mengulangi perintah hingga tugas selesai — sebenarnya merupakan hasil orkestrasi sistem penjalan (harness) yang menjalankan rangkaian tebakan prediksi tersebut secara berturut-turut.
 
-[Model providers](./Model%20provider.md) ship models in tiers: a large one that's smartest but slow and expensive, and smaller ones that are faster and cheaper but less capable. Picking a tier is a real decision — heavyweight for planning and hard debugging, lightweight for mechanical changes — and harnesses let you switch mid-[session](./Session.md).
+[Penyedia model (model provider)](./Model%20provider.md) merilis model dalam beberapa tingkatan (tier): model ukuran besar yang paling pintar tetapi berjalan lambat dan berbiaya mahal, serta model ukuran lebih kecil yang berjalan cepat dan murah tetapi kemampuannya lebih rendah. Memilih tingkatan model adalah keputusan penting — model besar yang tangguh cocok untuk perencanaan dan perbaikan bug yang rumit, sedangkan model kecil yang ringan cocok untuk perubahan kode mekanis biasa — dan sistem penjalan memungkinkan Anda untuk berganti model di tengah-tengah [sesi](./Session.md) percakapan.
 
-Being strict about the word also sharpens diagnosis. "The model is bad at this" is a specific claim — the same model in a different harness, or with a different [context](./Context.md), often behaves completely differently. Before blaming the model, check what it was given: most disappointing output traces back to context or harness, not parameters.
+Penggunaan istilah ini secara tepat juga akan memperjelas proses pencarian masalah. Kalimat "model ini buruk untuk tugas ini" adalah klaim spesifik — karena model yang sama di dalam sistem penjalan yang berbeda, atau dibekali dengan [konteks](./Context.md) yang berbeda, sering kali menunjukkan kinerja yang berbeda 180 derajat. Sebelum menyalahkan model, periksa terlebih dahulu apa saja informasi yang diberikan kepadanya: sebagian besar jawaban yang mengecewakan disebabkan oleh masalah kualitas konteks obrolan atau sistem penjalannya, bukan karena parameter modelnya.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"Should we switch the model from Sonnet to Opus for the planning step?"
+"Apakah kita sebaiknya mengganti model dari Sonnet ke Opus untuk fase perencanaan tugas ini?"
 
-"Try it — but the harness is doing most of the lifting on this task. The model swap won't help if the [system prompt](./System%20prompt.md) and tools are wrong."
+"Coba saja — tetapi sistem penjalannya (harness) yang melakukan sebagian besar pekerjaan berat di sini. Pergantian model tidak akan membantu jika [system prompt (instruksi sistem)](./System%20prompt.md) dan alat kerjanya salah dikonfigurasi."

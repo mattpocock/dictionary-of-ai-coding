@@ -1,17 +1,17 @@
 ---
-description: What the model knows from training, stored in its parameters. Frozen at training time. Counterpart to contextual knowledge.
+description: Apa yang diketahui model dari pelatihan, disimpan dalam parameternya yang beku. Kebalikan dari pengetahuan kontekstual.
 ---
 
-What the [model](./Model.md) "knows" from [training](./Training.md), stored in its [parameters](./Parameters.md). Frozen at training time — the model can't see its own parameters or update them. Detail is lost in the squeeze: billions of facts cram into a fixed number of parameters, and the rare ones blur. Source of fluency on common topics, and of fabrication on uncommon ones. Counterpart to [contextual knowledge](./Contextual%20knowledge.md).
+Apa yang "diketahui" oleh [model](./Model.md) dari proses [pelatihan (training)](./Training.md), yang disimpan di dalam kumpulan [parameter](./Parameters.md)-nya. Dibekukan pada saat pelatihan selesai — model tidak dapat melihat isi parameternya secara langsung ataupun memperbaruinya. Ada detail yang terbuang dalam proses perapatan data: miliaran fakta dipadatkan ke dalam jumlah parameter yang terbatas, sehingga fakta-fakta yang jarang muncul akan menjadi kabur. Ini adalah sumber kelancaran model dalam menjelaskan topik umum, sekaligus penyebab terjadinya karangan fakta (fabrikasi) pada topik yang tidak umum. Istilah ini merupakan padanan dari [pengetahuan kontekstual (contextual knowledge)](./Contextual%20knowledge.md).
 
-Parametric knowledge is not stored as facts. Training never gives the model a database to look things up in; it adjusts parameters until the model predicts text well, and a model that predicts text about a topic well behaves as if it knows the topic. How reliable the knowledge is tracks how often something appeared in the training data: a topic with millions of examples is reproduced accurately, for a topic with only a handful, the model guesses based on what similar topics look like. Reproducing and guessing are the same process to the model, so it can't tell which one it's doing. A fabricated answer arrives with the same fluency as a correct one. [Hallucination](./Hallucination.md) is the model guessing wrong.
+Pengetahuan parametrik tidak disimpan dalam bentuk tabel fakta kaku. Proses pelatihan tidak pernah membekali model dengan database untuk mencari data; pelatihan hanya menyesuaikan nilai parameter hingga model mampu menebak teks dengan baik, dan model yang dapat memprediksi teks tentang suatu topik dengan baik akan berperilaku seolah-olah ia memahami topik tersebut. Tingkat keandalan pengetahuan ini sangat bergantung pada seberapa sering topik tersebut muncul dalam data pelatihan: topik dengan jutaan contoh akan direproduksi secara akurat, sementara untuk topik yang hanya muncul beberapa kali, model akan menebak berdasarkan bentuk topik serupa yang diketahuinya. Bagi model, proses mereproduksi ingatan dan menebak jawaban adalah mekanisme yang persis sama, sehingga ia tidak bisa membedakan mana yang sedang dilakukannya. Jawaban hasil karangan akan disajikan dengan kelancaran bahasa yang sama meyakinkannya seperti jawaban yang benar. [Halusinasi](./Hallucination.md) adalah kejadian di mana tebakan model tersebut salah.
 
-Parametric knowledge also ages. The parameters stop changing at the [knowledge cutoff](./Knowledge%20cutoff.md), so a library released or renamed after that date doesn't exist in them, and an API that changed is remembered in its old form.
+Pengetahuan parametrik juga bisa usang. Parameter berhenti berubah setelah melewati [batas pengetahuan (knowledge cutoff)](./Knowledge%20cutoff.md), sehingga pustaka kode yang dirilis atau diganti namanya setelah tanggal batas tersebut tidak akan eksis di dalamnya, dan API yang sudah berubah akan tetap diingat dalam wujud lamanya.
 
-For both gaps — too rare and too recent — the remedy is the same: the knowledge can't be added to the parameters, so it has to be supplied as contextual knowledge instead.
+Untuk mengatasi kedua celah tersebut — topik yang terlalu langka dan topik yang terlalu baru — solusinya sama: karena pengetahuan tidak dapat ditambahkan ke dalam parameter model yang sudah beku, informasi tersebut harus disediakan sebagai pengetahuan kontekstual.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"It writes flawless React but invents methods on our internal SDK."
+"Dia menulis kode React dengan sangat sempurna tetapi terus mengarang fungsi pada SDK internal kita."
 
-"React is dense in the parametric knowledge — millions of training examples. Your SDK isn't, so the model fills in plausible-looking shapes. Load the SDK docs into [context](./Context.md)."
+"React tersimpan sangat padat di dalam pengetahuan parametrik model — karena memiliki jutaan contoh data pelatihan. Sedangkan SDK Anda tidak ada di sana, sehingga model mengisi celah tersebut dengan bentuk kode yang sekadar terlihat masuk akal. Coba muat dokumen panduan SDK ke dalam [konteks](./Context.md) obrolan."

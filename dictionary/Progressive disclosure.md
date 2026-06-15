@@ -1,15 +1,15 @@
 ---
-description: Loading only the context an agent needs right now, with context pointers to the rest. Borrowed from UI design.
+description: Memuat konteks yang dibutuhkan agen saat ini, dengan penunjuk ke sisa data lainnya. Diadopsi dari desain antarmuka (UI).
 ---
 
-Loading only the [context](./Context.md) an [agent](./Agent.md) needs right now, with [context pointers](./Context%20pointer.md) to the rest. Borrowed from UI design, where it means showing users only the controls relevant to their current task and hiding the rest behind a click.
+Metode memuat hanya [konteks](./Context.md) yang benar-benar dibutuhkan oleh [agen](./Agent.md) saat ini, dan mengganti sisa informasi lainnya menggunakan [penunjuk konteks (context pointer)](./Context%20pointer.md). Metode ini diadopsi dari dunia desain antarmuka (UI design), yang berarti hanya menampilkan tombol kendali yang relevan dengan tugas pengguna saat itu dan menyembunyikan sisanya di balik tombol klik.
 
-The technique exists because context is a cost twice over. Every [token](./Token.md) loaded up front is billed as [input tokens](./Input%20tokens.md) on every [turn](./Turn.md), and every token spends [attention budget](./Attention%20budget.md) whether the agent needs it or not. An [AGENTS.md](./AGENTS.md.md) stuffed with the full style guide, deployment runbook, and database conventions makes the agent worse at all of them — the instructions that matter for the current task are diluted by the ones that don't. The tell is an agent that ignores rules you know are in its context: they're in there, but buried.
+Teknik ini digunakan karena pemuatan konteks menimbulkan dua jenis kerugian sekaligus. Setiap [token](./Token.md) yang dimuat di awal akan ditagih sebagai [token input](./Input%20tokens.md) pada setiap [giliran](./Turn.md) pesan baru, dan setiap token tersebut akan memakan [anggaran perhatian](./Attention%20budget.md) model peduli apakah agen membutuhkannya atau tidak. File [AGENTS.md](./AGENTS.md.md) yang dipenuhi dengan seluruh isi panduan penulisan kode, alur kerja rilis aplikasi, dan aturan database justru akan membuat kemampuan agen menurun untuk semua tugas tersebut — karena instruksi penting untuk tugas aktif terdistorsi oleh instruksi lain yang tidak relevan. Ciri khasnya adalah ketika agen mulai mengabaikan aturan yang sebenarnya ada di dalam konteks obrolan: aturan tersebut ada di sana, tetapi terkubur di bawah informasi lainnya.
 
-Progressive disclosure inverts this. Keep the always-loaded layer small — a sentence per topic and a pointer to where the detail lives. The agent reads the style guide when it's writing a component, the deployment runbook when it's deploying, and neither when it's fixing a test. [Skills](./Skill.md) are the pattern built into the [harness](./Harness.md): a short description loaded every [session](./Session.md), the full instructions only when triggered.
+Pengungkapan bertahap membalikkan kondisi ini. Jaga agar lapisan informasi yang selalu dimuat di awal tetap berukuran kecil — misalnya cukup satu baris kalimat penjelasan per topik diikuti dengan penunjuk ke lokasi detailnya berada. Agen akan membaca panduan penulisan kode hanya saat ia menulis komponen tampilan, membaca panduan rilis hanya saat melakukan deployment, dan tidak membaca keduanya saat ia sedang memperbaiki tes kode pemrograman yang gagal. Modul [keahlian (skills)](./Skill.md) adalah wujud penerapan pola ini di dalam [harness (sistem penjalan)](./Harness.md): deskripsi singkatnya akan dimuat di awal setiap [sesi](./Session.md), sementara instruksi lengkapnya baru dibaca ketika fitur tersebut dipicu.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"Should I dump the entire style guide into AGENTS.md?"
+"Apakah sebaiknya saya memasukkan seluruh isi panduan gaya penulisan kode ke dalam file `AGENTS.md`?"
 
-"No — progressive disclosure. Reference the style guide as a skill the agent loads when it actually needs to write a component. AGENTS.md pays the token cost every turn."
+"Jangan — gunakan metode pengungkapan bertahap. Rujuk panduan gaya tersebut sebagai modul keahlian (skill) yang baru dimuat oleh agen saat ia benar-benar perlu menulis komponen kode. Informasi di dalam `AGENTS.md` akan memakan biaya token di setiap giliran percakapan."

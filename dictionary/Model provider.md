@@ -1,17 +1,17 @@
 ---
-description: Whatever serves a model for inference. Usually remote (Anthropic, OpenAI, Google), but can also be local (Ollama, llama.cpp).
+description: Pihak yang menyediakan server untuk menjalankan model (inference). Bisa online (OpenAI, Google) atau offline (Ollama).
 ---
 
-Whatever serves a [model](./Model.md) for [inference](./Inference.md). Usually a remote service (Anthropic, OpenAI, Google), but can also be local — Ollama, LM Studio, llama.cpp running on your own machine. The [harness](./Harness.md) doesn't run the model itself; it asks a provider to.
+Pihak atau sistem apa pun yang menyediakan server untuk menjalankan [model](./Model.md) ([inferensi](./Inference.md)). Biasanya berupa layanan komputasi awan (cloud) seperti Anthropic, OpenAI, atau Google, tetapi bisa juga dijalankan di komputer sendiri secara lokal (offline) menggunakan Ollama, LM Studio, atau llama.cpp. [Harness (sistem penjalan)](./Harness.md) tidak menjalankan model itu sendiri di komputer Anda; ia meminta penyedia model untuk melakukannya.
 
-The provider owns the machinery: the [parameters](./Parameters.md) live on its hardware, and every [model provider request](./Model%20provider%20request.md) is the harness sending [tokens](./Token.md) over the network and getting predictions back. That makes the provider the source of a whole category of problems that get misattributed to the model or the harness — rate limits, degraded capacity, and outages all live here. When the [agent](./Agent.md) stalls mid-[session](./Session.md) or errors on every [turn](./Turn.md), the provider's status page is worth checking before anything else.
+Penyedia model menguasai infrastruktur fisik: kumpulan [parameter](./Parameters.md) disimpan di dalam server mereka, dan setiap [permintaan penyedia model (model provider request)](./Model%20provider%20request.md) merupakan proses sistem penjalan mengirimkan [token](./Token.md) melalui jaringan internet dan menerima jawaban prediksi kembali. Hal ini menjadikan penyedia model sebagai sumber utama dari berbagai masalah yang sering kali salah dituduhkan kepada model atau sistem penjalan — seperti pembatasan jumlah pemanggilan API (rate limits), penurunan kapasitas server, dan server mati (down). Ketika sang [agen](./Agent.md) mendadak macet di tengah [sesi](./Session.md) obrolan atau memunculkan pesan error di setiap [giliran](./Turn.md) pesan, halaman status server penyedia model adalah hal pertama yang wajib Anda periksa sebelum mencari penyebab lainnya.
 
-The provider also sets the commercial terms: per-token pricing for [input](./Input%20tokens.md) and [output tokens](./Output%20tokens.md), [prefix cache](./Prefix%20cache.md) discounts, and which models are available at all. Note that the provider and the model's maker can be different companies — Bedrock, Vertex, and OpenRouter serve other people's models.
+Penyedia model juga menetapkan ketentuan harga: tarif per token untuk [token input](./Input%20tokens.md) dan [token output](./Output%20tokens.md), diskon [cache awalan (prefix cache)](./Prefix%20cache.md), serta model mana saja yang tersedia untuk digunakan. Perlu dicatat bahwa perusahaan penyedia server dan perusahaan pembuat model bisa berbeda — contohnya Amazon Bedrock, Google Vertex, dan OpenRouter menyediakan server untuk menjalankan model buatan perusahaan lain.
 
-Local providers trade capability for control: the models that fit on your own hardware are far smaller than the frontier ones, but nothing leaves the machine and there's no bill per token.
+Penyedia model lokal menawarkan kontrol penuh dengan mengorbankan kualitas kecerdasan: model yang muat di komputer pribadi Anda berukuran jauh lebih kecil daripada model komersial terkemuka di internet, tetapi tidak ada data yang dikirim keluar komputer Anda dan tidak ada tagihan biaya per token.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"Can we run this offline for the air-gapped client?"
+"Apakah kita bisa menjalankan aplikasi ini secara offline untuk klien yang memiliki batasan jaringan ketat?"
 
-"Swap the model provider to a local one — Ollama or llama.cpp on their box. The harness doesn't care, it just hits a different endpoint."
+"Ganti penyedia modelnya ke penyedia lokal — pasang Ollama atau llama.cpp di server lokal mereka. Sistem penjalannya tidak masalah, ia hanya akan memanggil alamat URL API yang berbeda."

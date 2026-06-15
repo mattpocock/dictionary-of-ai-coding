@@ -1,15 +1,15 @@
 ---
-description: The date past which a model has no parametric knowledge. Post-cutoff libraries and APIs are fabrication traps unless docs are loaded.
+description: Tanggal batas akhir pengetahuan parametrik model. Pustaka kode/API baru bisa memicu fabrikasi kode kecuali panduannya dimuat.
 ---
 
-The date past which a [model](./Model.md) has no [parametric knowledge](./Parametric%20knowledge.md). Libraries, APIs, and events from after the cutoff are fabrication traps unless their docs are loaded as [contextual knowledge](./Contextual%20knowledge.md). Each model release ships with its own cutoff.
+Tanggal batas akhir pengetahuan yang dimiliki oleh [model](./Model.md) di dalam parameternya ([pengetahuan parametrik](./Parametric%20knowledge.md)). Pustaka kode (library), API, serta peristiwa yang terjadi setelah tanggal batas ini akan menjadi jebakan yang memicu model mengarang-ngarang kode pemrograman (fabrikasi), kecuali jika dokumen panduannya dimuat sebagai [pengetahuan kontekstual (contextual knowledge)](./Contextual%20knowledge.md). Setiap versi rilis model memiliki tanggal batas pengetahuannya masing-masing.
 
-The cutoff exists because of how models are made: [training](./Training.md) bakes a snapshot of text into the model's [parameters](./Parameters.md), and after that the parameters are frozen. The model doesn't know its knowledge has an edge — asked about something past the cutoff, it doesn't refuse, it extrapolates from the nearest thing it does know. That's what makes the trap quiet: code written against an old version of a library looks plausible, often compiles, and fails on the parts that changed.
+Batas pengetahuan ini ada karena cara pembuatan model itu sendiri: proses [pelatihan (training)](./Training.md) menanamkan potret data teks ke dalam [parameter](./Parameters.md) model, dan setelah proses itu selesai, parameter tersebut akan dibekukan (frozen). Model tidak menyadari bahwa pengetahuannya memiliki batas akhir — ketika ditanya tentang hal baru yang rilis setelah tanggal batas, model tidak akan menolaknya, melainkan memperkirakan jawabannya berdasarkan hal terdekat yang diketahuinya. Inilah yang membuat jebakan tersebut tidak disadari: kode pemrograman yang ditulis berdasarkan pustaka versi usang akan terlihat masuk akal, sering kali berhasil dijalankan tanpa error sintaksis, namun gagal pada bagian fitur yang sebenarnya sudah berubah.
 
-The fix is always the same: get current information into [context](./Context.md). Load the changelog, point at the installed version's type definitions, or have the agent read the docs from the web. Anything in context outranks nothing-in-parameters.
+Solusinya selalu sama: masukkan informasi terbaru ke dalam [konteks](./Context.md) obrolan. Muat catatan perubahan (changelog), arahkan agen ke file definisi tipe data dari versi pustaka yang terinstal di komputer, atau minta agen membaca dokumen panduan terbaru dari web. Informasi apa pun di dalam konteks obrolan akan mengesampingkan memori usang yang ada di dalam parameter model.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"It keeps writing the v3 SDK syntax — we're on v5."
+"Dia terus menulis kode menggunakan aturan penulisan SDK versi 3 — padahal kita sudah memakai versi 5."
 
-"v5 shipped after the knowledge cutoff. Load the v5 changelog as contextual knowledge, otherwise it'll keep fabricating from the older parametric version."
+"SDK versi 5 dirilis setelah tanggal batas pengetahuan model tersebut. Coba muat catatan perubahan (changelog) versi 5 sebagai pengetahuan kontekstual, jika tidak, dia akan terus mengarang kode berdasarkan memori parameter versi lamanya."

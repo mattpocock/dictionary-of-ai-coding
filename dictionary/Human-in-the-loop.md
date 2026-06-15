@@ -1,22 +1,22 @@
 ---
-description: A working pattern where one or more humans pair with the agent during a session — reviewing, redirecting, or collaborating in real time.
+description: Pola kerja di mana manusia mendampingi agen selama sesi berlangsung — meninjau, mengarahkan, atau berkolaborasi secara real-time.
 aliases:
   - HITL
   - Human-in-the-loop (HITL)
 ---
 
-A working pattern where one or more humans pair with the [agent](./Agent.md) during a [session](./Session.md) — reviewing, redirecting, or collaborating in real time. The human is present and engaged, not just gating individual actions.
+Sebuah pola kerja di mana satu atau beberapa manusia mendampingi [agen](./Agent.md) selama [sesi](./Session.md) obrolan berlangsung — untuk meninjau hasil, mengarahkan tindakan, atau berkolaborasi secara langsung (real-time). Manusia hadir dan terlibat secara aktif, tidak hanya sekadar menyetujui atau menolak tindakan agen secara kaku.
 
-The contrast is with [AFK](./AFK.md) work, where the agent runs unattended and you judge the result afterwards. Human-in-the-loop means catching problems while they're still cheap: you see the agent reach for the wrong file, misread the requirement, or start down a dead end, and you redirect it in one sentence — rather than discovering twenty minutes of confident work built on that mistake. Agents don't reliably know when they're off track; left alone, they tend to push forward rather than stop and ask.
+Pola ini bertolak belakang dengan pola kerja otomatis [AFK (away from keyboard)](./AFK.md), di mana agen bekerja sendiri tanpa pengawasan dan Anda baru menilai hasilnya setelah selesai. Konsep keterlibatan manusia (human-in-the-loop) berguna untuk menangkap masalah selagi biayanya masih murah: Anda dapat melihat ketika agen mulai membuka file yang salah, salah memahami kebutuhan tugas, atau mulai terjebak ke jalan buntu, lalu langsung mengarahkannya dengan satu kalimat singkat — daripada Anda baru mengetahui kesalahan tersebut setelah agen melakukan pekerjaan secara percaya diri selama dua puluh menit di atas landasan yang salah. Agen tidak selalu menyadari kapan mereka keluar dari jalur; jika dibiarkan bekerja sendiri, mereka cenderung terus memaksa maju daripada berhenti dan bertanya.
 
-Which pattern fits depends on the work. Well-specified, low-risk, easy-to-verify tasks suit AFK. Tasks that are ambiguous, irreversible, or where you'd struggle to review the finished result — a schema migration, a tricky design decision, anything touching production — suit staying in the loop. The judgement call is essentially: how expensive is a wrong turn, and how late would you catch it?
+Pola mana yang cocok digunakan sangat bergantung pada jenis pekerjaannya. Tugas yang memiliki spesifikasi jelas, berisiko rendah, dan mudah diverifikasi sangat cocok diselesaikan secara AFK. Sebaliknya, tugas yang memiliki banyak ketidakjelasan (ambigu), tidak dapat dibatalkan (irreversible), atau di mana Anda akan kesulitan meninjau hasil akhirnya — seperti pemindahan database (migrasi schema), keputusan desain yang rumit, atau apa pun yang menyentuh sistem produksi aktif — sangat cocok diselesaikan dengan tetap mendampingi agen (in the loop). Pertimbangan utamanya adalah: seberapa besar kerugian akibat salah melangkah, dan seberapa lambat Anda akan menyadarinya?
 
-Some work is in-the-loop by nature, because your reactions are the input. [Grilling](./Grilling.md) only works with you there to answer the questions; [prototyping](./Prototyping.md) only works with you there to react to the artifact.
+Beberapa pekerjaan secara alami memang mengharuskan Anda berada di dalam siklus proses karena tanggapan Anda adalah bahan inputnya. Metode [Grilling (tanya-jawab intensif)](./Grilling.md) hanya bisa berjalan jika Anda ada di sana untuk menjawab pertanyaan-pertanyaan; sementara metode [pembuatan prototipe (prototyping)](./Prototyping.md) hanya bisa berjalan jika Anda ada di sana untuk menanggapi hasil kodenya secara langsung.
 
-Staying in the loop costs your attention, which is the scarce resource. Part of getting better with agents is moving more work safely out of the loop — with plans, [automated checks](./Automated%20check.md), and [human review](./Human%20review.md) at the end instead of supervision throughout.
+Mendampingi agen secara terus-menerus akan menyita perhatian Anda, padahal perhatian manusia adalah sumber daya yang terbatas. Salah satu cara agar dapat bekerja lebih efisien dengan agen adalah dengan memindahkan lebih banyak tugas keluar dari siklus pendampingan secara aman — yaitu dengan dibekali rencana kerja, [pemeriksaan otomatis](./Automated%20check.md), serta [tinjauan manusia](./Human%20review.md) di bagian akhir alih-alih melakukan pengawasan sepanjang proses kerja berjalan.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"Run this AFK overnight?"
+"Apakah tugas ini sebaiknya dijalankan secara AFK saja semalaman?"
 
-"No, schema migration — keep it human-in-the-loop. I want to see each step and steer if it picks the wrong column to backfill from."
+"Jangan, ini tugas pemindahan database (migrasi schema) — biarkan tetap berjalan dalam pendampingan manusia (human-in-the-loop). Saya ingin melihat setiap langkahnya dan mengarahkan agen jika dia salah memilih kolom data untuk pengisian."

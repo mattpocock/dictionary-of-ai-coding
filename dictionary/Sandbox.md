@@ -1,26 +1,26 @@
 ---
-description: An isolated environment the agent runs inside — container, VM, or restricted shell. Limits the blast radius of agent actions.
+description: Lingkungan terisolasi tempat agen berjalan (kontainer, VM, shell terbatas). Membatasi dampak kerusakan dari tindakan agen.
 aliases:
   - Sandboxing
   - Sandbox / Sandboxing
 ---
 
-An isolated [environment](./Environment.md) the [agent](./Agent.md) runs inside — a container, VM, ephemeral [filesystem](./Filesystem.md), or restricted-permission shell. Limits the blast radius of agent actions: even if the agent runs destructive commands or fetches something malicious, the damage is contained. The safety substrate that makes [AFK](./AFK.md) practical.
+Sebuah [lingkungan kerja](./Environment.md) terisolasi tempat [agen](./Agent.md) dijalankan — dapat berupa kontainer (container), mesin virtual (VM), [sistem file](./Filesystem.md) sementara (ephemeral), atau baris shell dengan izin terbatas. Berfungsi untuk membatasi dampak kerusakan (blast radius) dari tindakan agen: bahkan jika agen tidak sengaja menjalankan perintah yang merusak atau mengunduh berkas berbahaya, kerusakan tersebut akan tetap terisolasi di dalamnya. Ini adalah fondasi keamanan utama yang membuat pengerjaan otomatis [AFK](./AFK.md) aman dilakukan.
 
-The sandbox and the [permission mode](./Permission%20mode.md) solve the same problem from opposite ends. Permissions ask before an action runs; a sandbox limits what the action can reach if it does run. Permissions need you running [in the loop](./Human-in-the-loop.md) — every prompt is an interruption — and a session that asks constantly is barely autonomous. A sandbox spends infrastructure instead of attention: the stronger the isolation, the fewer questions need asking.
+Sistem sandbox dan [mode izin (permission mode)](./Permission%20mode.md) menyelesaikan masalah keamanan yang sama dari dua sisi yang berbeda. Sistem perizinan akan bertanya kepada Anda sebelum suatu tindakan dijalankan; sedangkan sandbox membatasi apa saja objek yang bisa dijangkau oleh tindakan tersebut jika ia berjalan. Sistem perizinan mengharuskan Anda untuk terus berada di dalam [lingkaran pendampingan (human-in-the-loop)](./Human-in-the-loop.md) — di mana setiap konfirmasi izin adalah gangguan fokus — dan sesi obrolan yang selalu meminta izin tidak akan bisa bekerja mandiri. Sebaliknya, sandbox mengandalkan infrastruktur komputer daripada menyita perhatian Anda: semakin kuat tingkat isolasinya, semakin sedikit pertanyaan izin yang perlu diajukan ke layar Anda.
 
-Isolation comes in grades:
+Tingkat isolasi dibagi menjadi beberapa tingkatan:
 
-| Grade            | What it is                                                 | What it contains                           |
-| ---------------- | ---------------------------------------------------------- | ------------------------------------------ |
-| Restricted shell | OS-level confinement around each command                   | Writes outside the project, network access |
-| Container        | Fresh filesystem, no credentials mounted, discarded after  | Anything the agent does to its own machine |
-| VM / cloud       | A separate machine entirely, often provided by the harness | Everything, including kernel-level escapes |
+| Tingkat Isolasi            | Deskripsi Teknis                                                                          | Lingkup Kerusakan yang Terisolasi                                   |
+| -------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| Shell Terbatas             | Pembatasan di tingkat OS di sekitar setiap perintah                                       | Penulisan data di luar proyek utama, akses jaringan internet        |
+| Kontainer (Container)      | Sistem file baru yang segar, tanpa kredensial terpasang, langsung dibuang setelah selesai | Segala tindakan yang dilakukan agen terhadap mesin kerjanya sendiri |
+| Mesin Virtual (VM) / Cloud | Komputer terpisah seutuhnya, biasanya disediakan langsung oleh sistem penjalan            | Semua tindakan, termasuk upaya pembobolan sistem di tingkat kernel  |
 
-What no sandbox contains: actions that leave it legitimately. An agent with your git credentials can push; one with network access can call production APIs. Decide what crosses the boundary before deciding how thick to make it.
+Satu hal yang tidak bisa dicegah oleh sandbox: tindakan agen yang keluar dari batas sandbox secara sah. Agen yang dibekali dengan kredensial git Anda tetap bisa mengirimkan perubahan kode (push) ke server utama; agen yang diberi akses internet tetap bisa memanggil API sistem produksi yang aktif. Tentukan terlebih dahulu informasi apa saja yang boleh melewati batas wilayah terisolasi sebelum menentukan seberapa tebal dinding isolasi yang akan dibangun.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"I want to let it run [bypass-permissions](./Agent%20mode.md) overnight but I'm not ready for that."
+"Saya ingin membiarkan agen berjalan semalaman dengan mode [melewati izin (bypass-permissions)](./Agent%20mode.md), tetapi saya belum siap secara mental untuk mengambil risiko itu."
 
-"Put it in a sandbox — fresh container, no credentials mounted, no network out. Worst case it nukes its own filesystem and you discard the container."
+"Letakkan agen di dalam sandbox — gunakan kontainer baru, tanpa kredensial yang terpasang, dan matikan akses jaringan keluar. Kasus terburuknya dia hanya akan menghancurkan sistem filenya sendiri dan Anda tinggal membuang kontainer tersebut."

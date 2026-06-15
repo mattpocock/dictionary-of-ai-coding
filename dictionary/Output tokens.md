@@ -1,15 +1,15 @@
 ---
-description: Tokens the model generates back. Billed at a higher rate than input tokens, since they cost more compute to produce.
+description: Token yang dihasilkan model. Harganya lebih mahal daripada token input karena proses komputasi pembuatannya lebih berat.
 ---
 
-[Tokens](./Token.md) the [model](./Model.md) generates back. Billed at a higher rate than [input tokens](./Input%20tokens.md) — commonly around five times the rate — since they cost more compute to produce.
+[Token](./Token.md) yang dihasilkan kembali oleh [model](./Model.md). Ditagih dengan tarif yang lebih mahal daripada [token input](./Input%20tokens.md) — umumnya sekitar lima kali lipat — karena membutuhkan daya komputasi server yang lebih besar untuk memproduksinya.
 
-Everything the model writes counts: the prose you read, the code it emits, [tool calls](./Tool%20call.md), and any extended thinking the model does before answering. That last one surprises people — reasoning tokens are billed as output even when the [harness](./Harness.md) often doesn't show them to you.
+Segala hal yang ditulis oleh model akan dihitung: teks penjelasan yang Anda baca, baris kode program yang dibuat, perintah [panggilan alat (tool call)](./Tool%20call.md), serta baris penalaran (reasoning tokens) yang dilakukan model sebelum menjawab. Hal terakhir ini sering mengejutkan pengguna — token penalaran tetap ditagih sebagai token output meskipun [harness (sistem penjalan)](./Harness.md) sering kali menyembunyikan teks penalaran tersebut dari layar Anda.
 
-Output tokens also set the pace of a [session](./Session.md). The model reads input quickly but generates output one token at a time, so when a [turn](./Turn.md) feels slow, it's almost always the output being written, not the input being read. A long wait usually means a long answer is coming.
+Token output juga menentukan kecepatan berjalannya suatu [sesi](./Session.md) obrolan. Model dapat membaca input dengan sangat cepat tetapi menghasilkan output secara bertahap satu token demi satu token. Oleh karena itu, ketika [giliran](./Turn.md) percakapan terasa lambat, hal itu hampir selalu disebabkan karena model sedang menuliskan output kodenya, bukan karena proses membaca input. Waktu tunggu yang lama biasanya menandakan bahwa model sedang menulis jawaban yang panjang.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"The refactor session is burning through credit even though the inputs are small."
+"Sesi perbaikan kode (refactor) ini menghabiskan kuota kredit yang besar padahal teks inputnya kecil."
 
-"Agent's rewriting whole files instead of patching. Output tokens cost roughly five times the input rate — get it emitting edits and the bill drops."
+"Agen menulis ulang seluruh isi file daripada memberikan potongan perubahannya (patch) saja. Biaya token output sekitar lima kali lipat tarif input — mintalah dia menuliskan editan kodenya saja agar biayanya turun."

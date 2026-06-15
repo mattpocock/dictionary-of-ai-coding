@@ -1,17 +1,17 @@
 ---
-description: Each token has a finite amount of influence to distribute across the rest of the context. Per-token, doesn't grow when context does.
+description: Setiap token memiliki batas pengaruh yang bisa disebarkan ke sisa konteks. Batas ini tidak bertambah ketika kapasitas konteks bertambah.
 ---
 
-Each [token](./Token.md) has a finite amount of influence to distribute across the rest of the [context](./Context.md). Heavy influence on [one relationship](./Attention%20relationship.md) leaves less for others. The budget is per-token and doesn't grow when the context does, which is why long [sessions](./Session.md) dilute.
+Setiap [token](./Token.md) memiliki kapasitas pengaruh (pengaruh perhatian) yang terbatas untuk dibagikan ke seluruh [konteks](./Context.md). Pengaruh yang kuat pada [satu hubungan](./Attention%20relationship.md) akan mengurangi kapasitas perhatian untuk hubungan lainnya. Anggaran perhatian (attention budget) ini dihitung per-token dan ukurannya tidak bertambah ketika isi percakapan bertambah panjang. Itulah mengapa [sesi](./Session.md) yang terlalu panjang membuat pemahaman agen melemah.
 
-Think of it as signal and noise. Your instruction is a signal at fixed volume; every other token in the [context window](./Context%20window.md) is competing sound. The instruction never gets quieter — it's still there, character for character — but as the context grows, the room gets louder around it, and the signal-to-noise ratio drops. An instruction that was the loudest thing at 10k tokens of context is background hum at 150k. This is the mechanism behind [attention degradation](./Attention%20degradation.md): the model doesn't forget; the signal gets lost in the noise.
+Bayangkan ini seperti sinyal dan kebisingan suara. Instruksi Anda adalah sinyal suara dengan volume tetap; sementara setiap token lain di dalam [jendela konteks](./Context%20window.md) adalah suara pesaing di dalam ruangan. Instruksi tersebut tidak pernah mengecil secara teks — ia tetap ada di sana, huruf demi huruf — tetapi seiring bertambahnya isi obrolan, suasana ruangan menjadi semakin bising, sehingga rasio sinyal terhadap kebisingan (signal-to-noise ratio) menurun. Sebuah instruksi yang awalnya terdengar paling keras pada konteks 10 ribu token, akan berubah menjadi sekadar bisikan latar belakang pada konteks 150 ribu token. Ini adalah mekanisme di balik [penurunan perhatian (attention degradation)](./Attention%20degradation.md): model tidak benar-benar 'lupa', melainkan sinyal instruksi Anda tenggelam dalam kebisingan.
 
-The symptom reads as disobedience — the agent agreed to a constraint early on and then drifts from it, and re-pasting the constraint helps only briefly. The cause isn't the instruction; it's everything else in the window competing with it.
+Gejalanya terlihat seperti pembangkangan — agen menyetujui suatu aturan di awal percakapan, lalu perlahan mengabaikannya, dan menempelkan ulang aturan tersebut hanya membantu untuk waktu yang singkat. Penyebabnya bukan karena instruksi Anda yang salah, melainkan karena informasi lain di dalam jendela percakapan yang berebut perhatian.
 
-What you can control is what goes into the context. Content that doesn't serve the task isn't neutral — it's noise over everything that does. Keep the window small, [clear](./Clearing.md) when the accumulated context stops paying for itself, and restate the constraints that matter instead of trusting their early mention to hold.
+Hal yang bisa Anda kendalikan adalah apa saja yang dimasukkan ke dalam konteks. Informasi yang tidak mendukung tugas tidaklah netral — itu adalah kebisingan yang mengaburkan informasi penting lainnya. Jaga agar jendela percakapan tetap kecil, lakukan [pembersihan (clear)](./Clearing.md) ketika konteks yang menumpuk tidak lagi sebanding dengan manfaatnya, dan tulis ulang aturan yang penting daripada mengandalkan penyebutan di awal obrolan.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"Why does it keep ignoring the schema I pasted at the top?"
+"Kenapa agen ini terus mengabaikan struktur tabel (schema) yang saya tempel di bagian atas obrolan?"
 
-"We're well into the [dumb zone](./Smart%20zone.md) — every token's attention budget is fixed, but the context kept growing. The signal on the schema is now competing with thousands of newer tokens."
+"Kita sudah masuk ke [zona bodoh (dumb zone)](./Smart%20zone.md) — anggaran perhatian setiap token itu terbatas, sementara obrolan kita terus memanjang. Sinyal pada struktur tabel tersebut sekarang harus berebut perhatian dengan ribuan token baru."

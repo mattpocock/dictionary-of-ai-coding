@@ -1,19 +1,19 @@
 ---
-description: The user reading the code the agent produced and forming a judgement on it. Reading the diff counts; reading the summary doesn't.
+description: Pengguna memeriksa kode yang dihasilkan agen dan menilainya. Membaca diff adalah kunci; membaca ringkasan tidak cukup.
 ---
 
-The user reading the code the [agent](./Agent.md) produced and forming a judgement on it. Reading the diff or the changed files counts; reading the agent's _description_ of what it did does not — narration is not the artifact. The description is a [secondary source](./Secondary%20source.md), written by the party being reviewed; the diff is the [primary source](./Primary%20source.md), and review means reading it.
+Proses di mana pengguna membaca secara langsung kode yang dihasilkan oleh [agen](./Agent.md) dan memberikan penilaian atas kualitasnya. Menilai di sini berarti membaca berkas perbedaan kode (diff) atau file yang berubah; membaca _deskripsi penjelasan_ dari agen mengenai apa yang dikerjakannya tidaklah dihitung sebagai tinjauan — karena cerita narasi bukanlah hasil karya aslinya. Deskripsi tersebut hanyalah [sumber sekunder (secondary source)](./Secondary%20source.md) yang ditulis oleh pihak yang sedang dinilai; sementara diff adalah [sumber primer (primary source)](./Primary%20source.md) yang wajib dibaca dalam proses peninjauan.
 
-Agents raise the volume of code produced, so review becomes the bottleneck. One useful idea is layering different review strategies. [Automated checks](./Automated%20check.md) catch the mechanical failures, [automated review](./Automated%20review.md) catches the describable ones, and human review is reserved for what only you can judge — whether the change is the right change, whether the approach fits the codebase, whether this should exist at all.
+Penggunaan agen akan meningkatkan jumlah kode program yang dihasilkan, sehingga proses peninjauan sering kali menjadi hambatan kecepatan kerja. Salah satu solusi yang berguna adalah dengan membagi strategi peninjauan menjadi beberapa lapisan. [Pemeriksaan otomatis](./Automated%20check.md) akan menangkap kesalahan teknis yang pasti, [tinjauan otomatis](./Automated%20review.md) akan menangkap kesalahan logika yang terdeskripsikan, dan [tinjauan manusia (human review)](./Human%20review.md) disimpan hanya untuk hal-hal yang memerlukan penilaian subjektif Anda — misalnya apakah perubahan kode tersebut sudah tepat, apakah pendekatannya sesuai dengan arsitektur proyek, atau apakah fitur tersebut memang perlu dibuat.
 
-Review is also cheaper earlier. Reading a plan before work starts, or a small diff mid-flight, takes minutes; excavating a finished branch after an [AFK](./AFK.md) run takes longer. Where you place the review checkpoint is a [human-in-the-loop](./Human-in-the-loop.md) decision, not an afterthought.
+Proses peninjauan juga jauh lebih mudah dilakukan di awal. Membaca dokumen rencana kerja sebelum pengerjaan dimulai, atau melihat berkas diff kecil di tengah proses pengerjaan hanya memakan waktu beberapa menit; sedangkan membongkar seluruh cabang kode (branch) yang sudah selesai setelah sesi otomatis [AFK (away from keyboard)](./AFK.md) akan memakan waktu jauh lebih lama. Penempatan titik pemeriksaan tinjauan ini adalah keputusan penting dalam metode [human-in-the-loop (keterlibatan manusia)](./Human-in-the-loop.md), bukan sekadar pelengkap di akhir.
 
-_Avoid:_ "code review" alone — ambiguous between human and automated.
+_Hindari:_ menggunakan istilah "code review" saja — karena maknanya bisa rancu antara peninjauan oleh manusia atau oleh sistem otomatis.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"I human-reviewed the AFK output."
+"Saya sudah melakukan tinjauan manusia (human review) pada hasil kerja otomatis (AFK)."
 
-"You read the diff or just the summary?"
+"Kamu membaca file perubahannya (diff) atau hanya membaca ringkasannya?"
 
-"Diff. The summary said it deleted dead code — turned out the function was called from a generated file."
+"Membaca diff. Ringkasannya menulis bahwa agen menghapus kode pemrograman yang sudah mati — tapi ternyata fungsi yang dihapus tersebut masih dipanggil dari file lain yang dibuat otomatis."

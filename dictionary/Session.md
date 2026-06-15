@@ -1,17 +1,17 @@
 ---
-description: One bounded run of interaction with an agent. Starts empty, accumulates, ends when cleared, closed, or compacted into a fresh session.
+description: Satu putaran interaksi terbatas dengan agen. Dimulai dari kosong, menumpuk, dan berakhir ketika dibersihkan/diringkas.
 ---
 
-One bounded run of interaction with an [agent](./Agent.md). Starts empty, accumulates messages, [tool results](./Tool%20result.md), and files read, and ends when [cleared](./Clearing.md), closed, or [compacted](./Compaction.md) into a fresh session. The session is what _fills_ the [context window](./Context%20window.md): if the context window is the box, the session is the stuff slowly filling it up. Work too large for a single context window must be split across sessions.
+Satu rangkaian batasan interaksi percakapan dengan [agen](./Agent.md). Dimulai dari kosong, kemudian menumpuk pesan, [hasil alat (tool result)](./Tool%20result.md), serta file-file yang dibaca, dan berakhir ketika [dibersihkan (clear)](./Clearing.md), ditutup, atau [diringkas (compact)](./Compaction.md) menjadi sesi baru yang bersih. Sesi adalah apa yang _mengisi_ kapasitas [jendela konteks](./Context%20window.md): jika jendela konteks diibaratkan sebagai sebuah kotak kardus, maka sesi adalah barang-barang yang perlahan mengisinya hingga penuh. Pekerjaan yang ukurannya terlalu besar untuk satu jendela konteks harus dibagi ke dalam beberapa sesi terpisah.
 
-The session's message history is the agent's working memory. The [model](./Model.md) is [stateless](./Stateless.md), so everything it appears to remember — what you asked for, what the tests said, what it decided three turns ago — is in the message history, re-sent with every [model provider request](./Model%20provider%20request.md). Whatever isn't in the session doesn't exist for the agent.
+Catatan riwayat pesan di dalam sesi adalah memori kerja aktif agen. [Model](./Model.md) bersifat [stateless (tidak menyimpan riwayat)](./Stateless.md), sehingga segala hal yang tampaknya diingat oleh model — seperti apa yang Anda minta, apa hasil laporan tes kodenya, atau apa keputusan yang disepakatinya tiga giliran pesan lalu — semuanya disimpan di dalam riwayat pesan tersebut, yang dikirimkan kembali di setiap [permintaan penyedia model (model provider request)](./Model%20provider%20request.md). Apa pun informasi yang tidak ada di dalam sesi dianggap tidak ada bagi agen.
 
-That memory ends with the session. A new session starts from nothing: the agent that knew your codebase well at the end of yesterday's session knows none of it this morning. What survives is the [filesystem](./Filesystem.md) — files written during one session can be read by the next, which is what [handoffs](./Handoff.md), [memory systems](./Memory%20system.md), and [AGENTS.md](./AGENTS.md.md) rely on.
+Memori tersebut akan berakhir bersamaan dengan berakhirnya sesi obrolan. Sesi baru akan dimulai seutuhnya dari nol: agen yang sangat memahami struktur proyek Anda di akhir sesi kemarin sore, tidak akan mengetahui apa pun tentang proyek tersebut di pagi hari ini. Hal yang dapat bertahan permanen hanyalah [sistem file](./Filesystem.md) komputer Anda — file yang ditulis oleh satu sesi obrolan dapat dibaca oleh sesi berikutnya, fitur inilah yang menjadi tumpuan bagi metode [serah terima (handoff)](./Handoff.md), [sistem memori](./Memory%20system.md), dan file [AGENTS.md](./AGENTS.md.md).
 
-You choose where a session ends. Everything in a session influences every later [turn](./Turn.md), so unrelated tasks done in one session leave residue that colours the next answer. One task per session keeps the context relevant; finishing a task is a natural point to clear.
+Anda sendiri yang menentukan kapan sesi obrolan harus diakhiri. Segala hal yang ada di dalam sesi akan memengaruhi setiap [giliran](./Turn.md) percakapan berikutnya, sehingga melakukan tugas-tugas berbeda yang tidak saling berhubungan di dalam satu sesi yang sama akan meninggalkan residu informasi yang dapat mengaburkan kualitas jawaban berikutnya. Membatasi satu sesi untuk satu tugas saja akan menjaga konteks obrolan tetap relevan; menyelesaikan suatu tugas adalah momen alami yang paling tepat untuk membersihkan sesi obrolan.
 
-_Usage:_
+_Contoh Penggunaan:_
 
-"How long can one session run before it falls apart?"
+"Berapa lama satu sesi obrolan dapat berjalan sebelum kinerjanya menurun?"
 
-"Depends on the work — a focused refactor stays sharp longer than open-ended research. Once the session bloats, hand off or compact, don't push through."
+"Sangat bergantung pada jenis pekerjaannya — tugas perbaikan kode (refactor) yang terfokus dapat menjaga ketajaman model lebih lama daripada riset terbuka. Begitu sesi obrolan mulai menumpuk dan bising, lakukan serah terima (handoff) atau penyusutan (compact), jangan memaksa melanjutkannya."

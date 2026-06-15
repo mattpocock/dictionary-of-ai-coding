@@ -10,19 +10,19 @@
 
 # AI Coding Dictionary
 
-**AI coding can feel like it's just for experts**. Unexplained jargon. Mysterious failures. Bills that don't seem to match the work.
+**Pemrograman berbasis AI sering kali terasa seperti hanya untuk para ahli**. Istilah-istilah rumit tanpa penjelasan. Kegagalan misterius. Tagihan biaya yang terasa tidak masuk akal dengan hasil kerjanya.
 
-It isn't, really. A lot of the confusion is manufactured: **there's a whole VC-funded economy that benefits from keeping it hard to understand**.
+Sebenarnya tidak sesulit itu. Kebanyakan kebingungan ini sengaja dibuat-buat: **ada seluruh ekosistem bisnis yang diuntungkan dengan menjaga agar teknologi ini tetap sulit dipahami**.
 
-The basic terms of engagement are learnable in an afternoon. Once you have them, the whole thing stops feeling like guesswork.
+Istilah-istilah dasar pemrograman AI ini sangat mudah dipelajari hanya dalam waktu satu sore saja. Setelah Anda memahaminya, semua proses pengerjaan tidak akan terasa seperti tebak-tebakan lagi.
 
-Why does context degrade? Why is the bill so high? Why does the same prompt behave differently from one day to the next?
+Mengapa jendela konteks bisa menurun kualitasnya? Mengapa biaya tagihannya sangat mahal? Mengapa perintah (prompt) yang sama bisa menghasilkan jawaban yang berbeda dari hari ke hari?
 
-Each has a clean answer, once someone tells you the words to use.
+Semua pertanyaan tersebut memiliki jawaban yang jelas, begitu ada seseorang yang menjelaskan istilah-istilahnya kepada Anda.
 
-That's what this dictionary is for. **The vocabulary of AI coding, translated into plain English**.
+Itulah tujuan dari kamus ini dibuat. **Kosa kata pemrograman berbasis AI, yang diterjemahkan ke dalam bahasa Indonesia yang sederhana**.
 
-**Want more than the vocabulary?** Join 62,000+ developers at **[aihero.dev/newsletter](https://www.aihero.dev/s/dictionary-newsletter)** for my latest skills, thinking on AI engineering, and the resources that'll keep you ahead of the curve.
+**Ingin tahu lebih banyak selain kosa kata?** Bergabunglah dengan 62.000+ pengembang lainnya di **[aihero.dev/newsletter](https://www.aihero.dev/s/dictionary-newsletter)** untuk mendapatkan keahlian terbaru, pemikiran seputar rekayasa AI, serta sumber daya yang akan menjaga Anda tetap terdepan.
 
 ---
 
