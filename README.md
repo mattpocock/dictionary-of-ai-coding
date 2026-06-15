@@ -35,7 +35,7 @@ Itulah tujuan dari kamus ini dibuat. **Kosa kata pemrograman berbasis AI, yang d
 ## Table of contents
 
 <details>
-<summary>Section 1 — The Model</summary>
+<summary>Section 1 — Model</summary>
 
 - [AI](#ai)
 - [Model](#model)
@@ -56,7 +56,7 @@ Itulah tujuan dari kamus ini dibuat. **Kosa kata pemrograman berbasis AI, yang d
 </details>
 
 <details>
-<summary>Section 2 — Sessions, Context Windows & Turns</summary>
+<summary>Section 2 — Sesi, Jendela Konteks & Giliran Pesan</summary>
 
 - [Stateless](#stateless)
 - [Context](#context)
@@ -70,7 +70,7 @@ Itulah tujuan dari kamus ini dibuat. **Kosa kata pemrograman berbasis AI, yang d
 </details>
 
 <details>
-<summary>Section 3 — Tools & Environment</summary>
+<summary>Section 3 — Alat & Lingkungan Kerja</summary>
 
 - [Environment](#environment)
 - [Filesystem](#filesystem)
@@ -86,7 +86,7 @@ Itulah tujuan dari kamus ini dibuat. **Kosa kata pemrograman berbasis AI, yang d
 </details>
 
 <details>
-<summary>Section 4 — Failure Modes</summary>
+<summary>Section 4 — Mode Kegagalan</summary>
 
 - [Sycophancy](#sycophancy)
 - [Hallucination](#hallucination)
@@ -101,7 +101,7 @@ Itulah tujuan dari kamus ini dibuat. **Kosa kata pemrograman berbasis AI, yang d
 </details>
 
 <details>
-<summary>Section 5 — Handoffs</summary>
+<summary>Section 5 — Operan Tugas (Handoff)</summary>
 
 - [Clearing](#clearing)
 - [Handoff](#handoff)
@@ -116,7 +116,7 @@ Itulah tujuan dari kamus ini dibuat. **Kosa kata pemrograman berbasis AI, yang d
 </details>
 
 <details>
-<summary>Section 6 — Memory and Steering</summary>
+<summary>Section 6 — Memori & Pengarahan</summary>
 
 - [Memory system](#memory-system)
 - [AGENTS.md](#agentsmd)
@@ -128,7 +128,7 @@ Itulah tujuan dari kamus ini dibuat. **Kosa kata pemrograman berbasis AI, yang d
 </details>
 
 <details>
-<summary>Section 7 — Patterns of Work</summary>
+<summary>Section 7 — Pola Kerja</summary>
 
 - [Human-in-the-loop](#human-in-the-loop)
 - [AFK](#afk)
@@ -144,7 +144,7 @@ Itulah tujuan dari kamus ini dibuat. **Kosa kata pemrograman berbasis AI, yang d
 
 </details>
 
-## Section 1 — The Model
+## Section 1 — Model
 
 ### AI
 
@@ -409,7 +409,7 @@ _Contoh Penggunaan:_
 
 "Coba periksa penggunaan token cache Anda. Jika sistem penjalan (harness) terus mengubah urutan system prompt atau posisi file di setiap giliran obrolan, awalan cache akan rusak dan Anda harus membayar penuh tarif input di setiap permintaan."
 
-## Section 2 — Sessions, Context Windows & Turns
+## Section 2 — Sesi, Jendela Konteks & Giliran Pesan
 
 ### Stateless
 
@@ -548,7 +548,7 @@ _Contoh Penggunaan:_
 
 "Agen melakukan empat belas kali [panggilan alat (tool calls)](#tool-call) di dalam giliran pesan tersebut — masing-masing panggilan adalah permintaan penyedia model yang terpisah. Latensi waktu menumpuk sebelum agen akhirnya mengembalikan kendali kepada Anda."
 
-## Section 3 — Tools & Environment
+## Section 3 — Alat & Lingkungan Kerja
 
 ### Environment
 
@@ -760,7 +760,7 @@ _Contoh Penggunaan:_
 
 "Letakkan agen di dalam sandbox — gunakan kontainer baru, tanpa kredensial yang terpasang, dan matikan akses jaringan keluar. Kasus terburuknya dia hanya akan menghancurkan sistem filenya sendiri dan Anda tinggal membuang kontainer tersebut."
 
-## Section 4 — Failure Modes
+## Section 4 — Mode Kegagalan
 
 ### Sycophancy
 
@@ -932,7 +932,7 @@ _Contoh Penggunaan:_
 
 "Kalian sudah keluar dari zona pintar — modelnya masih sama, hanya saja sekarang sudah masuk jauh ke dalam zona bodoh. Lakukan penyusutan (compact) dan muat ulang rencana kerjanya, komponen berikutnya pasti akan selesai dengan baik."
 
-## Section 5 — Handoffs
+## Section 5 — Operan Tugas (Handoff)
 
 ### Clearing
 
@@ -1081,7 +1081,7 @@ _Contoh Penggunaan:_
 
 "Fitur penyusutan otomatis (autocompact) berjalan di antara [giliran](#turn) percakapan — keputusan awal kita diringkas oleh model dan kemungkinan ada detail yang terbuang. Muat ulang file rencana, atau lakukan penyusutan manual di lain waktu agar Anda bisa mengontrol detail apa saja yang harus disimpan."
 
-## Section 6 — Memory and Steering
+## Section 6 — Memori & Pengarahan
 
 ### Memory system
 
@@ -1185,7 +1185,7 @@ _Contoh Penggunaan:_
 
 "Jalankan subagen untuk melakukan pencarian tersebut — subagen akan menghabiskan jendela konteksnya sendiri untuk memproses kebisingan hasil pencarian dan hanya melaporkan kembali dua jalur file yang benar-benar Anda butuhkan."
 
-## Section 7 — Patterns of Work
+## Section 7 — Pola Kerja
 
 ### Human-in-the-loop
 

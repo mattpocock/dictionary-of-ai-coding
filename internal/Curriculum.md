@@ -1,4 +1,4 @@
-## Section 1 — The Model
+## Section 1 — Model
 
 - AI
 - Model
@@ -16,7 +16,7 @@
 - Prefix cache
 - Cache tokens
 
-## Section 2 — Sessions, Context Windows & Turns
+## Section 2 — Sesi, Jendela Konteks & Giliran Pesan
 
 - Stateless
 - Context
@@ -27,7 +27,7 @@
 - Session
 - Turn
 
-## Section 3 — Tools & Environment
+## Section 3 — Alat & Lingkungan Kerja
 
 - Environment
 - Filesystem
@@ -40,7 +40,7 @@
 - Agent mode
 - Sandbox
 
-## Section 4 — Failure Modes
+## Section 4 — Mode Kegagalan
 
 - Sycophancy
 - Hallucination
@@ -52,7 +52,7 @@
 - Attention degradation
 - Smart zone
 
-## Section 5 — Handoffs
+## Section 5 — Operan Tugas (Handoff)
 
 - Clearing
 - Handoff
@@ -64,7 +64,7 @@
 - Compaction
 - Autocompact
 
-## Section 6 — Memory and Steering
+## Section 6 — Memori & Pengarahan
 
 - Memory system
 - AGENTS.md
@@ -73,7 +73,7 @@
 - Skill
 - Subagent
 
-## Section 7 — Patterns of Work
+## Section 7 — Pola Kerja
 
 - Human-in-the-loop
 - AFK
