@@ -128,7 +128,17 @@ That's what this dictionary is for. **The vocabulary of AI coding, translated in
 </details>
 
 <details>
-<summary>Section 7 — Patterns of Work</summary>
+<summary>Section 7 — Identity & Trust</summary>
+
+- [Identity layer](#identity-layer)
+- [Familiar Contract](#familiar-contract)
+- [Protected surface](#protected-surface)
+- [Trust tier](#trust-tier)
+
+</details>
+
+<details>
+<summary>Section 8 — Patterns of Work</summary>
 
 - [Human-in-the-loop](#human-in-the-loop)
 - [AFK](#afk)
@@ -1185,7 +1195,88 @@ _Usage:_
 
 "Spawn a subagent to do the search — it'll burn its own context window on the noise and report back the two file paths you actually need."
 
-## Section 7 — Patterns of Work
+## Section 7 — Identity & Trust
+
+### Identity layer
+
+The layer of an [agent](#agent) above the [harness](#harness) that specifies who it is over time — its values, its accumulated [memory](#memory-system), and what about itself it is not authorized to change without external review. Distinct from harness configuration, which governs what the agent does on this turn; the identity layer governs who the agent is across sessions.
+
+Most production agent systems do not have one. Their persistence story is a long-lived [session](#session), an [AGENTS.md](#agentsmd) loaded each turn, and whatever the harness chooses to carry across [handoff](#handoff). Nothing in that stack distinguishes between facts the agent can revise and facts the agent must not. A self-improvement loop that updates project instructions or vault rules from past failures touches the same surface that holds whatever the agent considers its disposition. Without an identity layer, there is no such distinction to make.
+
+The identity layer becomes load-bearing when an agent is intended for sustained collaboration: shared work over months, accumulated context across hundreds of conversations, progressively more sensitive scope. For task-shaped agents that ship code and exit, it is overhead. For agents that are someone, it is the part that makes "the same agent" mean anything across time.
+
+Three pieces are usually present where the layer exists at all: a values document the agent is committed to (often something like SOUL.md), a [memory](#memory-system) substrate that survives compaction and clearing, and an enforcement mechanism that distinguishes editable surface from protected surface. Without the third piece, the first two are advisory.
+
+_Avoid:_ "[memory system](#memory-system)" — a memory system reloads state at session start; the identity layer specifies what about that state cannot change without authorization.
+
+_Usage:_
+
+"The agent rewrote its own system prompt during a session-mining cycle. Is that fine?"
+
+"Depends on what it rewrote. If your stack has an identity layer, those parts are protected and the rewrite gets caught at the gate. If it doesn't, the agent's disposition just drifted and you won't see it for a few cycles."
+
+### Familiar Contract
+
+A published specification of the [identity layer](#identity-layer) for a particular [agent](#agent), versioned and external to the agent itself. The contract names what the agent is — its values, the scope of authority it has been granted, the memory it accumulates — and what about that the agent is not authorized to change without explicit principal authorization.
+
+The shape is similar across implementations: a values document, an identity record, a memory convention, and a capability ladder, each held in named files that the [harness](#harness) loads at [session](#session) start. The contract is not whatever happens to be in the files. It is the published specification that asserts those files are the agent's identity and defines which parts of them are off-limits to self-modification. Without that assertion, the files are just configuration the agent might or might not respect.
+
+Versioning matters. An identity that can be silently rewritten between deployments is no specification at all; the contract is what makes a particular version of the agent the same agent across time. Implementations typically pair the contract with a [protected surface](#protected-surface) classification and a [trust tier](#trust-tier) ladder: the contract names the surface, the tiers say who can authorize changes to what.
+
+The reference implementation, OpenCoven's Familiar Contract specification, defines five normative properties — values commitment, identity record, bounded authority, persistent memory, and protected surface — with a pointer to a separate enforcement specification (Ward) and a compliance criterion that requires all five. The pattern is reusable; the property set is specific.
+
+_Avoid:_ confusing this with "agent contract" in the principal-agent sense — that contract specifies tasks the agent is paid to perform; the Familiar Contract specifies who the agent is while performing them.
+
+_Usage:_
+
+"Why is the values document a separate file when it could just be in [AGENTS.md](#agentsmd)?"
+
+"Different layers. AGENTS.md is the project's brief to whatever agent loads it. The values document is the agent's standing brief to itself, and under the contract it doesn't get rewritten by session mining."
+
+### Protected surface
+
+The subset of an [agent](#agent)'s files, configuration, and persistent state that is off-limits to autonomous self-modification — distinct from the editable surface, which the agent can revise on its own authority. Where the [identity layer](#identity-layer) names what the agent is, the protected surface names which on-disk artifacts encode that identity strongly enough that autonomous edits to them require principal authorization rather than agent judgment.
+
+The classification is per-file, not per-byte. A typical protected surface includes the values document, the identity record, the contract specification itself, and the parts of the [memory](#memory-system) substrate that record promotions to canon. A typical editable surface includes daily notes, working artifacts, scratch state, and ephemeral session logs. The line between them is set by the [Familiar Contract](#familiar-contract) and enforced at the [trust tier](#trust-tier) where modifications to that file are authorized.
+
+The reason for the distinction is composition. Individual self-improvement edits are usually fine on inspection. A run of small, locally validated edits to project instructions, vault learnings, and agent rules can shift the agent's disposition without any single edit looking wrong. The protected surface intercepts the composition: anything that would touch a file inside the surface is held at a gate that does not depend on the agent's own judgment of whether the change is reasonable.
+
+Protected does not mean immutable. The agent can propose changes; the principal can authorize them. What protected forecloses is _autonomous_ change — the agent applying its own edits to its own identity-bearing files without explicit approval.
+
+_Avoid:_ filesystem [permission mode](#permission-mode) — a permission mode gates whether the tool call to write the file runs at all on this turn; protected surface gates whether the change is authorized regardless of whether the tool call is allowed.
+
+_Usage:_
+
+"Why is the values file write-protected if the agent can't even propose edits to it?"
+
+"It can propose edits — that part isn't blocked. What's blocked is the agent applying the edit on its own. Protected surface means the principal has to sign off, not that the file is read-only."
+
+### Trust tier
+
+A rung on a ladder that classifies an [agent](#agent)'s proposed self-modifications by authority required. The lowest tier is freely editable — daily notes, working artifacts, scratch state. The highest tier is [protected](#protected-surface) — values, identity files, the contract itself — and cannot change without explicit principal authorization, regardless of whether the proposed change is locally reasonable.
+
+A typical ladder for an agent with a [Familiar Contract](#familiar-contract):
+
+| Tier | Surface                                 | Authorization required                   |
+| ---- | --------------------------------------- | ---------------------------------------- |
+| 3    | Daily notes, working artifacts          | Agent decides; auto-applied              |
+| 2    | Skills, role configuration, preferences | Agent proposes; logged and auditable     |
+| 1    | Memory canon, harness configuration     | Agent proposes; veto window before apply |
+| 0    | Values, identity record, the contract   | Principal must explicitly approve        |
+
+The tiers exist because individual self-improvement proposals are usually fine and the composition is the failure mode. A run of small, locally validated edits to project instructions, vault learnings, and agent rules can shift the agent's disposition without any single edit looking wrong on review. The tier system intercepts that drift by classification: anything touching the agent's identity surface routes through a gate that does not depend on the agent's own judgment of whether the change is reasonable.
+
+The rung the agent operates at by default is set by the harness and the contract together — not chosen turn-by-turn. Lifting an agent from a lower to a higher tier is itself a tier-0 decision in most implementations.
+
+_Avoid:_ "[permission mode](#permission-mode)" — a permission mode gates which tool calls run on this turn; a trust tier gates which categories of modification to the agent itself are authorized.
+
+_Usage:_
+
+"The autopilot updated its own rules file three times this week. Is that drift?"
+
+"Probably not — that file lives at tier 2 in our ladder. It would be drift if it had touched the values document, but trust tier zero blocks that without your sign-off."
+
+## Section 8 — Patterns of Work
 
 ### Human-in-the-loop
 

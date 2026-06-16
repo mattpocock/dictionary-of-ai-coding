@@ -73,7 +73,14 @@
 - Skill
 - Subagent
 
-## Section 7 — Patterns of Work
+## Section 7 — Identity & Trust
+
+- Identity layer
+- Familiar Contract
+- Protected surface
+- Trust tier
+
+## Section 8 — Patterns of Work
 
 - Human-in-the-loop
 - AFK
