@@ -2,7 +2,7 @@
 description: A rung on a ladder that authorizes which categories of self-modification an agent can apply autonomously and which require human review.
 ---
 
-A rung on a ladder that classifies an [agent](./Agent.md)'s proposed self-modifications by authority required. The lowest tier is freely editable — daily notes, working artifacts, scratch state. The highest tier is [protected](./Protected%20surface.md) — values, identity files, the contract itself — and cannot change without explicit principal authorization, regardless of whether the proposed change is locally reasonable.
+A rung on a ladder that classifies an [agent](./Agent.md)'s proposed self-modifications by authority required. The least restrictive tier is freely editable — daily notes, working artifacts, scratch state. The most restrictive tier is [protected](./Protected%20surface.md) — values, identity files, the contract itself — and cannot change without explicit principal authorization, regardless of whether the proposed change is locally reasonable. Tier numbers decrease as restrictions increase, so the most permissive rung carries the highest number and the most protected rung is tier 0.
 
 A typical ladder for an agent with a [Familiar Contract](./Familiar%20Contract.md):
 
