@@ -1,0 +1,15 @@
+{
+  "name": "ai-vocabulary-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build-pages": "tsx build-dictionary.ts",
+    "dev": "npm run build-pages && vitepress dev",
+    "build": "npm run build-pages && vitepress build",
+    "preview": "vitepress preview"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "vitepress": "^1.6.3"
+  }
+}

@@ -1,1 +1,4 @@
 node_modules/
+.vercel
+site/.vitepress/cache/
+site/.vitepress/dist/

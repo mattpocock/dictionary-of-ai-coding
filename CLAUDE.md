@@ -18,6 +18,16 @@ The first sentence used in a paragraph must be extra-clear. Don't attempt to pre
 
 Whenever a new entry is added, search through all other entries to see if it can be referenced there. The presence of a new term may be able to reduce verbosity in other entries.
 
+## Bilingual migration
+
+Thai is planned as a first-class source language, not a README-only translation layer. The migration plan lives in `internal/bilingual/PLAN.md`.
+
+Before writing, editing, or reviewing Thai content, read `internal/TRANSLATION_CALIBRATION.md`. It is the single source of truth for Thai tone, level of formality, glossary choices, and which terms should remain in English.
+
+Before changing bilingual infrastructure or assigning work to another agent, read `internal/bilingual/HANDOFF.md`, `internal/bilingual/ORCHESTRATION.md`, and `internal/bilingual/COMMAND_ORDER.md`.
+
+The target source layout is `dictionary/<Concept>/en.md` and `dictionary/<Concept>/th.md`, while `internal/Curriculum.md` remains the source of truth for concept order.
+
 ## Agent skills
 
 ### Issue tracker
