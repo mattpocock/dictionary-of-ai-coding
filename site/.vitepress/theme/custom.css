@@ -1,0 +1,147 @@
+:root {
+  --vp-c-bg: #f7f3ee;
+  --vp-c-bg-alt: #efe8df;
+  --vp-c-bg-soft: #fffaf6;
+  --vp-c-bg-mute: #f1ece5;
+  --vp-c-text-1: #191817;
+  --vp-c-text-2: #4f4943;
+  --vp-c-text-3: #7d776f;
+  --vp-c-brand-1: #e35324;
+  --vp-c-brand-2: #f05a28;
+  --vp-c-brand-3: #fff0e6;
+  --vp-c-divider: #ddd6cd;
+  --vp-sidebar-bg-color: #f7f3ee;
+  --vp-font-family-base:
+    "Avenir Next", "Segoe UI", "Noto Sans Thai", "Helvetica Neue", Arial,
+    sans-serif;
+}
+
+.dark {
+  --vp-c-bg: #f7f3ee;
+  --vp-c-bg-alt: #efe8df;
+  --vp-c-bg-soft: #fffaf6;
+  --vp-c-bg-mute: #f1ece5;
+  --vp-c-text-1: #191817;
+  --vp-c-text-2: #4f4943;
+  --vp-c-text-3: #7d776f;
+  --vp-c-divider: #ddd6cd;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #f7f3ee;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 3px solid #f05a28;
+  outline-offset: 3px;
+}
+
+.VPNav {
+  background: rgba(247, 243, 238, 0.94) !important;
+  border-bottom: 1px solid #ddd6cd !important;
+}
+
+.VPNavBar.has-sidebar .content {
+  background: transparent !important;
+}
+
+.VPNavBarTitle .title {
+  color: #191817 !important;
+}
+
+.VPLink,
+.VPNavBarMenuLink,
+.VPNavBarMenuGroup .button {
+  color: #4f4943 !important;
+}
+
+.VPNavBarMenuLink:hover,
+.VPNavBarMenuGroup .button:hover {
+  color: #e35324 !important;
+}
+
+.VPSocialLink {
+  color: #4f4943 !important;
+}
+
+.VPDoc {
+  background: #f7f3ee;
+}
+
+.vp-doc {
+  color: #24211f;
+}
+
+.vp-doc h1 {
+  color: #191817 !important;
+  font-size: 2.7rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0;
+  line-height: 1.05;
+}
+
+.vp-doc h2 {
+  border-bottom: 1px solid #ddd6cd;
+  color: #191817 !important;
+  font-size: 1.45rem !important;
+  font-weight: 800 !important;
+  margin-top: 2.2rem !important;
+  padding-bottom: 0.5rem;
+}
+
+.vp-doc h3 {
+  color: #2f2b27 !important;
+  font-size: 1.1rem !important;
+  font-weight: 800 !important;
+}
+
+.vp-doc p,
+.vp-doc li {
+  color: #4f4943;
+  line-height: 1.75;
+}
+
+.vp-doc a {
+  color: #c94a20;
+  text-underline-offset: 3px;
+}
+
+.vp-doc table {
+  border-color: #ddd6cd;
+}
+
+.vp-doc tr {
+  background-color: #fffaf6;
+  border-top-color: #ddd6cd;
+}
+
+.vp-doc tr:nth-child(2n) {
+  background-color: #f1ece5;
+}
+
+.vp-doc th,
+.vp-doc td {
+  border-color: #ddd6cd;
+}
+
+.vp-doc div[class*="language-"],
+.vp-block {
+  background: #191817 !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

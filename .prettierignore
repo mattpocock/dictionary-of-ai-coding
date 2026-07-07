@@ -1,3 +1,5 @@
 README.md
 node_modules
 package-lock.json
+site/.vitepress/cache
+site/.vitepress/dist

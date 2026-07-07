@@ -1,0 +1,5 @@
+{
+  "buildCommand": "cd site && npm install && npm run build",
+  "outputDirectory": "site/.vitepress/dist",
+  "installCommand": "npm install"
+}

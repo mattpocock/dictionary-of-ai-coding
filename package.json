@@ -4,6 +4,8 @@
   "type": "module",
   "scripts": {
     "generate": "tsx internal/generate-readme.ts",
+    "site:dev": "cd site && npm run dev",
+    "site:build": "cd site && npm run build",
     "prepare": "husky"
   },
   "devDependencies": {
