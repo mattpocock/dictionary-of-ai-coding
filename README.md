@@ -79,6 +79,8 @@ That's what this dictionary is for. **The vocabulary of AI coding, translated in
 - [Tool call](#tool-call)
 - [Tool result](#tool-result)
 - [MCP](#mcp)
+- [Agent Client Protocol](#agent-client-protocol)
+- [Agent Control Protocol](#agent-control-protocol)
 - [Permission request](#permission-request)
 - [Permission mode](#permission-mode)
 - [Agent mode](#agent-mode)
@@ -683,7 +685,7 @@ _Usage:_
 
 ### MCP
 
-**Model Context Protocol.** A protocol for plugging external tool servers into a [harness](#harness) — how an [agent](#agent) gets [tools](#tool) beyond what the harness ships with. The agent never "calls MCP"; it calls a tool, and the harness happens to have gotten that tool from an MCP server. Also exposes resources (read-only data) and prompts (reusable templates), but tool provision is the primary use.
+**Model Context Protocol.** A protocol for plugging external tool servers into a [harness](#harness) — how an [agent](#agent) gets [tools](#tool) beyond what the harness ships with. The agent never "calls MCP"; it calls a tool, and the harness happens to have gotten that tool from an MCP server. Also exposes resources (read-only data) and prompts (reusable templates), but tool provision is the primary use. The [Agent Client Protocol](#agent-client-protocol) reuses some of MCP's message shapes for a different pairing — editor and agent, instead of agent and tool.
 
 The protocol solves an integration problem. Without a standard, every harness would need its own Linear integration, its own Slack integration, its own database integration — written and maintained separately for each. With MCP, the integration is written once as a server, and any MCP-compatible harness can use it. The harness connects to the server, the server advertises what tools it offers, and those tools become available to the agent alongside the built-in ones.
 
@@ -696,6 +698,54 @@ _Usage:_
 "The agent needs to read tickets from Linear."
 
 "Configure the harness to use the Linear MCP server — it exposes the Linear API as tools the agent can call. Saves you writing custom tool wrappers."
+
+### Agent Client Protocol
+
+**Agent Client Protocol.** A protocol standardizing communication between a code editor or IDE and the [coding agent](#agent) running behind it, so the editor doesn't need a bespoke integration for every agent it wants to support, and the agent doesn't need a different API for every editor it wants to reach. Created by Zed. It reuses parts of [MCP](#mcp)'s message shapes where the two overlap, and adds types specific to coding work, such as diff visualization.
+
+Without a shared protocol, every editor-agent pairing is its own integration. Adding a second agent to an editor means rebuilding the plumbing that already existed for the first one, and an agent that works well in one editor often only exists there — you end up choosing the editor because that's where the agent you want happens to live, not because the editor suits you better. The protocol turns each side into an implementation of one interface instead of a pair written for each other, the same relationship [Model provider](#model-provider)-agnostic harnesses have to models: swapping one side doesn't require rewriting the other.
+
+| Deployment   | Transport                                     | Typical case                                    |
+| ------------ | --------------------------------------------- | ----------------------------------------------- |
+| Local agent  | JSON-RPC over stdio, as an editor sub-process | A CLI coding agent the editor runs directly     |
+| Remote agent | HTTP or WebSocket (still evolving)            | A cloud-hosted agent the editor connects out to |
+
+What flows over that connection is the same material a [harness](#harness) already manages internally — [tool calls](#tool-call), [permission requests](#permission-request), streamed output — just exposed in a shape any conforming editor can render, instead of being wired to one editor's UI. An editor that speaks the protocol shows approvals and diffs consistently no matter which agent is behind the session.
+
+_Avoid:_ confusing this with the [Agent Control Protocol](#agent-control-protocol) — same acronym, unrelated protocols. That one is a small draft for an agent operating an arbitrary application's UI; this one is what's used across the coding-agent ecosystem for editor-agent communication.
+
+_Usage:_
+
+"We want to try a different coding agent, but our editor's assistant integration only talks to the one it shipped with."
+
+"Check whether both sides speak ACP. If the editor and the agent both implement it, swapping is a config change, not a rewrite of the integration."
+
+### Agent Control Protocol
+
+**Agent Control Protocol.** A draft protocol that lets an [agent](#agent) operate an existing application's UI through structured commands, instead of reading screenshots or scraping the DOM. The application declares a manifest of its screens, fields, and actions up front; the agent reads that manifest rather than the pixels, then sends commands such as "set this field" or "click this button" and gets a result back for each one.
+
+The alternatives it's trying to replace both break in a specific, familiar way. Vision-based automation feeds screenshots to the model, which is slow and spends [tokens](#token) decoding an image just to locate a button — and the moment a designer reflows the page, whatever the agent had inferred about layout is wrong. DOM scraping avoids the image cost but couples the agent to markup that shifts with every deploy, so a class-name rename breaks the automation with no warning. Traditional robotic process automation sidesteps both, but it's built for scheduled batch runs, not a live, conversational back-and-forth with a user mid-task.
+
+The protocol runs as a loop once the manifest is exchanged:
+
+| Step | Who   | What happens                                                                |
+| ---- | ----- | --------------------------------------------------------------------------- |
+| 1    | App   | Sends a manifest: its screens, fields, and actions                          |
+| 2    | Agent | Matches the user's request against the manifest                             |
+| 3    | Agent | Sends a numbered command — `set_field`, `click`, `navigate`, and so on      |
+| 4    | App   | Executes the command, returns a result tagged with the same sequence number |
+
+This makes the application's UI an ordinary [environment](#environment) for the agent to act on — structured data in, structured commands out, the same shape as any other tool integration, just aimed at a UI instead of a database or API.
+
+It sits next to [MCP](#mcp) rather than replacing it: MCP covers agent-to-data and agent-to-tool, this covers agent-to-existing-UI. It's a v2.0 draft from a small team, not an established standard — most applications don't expose a manifest, so treat support for it as the exception rather than something to plan around by default.
+
+_Avoid:_ confusing this with the [Agent Client Protocol](#agent-client-protocol) — same acronym, unrelated protocols. That one standardizes how a code editor talks to a coding agent; this one is an agent operating an arbitrary application's UI, and has nothing to do with coding tools specifically.
+
+_Usage:_
+
+"The UI-testing agent keeps breaking every time the design team reflows a screen."
+
+"That's screenshot coupling. If the app ships an ACP manifest, swap the vision step for reading the manifest — fields and actions arrive as data, so a layout change doesn't retrain the agent."
 
 ### Permission request
 
