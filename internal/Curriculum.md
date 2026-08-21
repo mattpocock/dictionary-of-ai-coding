@@ -82,6 +82,7 @@
 - Automated review
 - Human review
 - Vibe coding
+- Slop
 - Design concept
 - Grilling
 - Prototyping
