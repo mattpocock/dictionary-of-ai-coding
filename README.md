@@ -5,11 +5,11 @@
 -->
 
 <p>
-  <a href="https://aicodingdictionary.com">
+  <a href="https://www.aihero.dev/ai-coding-dictionary">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://res.cloudinary.com/total-typescript/image/upload/v1782821584/dictionary-dark.png">
-      <source media="(prefers-color-scheme: light)" srcset="https://res.cloudinary.com/total-typescript/image/upload/v1782821584/dictionary-light.png">
-      <img alt="AI Coding Dictionary" src="https://res.cloudinary.com/total-typescript/image/upload/v1782821584/dictionary-light.png" width="369">
+      <source media="(prefers-color-scheme: dark)" srcset="https://res.cloudinary.com/total-typescript/image/upload/v1777878285/dictionary-dark_2x.png">
+      <source media="(prefers-color-scheme: light)" srcset="https://res.cloudinary.com/total-typescript/image/upload/v1777878285/dictionary-light_2x.png">
+      <img alt="AI Coding Dictionary" src="https://res.cloudinary.com/total-typescript/image/upload/v1777878285/dictionary-light_2x.png" width="369">
     </picture>
   </a>
 </p>
@@ -137,6 +137,7 @@ That's what this dictionary is for. **The vocabulary of AI coding, translated in
 - [Automated review](#automated-review)
 - [Human review](#human-review)
 - [Vibe coding](#vibe-coding)
+- [Slop](#slop)
 - [Design concept](#design-concept)
 - [Grilling](#grilling)
 - [Prototyping](#prototyping)
@@ -1313,7 +1314,7 @@ Vibe coding trades inspection for speed. Reading diffs is usually the slowest st
 
 The cost arrives later. Vibe-coded changes accumulate into a codebase nobody has read, and behaviour was the only thing checked — so anything behaviour doesn't surface, like a secret written to logs, a missing edge case, or quietly wrong data handling, ships unseen. The first time someone debugs the system is the first time anyone reads the code. With human review gone, whatever automated verification still runs — tests, types, automated review — is the only gate the code passes through.
 
-_Avoid:_ "vibe coding" as a synonym for "low-quality AI coding" — the term names the review stance, not the resulting code.
+_Avoid:_ "vibe coding" as a synonym for "low-quality AI coding" — the term names the review stance, not the resulting code. Unreviewed output shipped to someone else has its own term: [slop](#slop).
 
 _Usage:_
 
@@ -1322,6 +1323,28 @@ _Usage:_
 "Vibe coded it — login still works, that's all I checked."
 
 "Read the diff before you push, vibing on auth is how secrets leak into logs."
+
+### Slop
+
+AI-generated output shipped to someone else without [human review](#human-review) — the pull request its sender never read, the bug report nobody reproduced, the generated doc pasted into the wiki. Simon Willison [pinned the definition down in 2024](https://simonwillison.net/2024/May/8/slop/), drawing the parallel to spam: content "mindlessly generated and thrust upon someone who didn't ask for it". Two properties define it — unrequested and unreviewed. A [model](#model) produced it, and no one exercised judgement on it before it was handed to another person.
+
+Slop is hard to reject on sight because model output is plausible by construction. [Next-token prediction](#next-token-prediction) produces the same assured register whether the content is sound, [hallucinated](#hallucination), or subtly wrong for this codebase, and the signals reviewers use as shortcuts — tidy structure, comments, tests, a confident description — now cost nothing to counterfeit. So the 600-line PR looks careful. An hour of reading finds tests that assert on mocks and a helper the codebase already had; a follow-up question goes unanswered, because the sender never read the diff and the [session](#session) that wrote it is gone. Identifying slop takes exactly the reading the producer skipped.
+
+The economics behind slop are an asymmetry: generation became nearly free, verification didn't. The skipped review isn't saved — it is transferred to a recipient who starts with less knowledge of the change than the sender had. At volume the transfer breaks anything that runs on human attention: review queues, issue trackers, bug bounties. In 2025 roughly [20% of the security reports curl received were slop](https://daniel.haxx.se/blog/2025/07/14/death-by-a-thousand-slops/), each occupying three or four maintainers for 30 minutes to three hours before it could be dismissed; the project shut its bug bounty down the following year.
+
+Provenance is not the test — review is. [Agent](#agent)-written code a human has read and stands behind is not slop, whatever fraction of it the model typed. The term is the artifact-side complement of [vibe coding](#vibe-coding), which names the stance: vibe coding your own [prototype](#prototyping) spends only your own time, and turns into slop production the moment unread output ships to someone else. Correctness doesn't redeem it — an unreviewed change that happens to work still arrives unowned, and the recipient can't know it works without doing the reading themselves. The norm that follows is Willison's: you attach your credibility to what you publish — read it before you ship it, or say plainly that you haven't.
+
+_Avoid:_ "slop" as a slur for anything AI-assisted. The test is review, not provenance — applied to work someone has read and stands behind, the word loses the line it exists to draw.
+
+_Usage:_
+
+"Three PRs this morning, each adding its own retry helper — full test suites, every assertion against a mock."
+
+"Did you ask why the helpers retry three times?"
+
+"Asked one author. They said they'd need to check with the agent that wrote it. That session's gone."
+
+"Slop, then. Close them and ask for one PR the author has actually read."
 
 ### Design concept
 
