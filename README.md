@@ -386,7 +386,7 @@ _Usage:_
 
 ### Output tokens
 
-[Tokens](#token) the [model](#model) generates back. Billed at a higher rate than [input tokens](#input-tokens) — commonly around five times the rate — since they cost more compute to produce.
+[Tokens](#token) the [model](#model) generates back. Billed at a higher rate than [input tokens](#input-tokens) — commonly around five times the rate — because output token generation is sequential and generally less hardware-efficient to serve. Each new token requires another decoding step while maintaining and accessing the [cache](#cache-tokens).
 
 Everything the model writes counts: the prose you read, the code it emits, [tool calls](#tool-call), and any extended thinking the model does before answering. That last one surprises people — reasoning tokens are billed as output even when the [harness](#harness) often doesn't show them to you, and turning up [effort](#effort) spends more of them.
 
