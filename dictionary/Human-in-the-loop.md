@@ -13,7 +13,7 @@ Which pattern fits depends on the work. Well-specified, low-risk, easy-to-verify
 
 Some work is in-the-loop by nature, because your reactions are the input. [Grilling](./Grilling.md) only works with you there to answer the questions; [prototyping](./Prototyping.md) only works with you there to react to the artifact.
 
-Staying in the loop costs your attention, which is the scarce resource. Part of getting better with agents is moving more work safely out of the loop — with plans, [automated checks](./Automated%20check.md), and [human review](./Human%20review.md) at the end instead of supervision throughout.
+Staying in the loop costs your attention, which is the scarce resource. Part of getting better with agents is moving more work safely out of the loop — with plans, [automated checks](./Automated%20check.md), and [human review](./Human%20review.md) at the end instead of supervision throughout. A [software factory](./Software%20factory.md) takes this further by starting sessions from triggers, so even kicking off the work doesn't need you.
 
 _Usage:_
 

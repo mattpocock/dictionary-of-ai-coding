@@ -5,11 +5,11 @@
 -->
 
 <p>
-  <a href="https://aicodingdictionary.com">
+  <a href="https://www.aihero.dev/ai-coding-dictionary">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://res.cloudinary.com/total-typescript/image/upload/v1782821584/dictionary-dark.png">
-      <source media="(prefers-color-scheme: light)" srcset="https://res.cloudinary.com/total-typescript/image/upload/v1782821584/dictionary-light.png">
-      <img alt="AI Coding Dictionary" src="https://res.cloudinary.com/total-typescript/image/upload/v1782821584/dictionary-light.png" width="369">
+      <source media="(prefers-color-scheme: dark)" srcset="https://res.cloudinary.com/total-typescript/image/upload/v1777878285/dictionary-dark_2x.png">
+      <source media="(prefers-color-scheme: light)" srcset="https://res.cloudinary.com/total-typescript/image/upload/v1777878285/dictionary-light_2x.png">
+      <img alt="AI Coding Dictionary" src="https://res.cloudinary.com/total-typescript/image/upload/v1777878285/dictionary-light_2x.png" width="369">
     </picture>
   </a>
 </p>
@@ -142,6 +142,8 @@ That's what this dictionary is for. **The vocabulary of AI coding, translated in
 - [Prototyping](#prototyping)
 - [DX](#dx)
 - [AX](#ax)
+- [Software factory](#software-factory)
+- [Dark factory](#dark-factory)
 
 </details>
 
@@ -1067,7 +1069,7 @@ The defining constraint is the size: one session. A ticket should be completable
 
 A good ticket is written for a reader with no other context. The goal, the acceptance criteria, and [context pointers](#context-pointer) to the relevant files and decisions — enough that the session can start working without re-deriving what the last one knew.
 
-The dependency graph is also what unlocks parallelism. Independent tickets — the leaves of the graph — can each run in their own session at the same time. This is an effective way of running multiple agents at once.
+The dependency graph is also what unlocks parallelism. Independent tickets — the leaves of the graph — can each run in their own session at the same time. This is an effective way of running multiple agents at once. In a [software factory](#software-factory), a ticket being marked ready is itself the trigger that starts its session.
 
 _Usage:_
 
@@ -1223,7 +1225,7 @@ Which pattern fits depends on the work. Well-specified, low-risk, easy-to-verify
 
 Some work is in-the-loop by nature, because your reactions are the input. [Grilling](#grilling) only works with you there to answer the questions; [prototyping](#prototyping) only works with you there to react to the artifact.
 
-Staying in the loop costs your attention, which is the scarce resource. Part of getting better with agents is moving more work safely out of the loop — with plans, [automated checks](#automated-check), and [human review](#human-review) at the end instead of supervision throughout.
+Staying in the loop costs your attention, which is the scarce resource. Part of getting better with agents is moving more work safely out of the loop — with plans, [automated checks](#automated-check), and [human review](#human-review) at the end instead of supervision throughout. A [software factory](#software-factory) takes this further by starting sessions from triggers, so even kicking off the work doesn't need you.
 
 _Usage:_
 
@@ -1311,7 +1313,7 @@ The term comes from Andrej Karpathy, who [coined it in early 2025](https://x.com
 
 Vibe coding trades inspection for speed. Reading diffs is usually the slowest step in agent-driven work, so dropping it removes the main bottleneck. For code whose failures are cheap — [prototypes](#prototyping), one-off scripts, internal tools — that's a reasonable trade. The risk scales with the code's lifespan and stakes.
 
-The cost arrives later. Vibe-coded changes accumulate into a codebase nobody has read, and behaviour was the only thing checked — so anything behaviour doesn't surface, like a secret written to logs, a missing edge case, or quietly wrong data handling, ships unseen. The first time someone debugs the system is the first time anyone reads the code. With human review gone, whatever automated verification still runs — tests, types, automated review — is the only gate the code passes through.
+The cost arrives later. Vibe-coded changes accumulate into a codebase nobody has read, and behaviour was the only thing checked — so anything behaviour doesn't surface, like a secret written to logs, a missing edge case, or quietly wrong data handling, ships unseen. The first time someone debugs the system is the first time anyone reads the code. With human review gone, whatever automated verification still runs — tests, types, automated review — is the only gate the code passes through. The same stance applied to sessions started by triggers rather than by a person is a [dark factory](#dark-factory).
 
 _Avoid:_ "vibe coding" as a synonym for "low-quality AI coding" — the term names the review stance, not the resulting code.
 
@@ -1406,4 +1408,47 @@ _Usage:_
 "The agent writes great code in the API repo and garbage in the frontend."
 
 "The API repo has strict types and a fast test suite; the frontend has neither and forty always-loaded skills. That's an AX gap, not a model problem."
+
+### Software factory
+
+A system of work where [agent](#agent) [sessions](#session) are started by triggers — an issue being created, a schedule, a CI failure, another session finishing — rather than by a human, so more work runs [AFK](#afk) and human attention is spent on the [human-in-the-loop](#human-in-the-loop) decisions that remain.
+
+Without a factory, every session starts because someone started it. Even fully AFK work waits on a person to open the session, point it at the [ticket](#ticket), and set it going. Teams want to ship more than that allows. A factory takes the human out of starting sessions, and not necessarily out of anything else.
+
+Common triggers and the sessions they start:
+
+| Trigger                        | Session it starts                    | Example                                                                                                                   |
+| ------------------------------ | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| Issue created or labelled      | Exploration, bug fix, implementation | An issue labelled `ready-for-agent` gets a session that opens a PR                                                        |
+| Schedule (cron)                | Recurring maintenance                | One lint rule fixed per night                                                                                             |
+| CI failure or monitoring alert | Diagnosis, fix attempt               | A failing build on main gets a session that finds the breaking commit and proposes a fix                                  |
+| Another session finishing      | Follow-on work                       | A PR opened by one agent triggers an [automated review](#automated-review), whose comments trigger a fix-up session |
+
+A factory doesn't have to cover the whole software process. One cron job that runs one kind of session and opens one reviewable PR is a factory. Starting that small is useful: a narrow loop produces small, similar PRs, and reviewing them shows how far the loop can be trusted before it's widened.
+
+Humans can sit anywhere in a factory — writing and labelling the issues that trigger sessions, approving a plan before implementation starts, doing [human review](#human-review) before merge. Deciding which of those decisions stay human is the main design question. A factory where no human reviews the output is a [dark factory](#dark-factory).
+
+_Usage:_
+
+"Who fixed all the `no-floating-promises` violations?"
+
+"The factory. Cron job picks one lint rule a night, opens a PR. I just review it in the morning."
+
+### Dark factory
+
+A [software factory](#software-factory) whose output is [vibe coded](#vibe-coding): [agent](#agent) [sessions](#session) start on triggers, and their changes merge and ship without anyone reading them. Humans may still write the issues that feed it; what makes it dark is that no [human review](#human-review) happens on the way out. The name comes from lights-out manufacturing, where a factory runs with nobody on the floor.
+
+It carries the cost of vibe coding at a different scale. With vibe coding, a person chooses not to read a diff they asked for, and at least knows the change exists. In a dark factory, changes land that no person individually asked for or saw, at the rate the triggers fire. The symptom is learning what the factory changed only when something breaks, then debugging code nobody on the team has read, spread across dozens of changes that each looked plausible to the checks that passed them.
+
+With review gone, [automated checks](#automated-check) and [automated review](#automated-review) are the only gates left, so a dark factory is only as safe as those gates are thorough.
+
+Teams that move toward one do it loop by loop. Start with a narrow loop that produces small, easy-to-trust PRs — one lint rule fixed per PR — and review every one. Once the loop has a track record, widen it: two fixes a day, then ten in one PR. Removing review is the last step for a given loop, taken when reviewing it has stopped finding problems, and it applies to that loop only.
+
+_Avoid:_ calling a factory "dark" because it runs unattended. Sessions that run [AFK](#afk) and end in PRs a human reviews are a software factory, not a dark one.
+
+_Usage:_
+
+"Can the dependency-bump loop merge on its own now?"
+
+"Three months of PRs and review hasn't caught anything. Turn off review for that loop only — the rest of the factory stays gated."
 

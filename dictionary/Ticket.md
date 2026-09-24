@@ -8,7 +8,7 @@ The defining constraint is the size: one session. A ticket should be completable
 
 A good ticket is written for a reader with no other context. The goal, the acceptance criteria, and [context pointers](./Context%20pointer.md) to the relevant files and decisions — enough that the session can start working without re-deriving what the last one knew.
 
-The dependency graph is also what unlocks parallelism. Independent tickets — the leaves of the graph — can each run in their own session at the same time. This is an effective way of running multiple agents at once.
+The dependency graph is also what unlocks parallelism. Independent tickets — the leaves of the graph — can each run in their own session at the same time. This is an effective way of running multiple agents at once. In a [software factory](./Software%20factory.md), a ticket being marked ready is itself the trigger that starts its session.
 
 _Usage:_
 
