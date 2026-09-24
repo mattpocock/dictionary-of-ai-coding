@@ -1313,7 +1313,7 @@ The term comes from Andrej Karpathy, who [coined it in early 2025](https://x.com
 
 Vibe coding trades inspection for speed. Reading diffs is usually the slowest step in agent-driven work, so dropping it removes the main bottleneck. For code whose failures are cheap — [prototypes](#prototyping), one-off scripts, internal tools — that's a reasonable trade. The risk scales with the code's lifespan and stakes.
 
-The cost arrives later. Vibe-coded changes accumulate into a codebase nobody has read, and behaviour was the only thing checked — so anything behaviour doesn't surface, like a secret written to logs, a missing edge case, or quietly wrong data handling, ships unseen. The first time someone debugs the system is the first time anyone reads the code. With human review gone, whatever automated verification still runs — tests, types, automated review — is the only gate the code passes through. The same stance applied to sessions started by triggers rather than by a person is a [dark factory](#dark-factory).
+The cost arrives later. Vibe-coded changes accumulate into a codebase nobody has read, and behaviour was the only thing checked — so anything behaviour doesn't surface, like a secret written to logs, a missing edge case, or quietly wrong data handling, ships unseen. The first time someone debugs the system is the first time anyone reads the code. With human review gone, whatever automated verification still runs — tests, types, automated review — is the only gate the code passes through. The same stance applied to a whole codebase, or part of one, whose changes come from a [software factory](#software-factory) is a [dark factory](#dark-factory).
 
 _Avoid:_ "vibe coding" as a synonym for "low-quality AI coding" — the term names the review stance, not the resulting code.
 
@@ -1426,7 +1426,7 @@ Common triggers and the sessions they start:
 
 A factory doesn't have to cover the whole software process. One cron job that runs one kind of session and opens one reviewable PR is a factory. Starting that small is useful: a narrow loop produces small, similar PRs, and reviewing them shows how far the loop can be trusted before it's widened.
 
-Humans can sit anywhere in a factory — writing and labelling the issues that trigger sessions, approving a plan before implementation starts, doing [human review](#human-review) before merge. Deciding which of those decisions stay human is the main design question. A factory where no human reviews the output is a [dark factory](#dark-factory).
+Humans can sit anywhere in a factory — writing and labelling the issues that trigger sessions, approving a plan before implementation starts, doing [human review](#human-review) before merge. Deciding which of those decisions stay human is the main design question. A codebase, or part of one, where no human reviews the factory's output is a [dark factory](#dark-factory).
 
 _Usage:_
 
@@ -1436,19 +1436,19 @@ _Usage:_
 
 ### Dark factory
 
-A [software factory](#software-factory) whose output is [vibe coded](#vibe-coding): [agent](#agent) [sessions](#session) start on triggers, and their changes merge and ship without anyone reading them. Humans may still write the issues that feed it; what makes it dark is that no [human review](#human-review) happens on the way out. The name comes from lights-out manufacturing, where a factory runs with nobody on the floor.
+A codebase, or part of one, where a [software factory](#software-factory) writes the code and no human reads it. There is no [human review](#human-review). Humans can still write the issues that start the work. But nobody reads the code that comes out. The name comes from "lights-out" factories, which make things with no people on the floor.
 
-It carries the cost of vibe coding at a different scale. With vibe coding, a person chooses not to read a diff they asked for, and at least knows the change exists. In a dark factory, changes land that no person individually asked for or saw, at the rate the triggers fire. The symptom is learning what the factory changed only when something breaks, then debugging code nobody on the team has read, spread across dozens of changes that each looked plausible to the checks that passed them.
+A dark factory is [vibe coding](#vibe-coding) for an area of code, not for one change. When you vibe code, you choose not to read a change that you asked for. But you know that the change exists. In a dark factory, the team makes that choice one time, for the full area. After that, no person asks for each change or sees it. Changes arrive as fast as the triggers start new work.
 
-With review gone, [automated checks](#automated-check) and [automated review](#automated-review) are the only gates left, so a dark factory is only as safe as those gates are thorough.
+The problem shows when something breaks. You do not know what changed, because nobody read the changes. You must debug code that nobody on the team has read. The cause can be in any of many changes, and each one passed the checks.
 
-Teams that move toward one do it loop by loop. Start with a narrow loop that produces small, easy-to-trust PRs — one lint rule fixed per PR — and review every one. Once the loop has a track record, widen it: two fixes a day, then ten in one PR. Removing review is the last step for a given loop, taken when reviewing it has stopped finding problems, and it applies to that loop only.
+[Automated checks](#automated-check) and [automated review](#automated-review) are the only gates. If they do not find a problem, the problem goes into the code.
 
-_Avoid:_ calling a factory "dark" because it runs unattended. Sessions that run [AFK](#afk) and end in PRs a human reviews are a software factory, not a dark one.
+_Avoid:_ calling a codebase "dark" only because its factory runs with nobody watching. If [agent](#agent) [sessions](#session) run [AFK](#afk) and a human reviews their PRs, that is a software factory. It is not a dark factory.
 
 _Usage:_
 
-"Can the dependency-bump loop merge on its own now?"
+"Who changed the retry logic in the billing service? Nobody on the team remembers it."
 
-"Three months of PRs and review hasn't caught anything. Turn off review for that loop only — the rest of the factory stays gated."
+"The billing service is a dark factory. The agents merge all changes that pass CI. Nobody read that change."
 

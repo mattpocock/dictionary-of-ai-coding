@@ -19,7 +19,7 @@ Common triggers and the sessions they start:
 
 A factory doesn't have to cover the whole software process. One cron job that runs one kind of session and opens one reviewable PR is a factory. Starting that small is useful: a narrow loop produces small, similar PRs, and reviewing them shows how far the loop can be trusted before it's widened.
 
-Humans can sit anywhere in a factory — writing and labelling the issues that trigger sessions, approving a plan before implementation starts, doing [human review](./Human%20review.md) before merge. Deciding which of those decisions stay human is the main design question. A factory where no human reviews the output is a [dark factory](./Dark%20factory.md).
+Humans can sit anywhere in a factory — writing and labelling the issues that trigger sessions, approving a plan before implementation starts, doing [human review](./Human%20review.md) before merge. Deciding which of those decisions stay human is the main design question. A codebase, or part of one, where no human reviews the factory's output is a [dark factory](./Dark%20factory.md).
 
 _Usage:_
 
