@@ -36,6 +36,8 @@
 - Tool call
 - Tool result
 - MCP
+- Agent Client Protocol
+- Agent Control Protocol
 - Permission request
 - Permission mode
 - Agent mode
