@@ -24,6 +24,10 @@ That's what this dictionary is for. **The vocabulary of AI coding, translated in
 
 **Want more than the vocabulary?** Join 62,000+ developers at **[aihero.dev/newsletter](https://www.aihero.dev/s/dictionary-newsletter)** for my latest skills, thinking on AI engineering, and the resources that'll keep you ahead of the curve.
 
+## 🌍 Translations
+
+- [中文 (Chinese)](https://github.com/yibie/dictionary-of-ai-coding) — Complete translation of all 68 terms into Chinese, maintained by [@yibie](https://github.com/yibie)
+
 ---
 
 ## Table of contents
