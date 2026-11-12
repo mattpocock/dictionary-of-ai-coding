@@ -73,6 +73,7 @@
 - Context pointer
 - Skill
 - Subagent
+- Home Repo
 
 ## Section 7 — Patterns of Work
 

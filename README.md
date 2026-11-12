@@ -125,6 +125,7 @@ That's what this dictionary is for. **The vocabulary of AI coding, translated in
 - [Context pointer](#context-pointer)
 - [Skill](#skill)
 - [Subagent](#subagent)
+- [Home Repo](#home-repo)
 
 </details>
 
@@ -1165,7 +1166,7 @@ The reason to use a pointer (instead of inlining the content) is cost. A pointer
 
 A pointer needs two parts to work: a stable path, and enough description for the agent to know when following it is worth it. A bare path is a pointer the agent has no reason to follow; "see `internal/deploy.md`" with no hint of what's inside gets skipped by a session that needed it. Write the line so it matches how tasks present: "release, deploy, or rollback — read `internal/deploy.md` first".
 
-Pointers are everywhere once you look: lines in AGENTS.md, [skill](#skill) descriptions (the harness loads the description; the skill body waits behind it), filenames in a directory listing, links between docs.
+Pointers are everywhere once you look: lines in AGENTS.md, [skill](#skill) descriptions (the harness loads the description; the skill body waits behind it), filenames in a directory listing, links between docs, the lines in a [Home Repo](#home-repo)'s AGENTS.md that name each of your other repos.
 
 A pointer can also tie a [secondary source](#secondary-source) back to the [primary source](#primary-source) it was derived from — the compaction summary that names the original transcript, the doc that names the source file it describes. This makes the secondary source's lossiness recoverable: when the summary turns out not to be enough, the agent follows the pointer and reads the original, instead of working from whatever the summary kept.
 
@@ -1212,6 +1213,31 @@ _Usage:_
 "The grep results are blowing out my context."
 
 "Spawn a subagent to do the search — it'll burn its own context window on the noise and report back the two file paths you actually need."
+
+### Home Repo
+
+A repository that holds your [skills](#skill), your [AGENTS.md](#agentsmd) and your shared docs, and points at your other repos. You run your [agent](#agent) in the Home Repo, and it opens or clones the other repos as the task needs them.
+
+When a project spans several repos, an agent started in one of them sees only that repo. Each repo ends up with its own copy of the skills and the agent setup, the copies drift apart, and [grilling](#grilling) a feature that crosses repos happens without the whole overview. A Home Repo keeps one copy of the shared material, and [sessions](#session) start there rather than inside a single repo.
+
+| Lives in the Home Repo                                              | Stays in each repo                         |
+| ------------------------------------------------------------------- | ------------------------------------------ |
+| Skills used across repos                                            | The repo's code                            |
+| AGENTS.md, with a pointer to each repo                              | Its own AGENTS.md, build and test commands |
+| Shared docs: coding standards, a glossary, system-wide decisions    | Docs about that repo alone                 |
+| Tooling, such as a CLI that connects the agent to external services |                                            |
+
+Each pointer is a [context pointer](#context-pointer): one line naming the repo, where it lives on disk, and where to clone it from if it's missing. About 20 repos works fine this way. At a few hundred, one pointer per repo is too many for the agent to choose between, so point at one file per area of the business and list that area's repos in it ([progressive disclosure](#progressive-disclosure)). At thousands of repos, the skills have enough consumers that a skills marketplace fits better.
+
+A Home Repo replaces a monorepo when you can't have one: when you mix public and private repos, or when a team won't adopt a monorepo. For a team, the Home Repo is the thing you share. In a [software factory](#software-factory), the Home Repo goes in the [sandbox](#sandbox) and clones the other repos as it needs them.
+
+_Avoid:_ "agent repo" and "meta-repo", older names for the same thing.
+
+_Usage:_
+
+"I keep copying the same skills into every repo, and the copies have drifted."
+
+"Move them into a Home Repo. One copy of the skills, AGENTS.md points at each repo, and you start your sessions there."
 
 ## Section 7 — Patterns of Work
 

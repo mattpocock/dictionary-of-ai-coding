@@ -8,7 +8,7 @@ The reason to use a pointer (instead of inlining the content) is cost. A pointer
 
 A pointer needs two parts to work: a stable path, and enough description for the agent to know when following it is worth it. A bare path is a pointer the agent has no reason to follow; "see `internal/deploy.md`" with no hint of what's inside gets skipped by a session that needed it. Write the line so it matches how tasks present: "release, deploy, or rollback — read `internal/deploy.md` first".
 
-Pointers are everywhere once you look: lines in AGENTS.md, [skill](./Skill.md) descriptions (the harness loads the description; the skill body waits behind it), filenames in a directory listing, links between docs.
+Pointers are everywhere once you look: lines in AGENTS.md, [skill](./Skill.md) descriptions (the harness loads the description; the skill body waits behind it), filenames in a directory listing, links between docs, the lines in a [Home Repo](./Home%20Repo.md)'s AGENTS.md that name each of your other repos.
 
 A pointer can also tie a [secondary source](./Secondary%20source.md) back to the [primary source](./Primary%20source.md) it was derived from — the compaction summary that names the original transcript, the doc that names the source file it describes. This makes the secondary source's lossiness recoverable: when the summary turns out not to be enough, the agent follows the pointer and reads the original, instead of working from whatever the summary kept.
 
