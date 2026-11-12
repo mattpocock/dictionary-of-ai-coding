@@ -25,13 +25,32 @@ function fail(msg: string): never {
   process.exit(1);
 }
 
+const headingSlugCache = new Map<string, string>();
+
 // Mirrors GitHub's heading slugger: lowercase, strip punctuation (keeping hyphens),
 // then replace spaces with hyphens. "Section 1 — Foundations" → "section-1--foundations".
 function headingSlug(heading: string): string {
-  return heading
+  const cached = headingSlugCache.get(heading);
+  if (cached) return cached;
+
+  const slug = heading
     .toLowerCase()
     .replace(/[^\p{L}\p{N} -]/gu, "")
     .replace(/ /g, "-");
+
+  headingSlugCache.set(heading, slug);
+  return slug;
+}
+
+function loadDictionaryEntries(): Map<string, string> {
+  const entries = new Map<string, string>();
+
+  for (const file of readdirSync(DICT_DIR).filter((name) => name.endsWith(".md"))) {
+    const key = file.slice(0, -3);
+    entries.set(key, readFileSync(join(DICT_DIR, file), "utf8"));
+  }
+
+  return entries;
 }
 
 function parseCurriculum(text: string): Section[] {
@@ -80,10 +99,11 @@ function parseCurriculum(text: string): Section[] {
 }
 
 function stripFrontmatter(body: string): string {
-  if (!body.startsWith("---\n")) return body;
-  const end = body.indexOf("\n---\n", 4);
-  if (end === -1) return body;
-  return body.slice(end + 5).replace(/^\n+/, "");
+  const normalized = body.replace(/\r\n/g, "\n");
+  if (!normalized.startsWith("---\n")) return normalized;
+  const end = normalized.indexOf("\n---\n", 4);
+  if (end === -1) return normalized;
+  return normalized.slice(end + 5).replace(/^\n+/, "");
 }
 
 function rewriteLinks(body: string): string {
@@ -99,6 +119,7 @@ function main(): void {
     fail(`Template missing ${TOC_MARKER} marker`);
 
   const sections = parseCurriculum(readFileSync(CURRICULUM, "utf8"));
+  const dictionaryEntries = loadDictionaryEntries();
 
   const seen = new Set<string>();
   const parts: string[] = [];
@@ -107,15 +128,14 @@ function main(): void {
     for (const term of section.terms) {
       if (seen.has(term)) fail(`Curriculum.md: duplicate term "${term}"`);
       seen.add(term);
-      const entryPath = join(DICT_DIR, `${term}.md`);
-      let body: string;
-      try {
-        body = readFileSync(entryPath, "utf8");
-      } catch {
+
+      const body = dictionaryEntries.get(term);
+      if (!body) {
         fail(
-          `Curriculum.md references "${term}" but ${entryPath} does not exist`
+          `Curriculum.md references "${term}" but ${join(DICT_DIR, `${term}.md`)} does not exist`
         );
       }
+
       parts.push(
         `### ${term}`,
         "",
@@ -125,11 +145,7 @@ function main(): void {
     }
   }
 
-  const onDisk = new Set(
-    readdirSync(DICT_DIR)
-      .filter((n) => n.endsWith(".md"))
-      .map((n) => n.slice(0, -3))
-  );
+  const onDisk = new Set(dictionaryEntries.keys());
   const orphans = [...onDisk].filter((t) => !seen.has(t)).sort();
   if (orphans.length)
     fail(
